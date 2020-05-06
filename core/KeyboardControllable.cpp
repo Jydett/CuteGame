@@ -38,11 +38,11 @@ bool KeyBoardControllable::handleInput() {
     bool moveRequested = false;
 //    qDebug() << "handleInput";
     if (leftKeyPressed) {
-        speedX -= accX;
+        speedX -= LinearMovement(accX);
         moveRequested = true;
     }
     if (rightKeyPressed) {
-        speedX += accX;
+        speedX += LinearMovement(accX);
         moveRequested = true;
     }
     if (spaceKeyPressed && !jumping && !jumpRequested) {

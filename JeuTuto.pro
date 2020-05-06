@@ -16,15 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    antigravityfield.cpp \
     core/KeyboardControllable.cpp \
     core/PhysicsObject.cpp \
     main.cpp \
     player/player.cpp \
     rotatingplateform.cpp \
     scene/playscene.cpp \
-    view/view.cpp
+    view/levelview.cpp
 
 HEADERS += \
+    antigravityfield.h \
     core/KeyboardControllable.h \
     core/PhysicsObject.h \
     core/Updatable.h \
@@ -32,7 +34,7 @@ HEADERS += \
     rotatingplateform.h \
     scene/playscene.h \
     view.h \
-    view/view.h
+    view/levelview.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

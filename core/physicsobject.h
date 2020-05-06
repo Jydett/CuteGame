@@ -21,6 +21,8 @@ private:
     bool collide();
 
 protected:
+    static qreal LinearMovement(qreal pps/*, int delta*/);
+
     //inherited posX, posY
 
     qreal accX, decX;

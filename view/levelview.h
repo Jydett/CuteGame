@@ -3,7 +3,7 @@
 
 #include <QGraphicsView>
 
-class View : public QGraphicsView {
+class LevelView : public QGraphicsView {
     Q_OBJECT
 signals:
     void sceneChanged();
@@ -11,7 +11,7 @@ signals:
 public:
 //    QMediaPlaylist *bgm;
 
-    View();
+    LevelView();
     void sceneSet(QGraphicsScene * scene);
 };
 
