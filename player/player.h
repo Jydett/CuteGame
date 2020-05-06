@@ -8,11 +8,12 @@ class Player : public KeyBoardControllable
 {
 
 public:
-//    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     Player();
 
-//private:
+private:
 //    QImage image;
+    QGraphicsTextItem * text;
 
 };
 

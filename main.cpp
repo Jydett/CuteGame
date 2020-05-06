@@ -14,12 +14,12 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     PlayScene * scene = new PlayScene;
 
-    RotatingPlateform* rooo = new RotatingPlateform();
-    scene->addItem(rooo);
+//    RotatingPlateform* rooo = new RotatingPlateform();
+//    scene->addItem(rooo);
 
     QGraphicsRectItem * ground = new QGraphicsRectItem();
-    ground->setRect(0, 150, 500, 10);
-    ground->setTransformOriginPoint(ground->boundingRect().center());
+    ground->setRect(0, 150, 500, 3);
+//    ground->setTransformOriginPoint(ground->boundingRect().center());
 //    ground->setRotation(340);
     scene->addItem(ground);
 

@@ -39,6 +39,9 @@ protected:
 
     bool jumpRequested;
 
+    //collision flags
+    bool contactX = true, contactYbottom = true, contactYtop = true;
+
     void advance(int step) override;
     bool virtual handleInput() { return false; };
 
