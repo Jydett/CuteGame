@@ -1,7 +1,8 @@
 #ifndef CONTROLLABLE_H
 #define CONTROLLABLE_H
 
-#include "PhysicsObject.h"
+#include "physicsobject.h"
+#include "sound/sound.h"
 
 class KeyBoardControllable : public PhysicsObject
 {
@@ -17,6 +18,7 @@ private:
     bool rightKeyPressed;
     bool leftKeyPressed;
     bool spaceKeyPressed;
+    Sound * sound;
 };
 
 #endif // CONTROLLABLE_H

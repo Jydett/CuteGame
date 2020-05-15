@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
     //play music
     Sound * sound = new Sound();
-    sound->playMusic(15);
+    sound->playMusic(25);
 
     return a.exec();
 }

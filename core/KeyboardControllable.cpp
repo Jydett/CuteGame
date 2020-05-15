@@ -7,6 +7,7 @@ KeyBoardControllable::KeyBoardControllable() {
     leftKeyPressed = false;
     rightKeyPressed = false;
     spaceKeyPressed = false;
+    sound = new Sound();
 }
 
 void KeyBoardControllable::keyPressEvent(QKeyEvent *event)
@@ -49,6 +50,7 @@ bool KeyBoardControllable::handleInput() {
         jumping = true;
         jumpRequested = true;
         speedY = -jumpForce;
+        sound->playSound(20);
     }
     if (! spaceKeyPressed) {
         jumpRequested = false;
