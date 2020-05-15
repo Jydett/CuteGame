@@ -1,5 +1,4 @@
-#include "KeyboardControllable.h"
-
+#include "keyboardcontrollable.h"
 #include <QDebug>
 #include <QKeyEvent>
 
@@ -36,13 +35,12 @@ void KeyBoardControllable::keyReleaseEvent(QKeyEvent *event)
 
 bool KeyBoardControllable::handleInput() {
     bool moveRequested = false;
-//    qDebug() << "handleInput";
     if (leftKeyPressed) {
-        speedX -= LinearMovement(accX);
+        speedX -= linearMovement(accX);
         moveRequested = true;
     }
     if (rightKeyPressed) {
-        speedX += LinearMovement(accX);
+        speedX += linearMovement(accX);
         moveRequested = true;
     }
     if (spaceKeyPressed && !jumping && !jumpRequested) {

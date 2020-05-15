@@ -1,33 +1,29 @@
-#ifndef PHYSICSOBJECT_H
-#define PHYSICSOBJECT_H
+#ifndef ENTITY_H
+#define ENTITY_H
+#include <QGraphicsRectItem>
+#include "gameobject.h"
+#include "Type.h"
 
-#include <QGraphicsItem>
-
-#define GRAVITY 0.5
-#define FRICTION 0.5
-
-class PhysicsObject : public QGraphicsRectItem
+class Entity : public GameObject, public QGraphicsRectItem
 {
 public:
+    Entity();
+    bool virtual handleInput() { return false; };
+    enum { Type = ENTITY_TYPE };
+    int type() const override { return Type; };
 
-    PhysicsObject();
+private:
     void accelerate(qreal accelX, qreal accelY);
     void move(qreal xDelta, qreal yDelta);
     void setCollisionPoint(QPointF collisions[8]);
-    void generateCollisionBox();
 
     //todo signal ??
     virtual void movementUpdated(qreal dX, qreal dY) {};
 
-private:
-    QPointF collisionPoints[8];
-
 protected:
-    qreal LinearMovement(qreal pps/*, int delta*/);
-
-    bool traversable;
-
-//    virtual void collide(PhysicsObject * other) = 0;
+    QPointF collisionPoints[8];
+    bool dead;
+    bool dying;
 
     //inherited posX, posY
 
@@ -51,8 +47,7 @@ protected:
     bool contactX = true, contactYbottom = true, contactYtop = true;
 
     void advance(int step) override;
-    bool virtual handleInput() { return false; };
-
+    void generateCollisionBox();
 };
 
-#endif // PHYSICSOBJECT_H
+#endif // ENTITY_H

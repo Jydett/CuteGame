@@ -1,9 +1,9 @@
-#ifndef CONTROLLABLE_H
-#define CONTROLLABLE_H
+#ifndef KEYBOARDCONTROLLABLE2_H
+#define KEYBOARDCONTROLLABLE2_H
+#include "entity.h"
+#include <QKeyEvent>
 
-#include "PhysicsObject.h"
-
-class KeyBoardControllable : public PhysicsObject
+class KeyBoardControllable : public Entity
 {
 public:
     KeyBoardControllable();
@@ -19,4 +19,4 @@ private:
     bool spaceKeyPressed;
 };
 
-#endif // CONTROLLABLE_H
+#endif // KEYBOARDCONTROLLABLE2_H

@@ -11,25 +11,26 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    PlayScene * scene = new PlayScene;
-
-
-    //create an vieable item
-    Player * player = new Player;
-
-    //add the item to the scene
-    scene->addItem(player);
-
 
     //add a view
     QGraphicsView * view = new LevelView;
-    view->setFixedSize(QSize(1280, 720));
+//    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 
+    PlayScene * scene = new PlayScene();
+    view->setScene(scene);
+    view->setSceneRect(0, 0, 100000000, 100000000);
+
+
+    //create an vieable item
+    Player * player = new Player(view);
+
+    //add the item to the scene
     //make the player focusable -> mendatory to get key events
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
+    scene->addItem(player);
 
-    view->setScene(scene);
+    view->centerOn(0, 0);
 
     view->show();
 
@@ -37,6 +38,9 @@ int main(int argc, char *argv[]) {
     QObject::connect(&timer, &QTimer::timeout, scene, &QGraphicsScene::advance);
     timer.start(1000 / 60);
 
+//    while (true) {
+
+//    }
 
     return a.exec();
 }

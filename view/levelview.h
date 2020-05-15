@@ -13,6 +13,9 @@ public:
 
     LevelView();
     void sceneSet(QGraphicsScene * scene);
+
+protected:
+    virtual void wheelEvent(QWheelEvent *e);
 };
 
 #endif // VIEW_H

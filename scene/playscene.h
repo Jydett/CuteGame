@@ -2,6 +2,7 @@
 #define PLAYSCENE_H
 
 #include <QGraphicsScene>
+#include <QScrollBar>
 
 class PlayScene : public QGraphicsScene
 {

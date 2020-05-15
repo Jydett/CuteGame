@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file>images/brick.png</file>
+        <file>images/surprise_block.png</file>
+        <file>images/player.png</file>
+    </qresource>
+</RCC>

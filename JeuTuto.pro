@@ -17,22 +17,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     antigravityfield.cpp \
-    core/KeyboardControllable.cpp \
-    core/PhysicsObject.cpp \
+    core/entity.cpp \
+    core/gameobject.cpp \
+    core/inert.cpp \
+    core/keyboardcontrollable.cpp \
+    core/reapeatabletextureditem.cpp \
     main.cpp \
     player/player.cpp \
     rotatingplateform.cpp \
     scene/playscene.cpp \
+    surpriseblock.cpp \
     view/levelview.cpp
 
 HEADERS += \
     antigravityfield.h \
-    core/KeyboardControllable.h \
-    core/PhysicsObject.h \
-    core/Updatable.h \
+    core/Type.h \
+    core/entity.h \
+    core/gameobject.h \
+    core/inert.h \
+    core/keyboardcontrollable.h \
+    core/reapeatabletextureditem.h \
     player/player.h \
     rotatingplateform.h \
     scene/playscene.h \
+    surpriseblock.h \
     view.h \
     view/levelview.h
 
@@ -41,5 +49,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    images/player.png
+DISTFILES +=
+
+RESOURCES += \
+    assets.qrc

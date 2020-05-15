@@ -1,21 +1,24 @@
-#include "PhysicsObject.h"
+#include "entity.h"
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QRectF>
-#include <QPainterPath>
 #include <QtMath>
+#include "gameobject.h"
 
-PhysicsObject::PhysicsObject()
+Entity::Entity()
 {
+    this->dying = false;
+    this->dead = false;
+
     qreal mScale = 60.0; //desired framerate
     accX = 0.2 * mScale * mScale;
-    decX = 0.3 * mScale * mScale;
-    accY = 0.5 * mScale * mScale;
+    decX = 0.5 * mScale * mScale;
+    accY = 0.4 * mScale * mScale;
 
     maxSpeedX = 5.0 * mScale;
-    maxSpeedY = 10.0 * mScale;
+    maxSpeedY = 8.0 * mScale;
 
-    jumpForce = 12.0 * mScale;
+    jumpForce = 10.0 * mScale;
 
     speedX = 0;
     speedY = 0;
@@ -24,28 +27,28 @@ PhysicsObject::PhysicsObject()
     jumpRequested = false;
 }
 
-void PhysicsObject::setCollisionPoint(QPointF points[8]) {
+void Entity::setCollisionPoint(QPointF points[8]) {
     for (int i = 0; i < 8; i++)
         collisionPoints[i] = points[i];
 }
 
-void PhysicsObject::generateCollisionBox() {
+void Entity::generateCollisionBox() {
     QRectF rect = this->rect();
     qreal width = rect.width();
     qreal widthQ = width / 4;
     qreal height = rect.height();
     qreal heightQ = height / 4;
     QPointF points[8] = {
-        QPointF(widthQ, 0), QPointF(3 * widthQ, 0),
-        QPointF(widthQ, height), QPointF(3 * widthQ, height),
-        QPointF(0, heightQ), QPointF(0, 3 * heightQ),
-        QPointF(width, heightQ), QPointF(width, 3 * heightQ),
+        QPointF(widthQ, 1), QPointF(3 * widthQ, 1),
+        QPointF(widthQ, height - 1), QPointF(3 * widthQ, height - 1),
+        QPointF(1, heightQ), QPointF(1, 3 * heightQ),
+        QPointF(width - 1, heightQ), QPointF(width - 1, 3 * heightQ),
     };
     setCollisionPoint(points);
 }
 
 //collision detection
-void PhysicsObject::advance(int phase) {
+void Entity::advance(int phase) {
     if (! phase)
         return;
 
@@ -79,9 +82,11 @@ void PhysicsObject::advance(int phase) {
     // Keep iterating the contact solver until the maximum number of iterations is reached
     // or no collisions are detected
 
-    qreal nextMoveX = LinearMovement(speedX);
-    qreal nextMoveY = LinearMovement(speedY);
     for (int iteration = 0; iteration < iterations && (contactX || contactYbottom || contactYtop); iteration++) {
+
+        qreal nextMoveX = linearMovement(speedX);
+        qreal nextMoveY = linearMovement(speedY);
+
         contactX = contactYbottom = contactYtop = false;
 
         qreal projectedMoveX, projectedMoveY, originalMoveX, originalMoveY;
@@ -108,6 +113,12 @@ void PhysicsObject::advance(int phase) {
             if (isLadder) {
                 realAccY = - 2 * accY;
                 continue;
+            }
+
+            GameObject * gameObject = nullptr;
+            bool nonCollidableHit = false;
+            if (type > (UserType + 10)) {
+                gameObject = (GameObject *) boundObject;
             }
 
             // ================================================================================
@@ -153,21 +164,33 @@ void PhysicsObject::advance(int phase) {
 
                 // If an intersection occurred...
                 if (segments < vectorLength) {
-                    // Apply correction for over-movement
-                    if (segments > 0) {
-                        projectedMoveX -= nextMoveX / vectorLength;
-                        projectedMoveY -= nextMoveY / vectorLength;
+                    bool notCollidable = false;
+                    //If we have entered a non-collidable gameobject we don't stop the entity
+                    if (gameObject != nullptr) {
+                        //le c++ marche pas :( (ici le ! ne marche pas ¯\_(ツ)_/¯)
+                        notCollidable = ((gameObject->isCollidable()) == false);
                     }
+                    if (notCollidable) {
+                        nonCollidableHit = true;
+                        //we exit the loop
+                        break;
+                    } else {
+                        // Apply correction for over-movement
+                        if (segments > 0) {
+                            projectedMoveX -= nextMoveX / vectorLength;
+                            projectedMoveY -= nextMoveY / vectorLength;
+                        }
 
-                    // Adjust the X or Y component of the vector depending on
-                    // which direction we are currently testing
-                    if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
-                    if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
+                        // Adjust the X or Y component of the vector depending on
+                        // which direction we are currently testing
+                        if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
+                        if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
+                    }
                 }
             }
 
             // ================================================================================
-            // Discrete contact solver
+            // Penetration resolution
             //
             // Here we look for existing collisions and nudge the player in the opposite
             // direction until the collision is solved. The purpose of iteration is because
@@ -177,6 +200,11 @@ void PhysicsObject::advance(int phase) {
             // player's position is nudged backwards and forwards between the same two points
             // repeatedly, creating jitter in the player's movement.
             // ================================================================================
+
+            //We skip the movement calculation if we hit an non collidable
+            if (nonCollidableHit) {
+                continue;
+            }
 
             // We will test the four possible directions of player movement individually
             // dir: 0 = top, 1 = bottom, 2 = left, 3 = right
@@ -221,16 +249,24 @@ void PhysicsObject::advance(int phase) {
 
             if (nextMoveY > originalMoveY && originalMoveY < 0) {
                 contactYtop = true;
-                qDebug() << "Contact with plateform !";
-                //TODO contactTop with plateform
+                if (gameObject != nullptr) {
+                    qDebug() << "contact with " << gameObject;
+                    this->hit(gameObject, TOP);
+                }
             }
 
             if (nextMoveY < originalMoveY && originalMoveY > 0) {
                 contactYbottom = true;
+                if (gameObject != nullptr) {
+                    this->hit(gameObject, BOTTOM);
+                }
             }
 
             if (abs(nextMoveX - originalMoveX) > 0.01f) {
                 contactX = true;
+                if (gameObject != nullptr) {
+                    this->hit(gameObject, SIDE);
+                }
             }
 
             // The player can't continue jumping if we hit the side of something, must fall instead
@@ -261,8 +297,8 @@ void PhysicsObject::advance(int phase) {
         }
     }
 
-    qreal dX = LinearMovement(speedX);
-    qreal dY = LinearMovement(speedY);
+    qreal dX = linearMovement(speedX);
+    qreal dY = linearMovement(speedY);
     if (dX != 0 || dY != 0) {
         playerX += dX;
         playerY += dY;
@@ -276,19 +312,19 @@ void PhysicsObject::advance(int phase) {
     setPos(playerX, playerY);
     bool moveRequested = handleInput();
 
-    speedY = speedY + LinearMovement(realAccY);
+    speedY = speedY + linearMovement(realAccY);
 
     //decelerate if no move is requested
     if (! moveRequested) {
-        if (speedX < 0) speedX += LinearMovement(decX);
-        if (speedX > 0) speedX -= LinearMovement(decX);
+        if (speedX < 0) speedX += linearMovement(decX);
+        if (speedX > 0) speedX -= linearMovement(decX);
 
         // Deceleration may produce a speed that is greater than zero but
         // smaller than the smallest unit of deceleration. These lines ensure
         // that the player does not keep travelling at slow speed forever after
         // decelerating.
-        if (speedX > 0 && speedX < LinearMovement(decX)) speedX = 0;
-        if (speedX < 0 && speedX > LinearMovement(-decX)) speedX = 0;
+        if (speedX > 0 && speedX < linearMovement(decX)) speedX = 0;
+        if (speedX < 0 && speedX > linearMovement(-decX)) speedX = 0;
     }
 
     //clamp speed values
@@ -296,10 +332,4 @@ void PhysicsObject::advance(int phase) {
     if (speedX < -maxSpeedX) speedX = -maxSpeedX;
     if (speedY < -maxSpeedY) speedY = -maxSpeedY;
     if (speedY > maxSpeedY) speedY = maxSpeedY;
-}
-
-
-qreal PhysicsObject::LinearMovement(qreal pps/*, int delta*/) {
-    static const qreal sec_elapsed = 1.0 / 60.0;//TODO get delta
-    return pps * sec_elapsed;
 }
