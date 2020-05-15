@@ -8,6 +8,7 @@
 #include "scene/playscene.h"
 #include "view/levelview.h"
 #include "player/player.h"
+#include "sound/sound.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -37,6 +38,9 @@ int main(int argc, char *argv[]) {
     QObject::connect(&timer, &QTimer::timeout, scene, &QGraphicsScene::advance);
     timer.start(1000 / 60);
 
+    //play music
+    Sound * sound = new Sound();
+    sound->playMusic(15);
 
     return a.exec();
 }

@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,6 +23,7 @@ SOURCES += \
     player/player.cpp \
     rotatingplateform.cpp \
     scene/playscene.cpp \
+    sound/sound.cpp \
     view/levelview.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     player/player.h \
     rotatingplateform.h \
     scene/playscene.h \
+    sound/sound.h \
     view.h \
     view/levelview.h
 
