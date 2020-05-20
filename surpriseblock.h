@@ -12,9 +12,10 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setPosition(int x, int y);
     void hit(GameObject *what, Direction fromDir) override;
-    enum { Type = BLOCK_TYPE };
+    enum { Type = UserType + 11 };
     int type() const override { return Type; };
     void collide(Player* player);
+
 private:
     QPixmap textureData;
     int size;

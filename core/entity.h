@@ -8,7 +8,7 @@ class Entity : public GameObject, public QGraphicsRectItem
 {
 public:
     Entity();
-    bool virtual handleInput() { return false; };
+    virtual bool handleInput() { return false; };
     enum { Type = ENTITY_TYPE };
     int type() const override { return Type; };
 
@@ -29,11 +29,11 @@ protected:
 
     qreal accX, decX;
 
-    qreal speedX, speedY;
-
     qreal maxSpeedX, maxSpeedY;
 
     qreal jumpForce;
+
+    qreal speedX, speedY;
 
     //gravity
     qreal accY;

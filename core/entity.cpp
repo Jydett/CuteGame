@@ -5,6 +5,8 @@
 #include <QtMath>
 #include "gameobject.h"
 
+#include "../surpriseblock.h"
+
 Entity::Entity()
 {
     this->dying = false;
@@ -69,10 +71,10 @@ void Entity::advance(int phase) {
     //we get near object
     QList<QGraphicsItem *> boundObjects = scene()->items(
         QPolygonF()
-                << mapToScene(-MASK_SIZE + bottomLeft.x(), MASK_SIZE + bottomLeft.y())
-                << mapToScene(-MASK_SIZE + topLeft.x(), -MASK_SIZE + topLeft.y())
-                << mapToScene(MASK_SIZE + topRight.x(), -MASK_SIZE + topRight.y())
-                << mapToScene(MASK_SIZE + bottomRight.x(), MASK_SIZE + bottomRight.y()));
+            << mapToScene(-MASK_SIZE + bottomLeft.x(), MASK_SIZE + bottomLeft.y())
+            << mapToScene(-MASK_SIZE + topLeft.x(), -MASK_SIZE + topLeft.y())
+            << mapToScene(MASK_SIZE + topRight.x(), -MASK_SIZE + topRight.y())
+            << mapToScene(MASK_SIZE + bottomRight.x(), MASK_SIZE + bottomRight.y()));
 
 //    qDebug() << "objects found: " << boundObjects.size();
 
@@ -118,7 +120,7 @@ void Entity::advance(int phase) {
             GameObject * gameObject = nullptr;
             bool nonCollidableHit = false;
             if (type > (UserType + 10)) {
-                gameObject = (GameObject *) boundObject;
+                gameObject = dynamic_cast<GameObject*>(boundObject);
             }
 
             // ================================================================================
@@ -250,7 +252,6 @@ void Entity::advance(int phase) {
             if (nextMoveY > originalMoveY && originalMoveY < 0) {
                 contactYtop = true;
                 if (gameObject != nullptr) {
-                    qDebug() << "contact with " << gameObject;
                     this->hit(gameObject, TOP);
                 }
             }
@@ -262,7 +263,7 @@ void Entity::advance(int phase) {
                 }
             }
 
-            if (abs(nextMoveX - originalMoveX) > 0.01f) {
+            if (qFabs(nextMoveX - originalMoveX) > 0.01f) {
                 contactX = true;
                 if (gameObject != nullptr) {
                     this->hit(gameObject, SIDE);

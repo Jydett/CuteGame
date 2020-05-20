@@ -6,6 +6,7 @@ KeyBoardControllable::KeyBoardControllable() {
     leftKeyPressed = false;
     rightKeyPressed = false;
     spaceKeyPressed = false;
+    downKeyPressed = false;
 }
 
 void KeyBoardControllable::keyPressEvent(QKeyEvent *event)
@@ -17,6 +18,8 @@ void KeyBoardControllable::keyPressEvent(QKeyEvent *event)
         rightKeyPressed = true;
     } else if (event->key() == Qt::Key_Space) {
         spaceKeyPressed = true;
+    } else if (event->key() == Qt::Key_Down) {
+        downKeyPressed = true;
     }
 }
 
@@ -29,6 +32,8 @@ void KeyBoardControllable::keyReleaseEvent(QKeyEvent *event)
         rightKeyPressed = false;
     } else if (event->key() == Qt::Key_Space) {
         spaceKeyPressed = false;
+    } else if (event->key() == Qt::Key_Down) {
+        downKeyPressed = false;
     }
 }
 

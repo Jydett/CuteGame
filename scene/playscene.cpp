@@ -36,21 +36,38 @@ PlayScene::PlayScene()
 
     const int TEXTURE_SIZE = 16;
 
+    ReapeatableTexturedItem * petit = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);
+    petit->setPosition(230, 600 - 16);
+    this->addItem(petit);
+
     ReapeatableTexturedItem * ground1 = new ReapeatableTexturedItem(":/assets/images/brick.png", 200, 1, TEXTURE_SIZE);
     ground1->setPosition(0, 600);
     this->addItem(ground1);
 
-    ReapeatableTexturedItem * mur = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 2, TEXTURE_SIZE);
-    mur->setPosition(100, 600 - 32);
+    ReapeatableTexturedItem * mur = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 3, TEXTURE_SIZE);
+    mur->setPosition(260, 600 - 48);
     this->addItem(mur);
+
+//    ReapeatableTexturedItem * mur2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 2, TEXTURE_SIZE);
+//    mur2->setPosition(300, 600 - 32);
+//    this->addItem(mur2);
 
 //    QGraphicsRectItem * ladder = new AntigravityField();
 //    ladder->setRect(550, 100, 100, 20);
 //    this->addItem(ladder);
 
-    SurpriseBlock * block = new SurpriseBlock();
-    block->setPosition(300, 500);
-    this->addItem(block);
+    for (auto i = 0; i < 20; i++) {
+        SurpriseBlock * block = new SurpriseBlock();
+        block->setPosition(300 + (i * 32), 470);
+        this->addItem(block);
+    }
+
+    for (auto i = 0; i < 19; i++) {
+        SurpriseBlock * block = new SurpriseBlock();
+        block->setPosition(316 + (i * 32), 400);
+        this->addItem(block);
+    }
+
 
 
 //    ReapeatableTexturedItem * myFirstBlock = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);

@@ -35,7 +35,9 @@ void SurpriseBlock::hit(GameObject *what, Direction fromDir) {
 
 void SurpriseBlock::collide(Player *player) {
     if (broken == false) {
+        qDebug() << "collide";
         this->brokenOffset = 16;
         this->broken = true;
+        this->scene()->update(boundingRect());
     }
 }

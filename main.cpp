@@ -38,9 +38,5 @@ int main(int argc, char *argv[]) {
     QObject::connect(&timer, &QTimer::timeout, scene, &QGraphicsScene::advance);
     timer.start(1000 / 60);
 
-//    while (true) {
-
-//    }
-
     return a.exec();
 }

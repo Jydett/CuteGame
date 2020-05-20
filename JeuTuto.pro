@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     antigravityfield.cpp \
+    core/coin.cpp \
     core/entity.cpp \
     core/gameobject.cpp \
     core/inert.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 HEADERS += \
     antigravityfield.h \
     core/Type.h \
+    core/coin.h \
     core/entity.h \
     core/gameobject.h \
     core/inert.h \

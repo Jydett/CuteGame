@@ -17,9 +17,16 @@ public:
 //    void keyReleaseEvent(QKeyEvent *event) override;
 
 private:
-    QImage image;
+    QPixmap textureData;
     QGraphicsTextItem * text;
     QGraphicsView * view;
+
+    int spriteWidth;
+    int spriteHeight;
+    int annimationIndex;
+    int lastYIndex;
+
+    qreal axeXSave;
 };
 
 #endif // PLAYER2_H

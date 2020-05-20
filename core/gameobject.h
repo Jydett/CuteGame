@@ -22,7 +22,7 @@ public:
         return pps * sec_elapsed;
     }
 
-    virtual void hit(GameObject* what, Direction fromDir) = 0;
+    virtual void hit(GameObject* what, Direction fromDir) {};
 protected:
     bool collidable;
 };

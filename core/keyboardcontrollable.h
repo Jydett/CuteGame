@@ -13,10 +13,11 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 
-private:
+protected:
     bool rightKeyPressed;
     bool leftKeyPressed;
     bool spaceKeyPressed;
+    bool downKeyPressed;
 };
 
 #endif // KEYBOARDCONTROLLABLE2_H

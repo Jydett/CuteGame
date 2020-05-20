@@ -1,5 +1,6 @@
 #include "player.h"
 #include <QDebug>
+#include <typeinfo>
 #include "../surpriseblock.h"
 
 #define SPEED 3
@@ -7,13 +8,15 @@
 Player::Player(QGraphicsView* view)
 {
     this->view = view;
+    this->spriteWidth = 16;
+    this->spriteHeight = 32;
+    this->annimationIndex = 0;
     setRect(0, 0, 16, 32);
     generateCollisionBox();
+    axeXSave = accX;
 //    setFlag(ItemClipsToShape);
-    image = QImage(":/assets/images/player.png");
-    if (image.format() == 0) {
-        qDebug() << "ERREUR DE CHARGEMENT DE L'IMAGE";
-    }
+    textureData = QPixmap(":/assets/images/player.png");
+     //TODO gerer erreur
 }
 
 void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
@@ -26,7 +29,34 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 ////                       "\n scroll " + scroll->value()
 //                       "");
 //    painter->drawRect(rect.toAlignedRect());
-    painter->drawImage(rect, image);
+    int xIndex = 0, yIndex = 0;
+    int actualSpriteHeight;
+    if (downKeyPressed) {
+        if (accX != 0) {
+            axeXSave = accX;
+        }
+        accX = 0;
+        actualSpriteHeight = 16;
+        yIndex = spriteHeight + 1 + spriteHeight + 2;
+        rect = QRectF(rect.x(), rect.y() + actualSpriteHeight, spriteWidth, actualSpriteHeight);
+        if (speedX < 0) {
+            xIndex = spriteWidth;
+        }
+    } else {
+        accX = axeXSave;
+        actualSpriteHeight = spriteHeight;
+        if (speedX > 0) {
+            xIndex = (annimationIndex++ % 3 + 1) * spriteWidth;
+        } else if (speedX < 0) {
+            xIndex = (annimationIndex++ % 3 + 1) * spriteWidth;
+            yIndex = spriteHeight + 1;
+        } else {
+            yIndex = lastYIndex;
+        }
+    }
+    lastYIndex = yIndex;
+
+    painter->drawPixmap(rect, textureData, QRect(xIndex, yIndex, spriteWidth, actualSpriteHeight));
 
 //     painter->setBrush(QBrush(Qt::red));
 //    for (auto i = 0; i < 8; i++) {
@@ -39,11 +69,10 @@ void Player::movementUpdated(qreal dX, qreal dY) {
     view->centerOn(x(), CONST_Y);
 }
 
-void Player::hit(GameObject *what, Direction fromDir) {
-    SurpriseBlock * block = dynamic_cast<SurpriseBlock*>(what);
-    qDebug() << "cast: " << dynamic_cast<SurpriseBlock*>(what) << " res" << block;
-    if (block) {
+void Player::hit(GameObject* what, Direction fromDir) {
+    SurpriseBlock* block = dynamic_cast<SurpriseBlock*>(what);
+    if (block != nullptr && fromDir == TOP) {
         block->collide(this);
+        return;
     }
-    qDebug() << "player hit";
 }
