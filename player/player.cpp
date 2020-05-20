@@ -76,3 +76,8 @@ void Player::hit(GameObject* what, Direction fromDir) {
         return;
     }
 }
+
+bool Player::onJump() {
+    //son
+    return true;
+}

@@ -11,7 +11,8 @@ public:
     void movementUpdated(qreal dX, qreal dY) override;
     void hit(GameObject* what, Direction fromDir) override;
 
-//protected:
+protected:
+    bool onJump();
 //    bool handleInput() override;
 //    void keyPressEvent(QKeyEvent* event) override;
 //    void keyReleaseEvent(QKeyEvent *event) override;

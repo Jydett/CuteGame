@@ -3,11 +3,12 @@
 #include <QPainter>
 #include <QDebug>
 
-SurpriseBlock::SurpriseBlock()
+SurpriseBlock::SurpriseBlock(bool hidden)
 {
     this->collidable = true;
-
+    this->hidden = hidden;
     this->broken = false;
+    if (hidden) collidable = false;
     this->brokenOffset = 0;
     this->size = 16;
     this->deleteOnbreak = true;
@@ -19,6 +20,7 @@ void SurpriseBlock::setPosition(int x, int y) {
 }
 
 void SurpriseBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    if (hidden && ! broken) return;
     QPointF pos = boundingRect().topLeft();
     painter->drawPixmap(
         QPointF(pos.x(), pos.y()),
@@ -35,6 +37,9 @@ void SurpriseBlock::hit(GameObject *what, Direction fromDir) {
 
 void SurpriseBlock::collide(Player *player) {
     if (broken == false) {
+        if (hidden) {
+            collidable = true;
+        }
         qDebug() << "collide";
         this->brokenOffset = 16;
         this->broken = true;

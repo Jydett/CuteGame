@@ -8,7 +8,7 @@
 class SurpriseBlock : public Inert, public QGraphicsRectItem
 {
 public:
-    SurpriseBlock();
+    SurpriseBlock(bool hidden);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setPosition(int x, int y);
     void hit(GameObject *what, Direction fromDir) override;
@@ -22,6 +22,7 @@ private:
     bool broken;
     bool deleteOnbreak;
     int brokenOffset;
+    bool hidden;
 };
 
 #endif // SURPRISEBLOCK_H
