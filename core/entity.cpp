@@ -229,14 +229,17 @@ void Entity::advance(int phase) {
 
             if (nextMoveY > originalMoveY && originalMoveY < 0) {
                 contactYtop = true;
+                if (gameObject != nullptr) this->hit(gameObject, TOP);
             }
 
             if (nextMoveY < originalMoveY && originalMoveY > 0) {
                 contactYbottom = true;
+                if (gameObject != nullptr) this->hit(gameObject, BOTTOM);
             }
 
             if (qFabs(nextMoveX - originalMoveX) > 0.01f) {
                 contactX = true;
+                if (gameObject != nullptr) this->hit(gameObject, SIDE);
             }
 
             //we cancel the collision flags if the collision was a walkable entity
@@ -246,18 +249,9 @@ void Entity::advance(int phase) {
                 nextMoveY = originalMoveY;
                 nextMoveX = originalMoveX;
                 //when notCollidable is set: gameObject != nullptr
-                if (contactX) {
-                    this->hit(gameObject, SIDE);
-                    contactX = false;
-                }
-                if (contactYtop) {
-                    this->hit(gameObject, TOP);
-                    contactYtop = false;
-                }
-                if (contactYbottom) {
-                    this->hit(gameObject, BOTTOM);
-                    contactYbottom = false;
-                }
+                if (contactX) contactX = false;
+                if (contactYtop) contactYtop = false;
+                if (contactYbottom) contactYbottom = false;
             }
 
             // The player can't continue jumping if we hit the side of something, must fall instead
