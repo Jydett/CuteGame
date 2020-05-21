@@ -19,7 +19,7 @@ protected:
 
 private:
     QPixmap textureData;
-    QGraphicsTextItem * text;
+    QGraphicsTextItem * debugIfo;
     QGraphicsView * view;
 
     int spriteWidth;

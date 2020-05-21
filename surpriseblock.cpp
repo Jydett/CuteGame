@@ -20,7 +20,7 @@ void SurpriseBlock::setPosition(int x, int y) {
 }
 
 void SurpriseBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-    painter->drawRect(boundingRect());
+//    painter->drawRect(boundingRect());
     if (hidden && ! broken) return;
     QPointF pos = boundingRect().topLeft();
     painter->drawPixmap(

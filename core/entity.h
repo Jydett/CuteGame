@@ -43,6 +43,8 @@ protected:
 
     bool jumpRequested;
 
+    bool wasOnGroundLastFrame;
+
     //collision flags
     bool contactX = true, contactYbottom = true, contactYtop = true;
 

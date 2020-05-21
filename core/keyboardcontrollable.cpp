@@ -48,7 +48,7 @@ bool KeyBoardControllable::handleInput() {
         speedX += linearMovement(accX);
         moveRequested = true;
     }
-    if (spaceKeyPressed && !jumping && !jumpRequested) {
+    if (spaceKeyPressed && wasOnGroundLastFrame && !jumping && !jumpRequested) {
         if (onJump()) {
             jumping = true;
             jumpRequested = true;

@@ -15,6 +15,7 @@ Player::Player(QGraphicsView* view)
     setRect(0, 0, 16, 32);
     generateCollisionBox();
     axeXSave = accX;
+//    this->debugIfo = new QGraphicsTextItem(this);
 //    setFlag(ItemClipsToShape);
     textureData = QPixmap(":/assets/images/player.png");
      //TODO gerer erreur
@@ -22,14 +23,6 @@ Player::Player(QGraphicsView* view)
 
 void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     QRectF rect = this->rect();
-//    text->setPlainText("x:" + QString::number(x()) + " y:" + QString::number(y()) +
-//                       "\nsx:" + QString::number(speedX) + " sy:" + QString::number(speedY) +
-//                       "\nsy:" + QString::number(accX) + " ay:" + QString::number(accY) +
-//                       "\n jumping ? " + QString::number(jumping) + " requested ? " + QString::number(jumpRequested) +
-////                       "\n bottom " + QString::number(contactYbottom) + " top " + QString::number(contactYtop)
-////                       "\n scroll " + scroll->value()
-//                       "");
-    painter->drawRect(rect.toAlignedRect());
     int xIndex = 0, yIndex = 0;
     int actualSpriteHeight;
     if (downKeyPressed) {
@@ -63,6 +56,22 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 //    for (auto i = 0; i < 8; i++) {
 //        painter->drawPoint(collisionPoints[i]);
 //    }
+
+    //DEBUG
+    {
+//        painter->drawRect(rect.toAlignedRect());
+
+
+//        debugIfo->setPlainText(
+    //        "x:" + QString::number(x()) + " y:" + QString::number(y()) +
+    //       "\nsx:" + QString::number(speedX) + " sy:" + QString::number(speedY) +
+    //       "\nsy:" + QString::number(accX) + " ay:" + QString::number(accY) +
+    //       "\n jumping ? " + QString::number(jumping) + " requested ? " + QString::number(jumpRequested) +
+//           " \n wasOnGround " + QString::number(wasOnGroundLastFrame) +
+    //                       "\n bottom " + QString::number(contactYbottom) + " top " + QString::number(contactYtop)
+    //                       "\n scroll " + scroll->value()
+//           "");
+    }
 }
 
 void Player::movementUpdated(qreal dX, qreal dY) {

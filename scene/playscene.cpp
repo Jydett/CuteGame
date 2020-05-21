@@ -44,6 +44,10 @@ PlayScene::PlayScene()
     ground1->setPosition(0, 600);
     this->addItem(ground1);
 
+    ReapeatableTexturedItem * ground2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 10, 1, TEXTURE_SIZE);
+    ground2->setPosition(0, 500);
+    this->addItem(ground2);
+
     ReapeatableTexturedItem * mur = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 3, TEXTURE_SIZE);
     mur->setPosition(260, 600 - 48);
     this->addItem(mur);

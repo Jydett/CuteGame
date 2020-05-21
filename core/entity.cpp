@@ -11,6 +11,7 @@ Entity::Entity()
 {
     this->dying = false;
     this->dead = false;
+    this->wasOnGroundLastFrame = false;
 
     qreal mScale = 60.0; //desired framerate
     accX = 0.2 * mScale * mScale;
@@ -268,9 +269,7 @@ void Entity::advance(int phase) {
             //prevent flickering
             playerY += static_cast<int>(nextMoveY);
             speedY = 0;
-
-            if (contactYbottom)
-                jumping = false;
+            if (contactYbottom) jumping = false;
         }
 
         if (contactX) {
@@ -280,6 +279,13 @@ void Entity::advance(int phase) {
             playerX += static_cast<int>(nextMoveX);
             speedX = 0;
         }
+    }
+
+    //FIXME un peu dégeu ca non ? xD @Jydet
+    if (speedY == 0) {
+        wasOnGroundLastFrame = true;
+    } else {
+        wasOnGroundLastFrame = false;
     }
 
     qreal dX = linearMovement(speedX);
