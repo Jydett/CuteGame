@@ -11,6 +11,7 @@ Player::Player(QGraphicsView* view)
     this->spriteWidth = 16;
     this->spriteHeight = 32;
     this->annimationIndex = 0;
+    this->lastYIndex = 0;
     setRect(0, 0, 16, 32);
     generateCollisionBox();
     axeXSave = accX;
@@ -28,7 +29,7 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 ////                       "\n bottom " + QString::number(contactYbottom) + " top " + QString::number(contactYtop)
 ////                       "\n scroll " + scroll->value()
 //                       "");
-//    painter->drawRect(rect.toAlignedRect());
+    painter->drawRect(rect.toAlignedRect());
     int xIndex = 0, yIndex = 0;
     int actualSpriteHeight;
     if (downKeyPressed) {

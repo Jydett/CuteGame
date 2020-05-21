@@ -49,9 +49,11 @@ bool KeyBoardControllable::handleInput() {
         moveRequested = true;
     }
     if (spaceKeyPressed && !jumping && !jumpRequested) {
-        jumping = true;
-        jumpRequested = true;
-        speedY = -jumpForce;
+        if (onJump()) {
+            jumping = true;
+            jumpRequested = true;
+            speedY = -jumpForce;
+        }
     }
     if (! spaceKeyPressed) {
         jumpRequested = false;

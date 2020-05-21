@@ -12,7 +12,7 @@ public:
     void hit(GameObject* what, Direction fromDir) override;
 
 protected:
-    bool onJump();
+    bool onJump() override;
 //    bool handleInput() override;
 //    void keyPressEvent(QKeyEvent* event) override;
 //    void keyReleaseEvent(QKeyEvent *event) override;

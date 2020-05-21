@@ -48,6 +48,9 @@ protected:
 
     void advance(int step) override;
     void generateCollisionBox();
+
+    //inline ?
+    bool objectIsNotInCollisionPoints(QGraphicsItem * boundObject, int dir, qreal projectedMoveX, qreal projectedMoveY);
 };
 
 #endif // ENTITY_H

@@ -58,13 +58,13 @@ PlayScene::PlayScene()
 
     for (auto i = 0; i < 20; i++) {
         SurpriseBlock * block = new SurpriseBlock(i % 2 == 0);
-        block->setPosition(300 + (i * 32), 470);
+        block->setPosition(300 + (i * 32), 490);
         this->addItem(block);
     }
 
     for (auto i = 0; i < 19; i++) {
         SurpriseBlock * block = new SurpriseBlock(i % 2 == 1);
-        block->setPosition(316 + (i * 32), 400);
+        block->setPosition(316 + (i * 32), 420);
         this->addItem(block);
     }
 

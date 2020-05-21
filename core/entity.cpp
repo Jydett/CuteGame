@@ -119,8 +119,10 @@ void Entity::advance(int phase) {
 
             GameObject * gameObject = nullptr;
             bool nonCollidableHit = false;
+            bool notCollidable = false;
             if (type > (UserType + 10)) {
                 gameObject = dynamic_cast<GameObject*>(boundObject);
+                notCollidable = (gameObject->isCollidable() == false);
             }
 
             // ================================================================================
@@ -136,10 +138,10 @@ void Entity::advance(int phase) {
             // We will test the four possible directions of player movement individually
             // dir: 0 = top, 1 = bottom, 2 = left, 3 = right
             for (int dir = 0; dir < 4; dir++) {
-                if (dir == 0 && nextMoveY > 0) continue;
-                if (dir == 1 && nextMoveY < 0) continue;
-                if (dir == 2 && nextMoveX > 0) continue;
-                if (dir == 3 && nextMoveX < 0) continue;
+                if (dir == 0 && nextMoveY >= 0) continue; else
+                if (dir == 1 && nextMoveY <= 0) continue; else
+                if (dir == 2 && nextMoveX >= 0) continue; else
+                if (dir == 3 && nextMoveX <= 0) continue;
 
                 // Our current position along the anticipated movement vector of the player this frame
                 projectedMoveX = projectedMoveY = 0;
@@ -150,15 +152,8 @@ void Entity::advance(int phase) {
 
                 // Advance along the vector until it intersects with some geometry
                 // or we reach the end
-                while (! boundObject->contains(QPointF(
-                             collisionPoints[dir * 2].x() + playerX + projectedMoveX,
-                             collisionPoints[dir * 2].y() + playerY + projectedMoveY
-                                             )) &&
-                       ! boundObject->contains(QPointF(
-                             collisionPoints[dir * 2 + 1].x() + playerX + projectedMoveX,
-                             collisionPoints[dir * 2 + 1].y() + playerY + projectedMoveY
-                                             )) && segments < vectorLength)
-                {
+                while (objectIsNotInCollisionPoints(boundObject, dir, projectedMoveX, projectedMoveY)
+                       && segments < vectorLength) {
                     projectedMoveX += nextMoveX / vectorLength;
                     projectedMoveY += nextMoveY / vectorLength;
                     segments++;
@@ -166,107 +161,102 @@ void Entity::advance(int phase) {
 
                 // If an intersection occurred...
                 if (segments < vectorLength) {
-                    bool notCollidable = false;
-                    //If we have entered a non-collidable gameobject we don't stop the entity
-                    if (gameObject != nullptr) {
-                        //le c++ marche pas :( (ici le ! ne marche pas ¯\_(ツ)_/¯)
-                        notCollidable = ((gameObject->isCollidable()) == false);
+                    // Apply correction for over-movement
+                    if (segments > 0) {
+                        projectedMoveX -= nextMoveX / vectorLength;
+                        projectedMoveY -= nextMoveY / vectorLength;
                     }
-                    if (notCollidable) {
-                        nonCollidableHit = true;
-                        //we exit the loop
-                        break;
-                    } else {
-                        // Apply correction for over-movement
-                        if (segments > 0) {
-                            projectedMoveX -= nextMoveX / vectorLength;
-                            projectedMoveY -= nextMoveY / vectorLength;
+
+                    // Adjust the X or Y component of the vector depending on
+                    // which direction we are currently testing
+                    if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
+                    if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
+                }
+            }
+
+            //We skip the penetration resolution calculation if we hit an non collidable
+            if (notCollidable == false) {
+                // ================================================================================
+                // Penetration resolution
+                //
+                // Here we look for existing collisions and nudge the player in the opposite
+                // direction until the collision is solved. The purpose of iteration is because
+                // the correction may cause collisions with other pieces of geometry. Iteration
+                // also solves the so-called 'jitter' problem where a collision between the
+                // player and the geometry is constantly solved and then re-introduced as the
+                // player's position is nudged backwards and forwards between the same two points
+                // repeatedly, creating jitter in the player's movement.
+                // ================================================================================
+
+                // We will test the four possible directions of player movement individually
+                // dir: 0 = top, 1 = bottom, 2 = left, 3 = right
+                for (int dir = 0; dir < 4; dir++) {
+                    // Skip the test if the expected direction of movement makes the test irrelevant
+                    // For example, we only want to test the top of the player's head when movement is
+                    // upwards, not downwards. This is really important! If we don't do this, we can
+                    // make corrections in the wrong direction, causing the player to magically jump
+                    // up to platforms or stick to ceilings.
+                    if (dir == 0 && nextMoveY >= 0) continue; else
+                    if (dir == 1 && nextMoveY <= 0) continue; else
+                    if (dir == 2 && nextMoveX >= 0) continue; else
+                    if (dir == 3 && nextMoveX <= 0) continue;
+
+                    projectedMoveX = (dir >= 2 ? nextMoveX : 0);
+                    projectedMoveY = (dir <  2 ? nextMoveY : 0);
+                    while (boundObject->contains(QPointF(
+                                 collisionPoints[dir * 2].x() + playerX + projectedMoveX,
+                                 collisionPoints[dir * 2].y() + playerY + projectedMoveY
+                                                 )) ||
+                           boundObject->contains(QPointF(
+                                 collisionPoints[dir * 2 + 1].x() + playerX + projectedMoveX,
+                                 collisionPoints[dir * 2 + 1].y() + playerY + projectedMoveY
+                                                 )))
+                    {
+                        if (dir == 0) {
+                            projectedMoveY++;
+                        } else if (dir == 1) {
+                            projectedMoveY--;
+                        } else if (dir == 2) {
+                            projectedMoveX++;
+                        } else if (dir == 3) {
+                            projectedMoveX--;
                         }
-
-                        // Adjust the X or Y component of the vector depending on
-                        // which direction we are currently testing
-                        if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
-                        if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
                     }
+                    if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
+                    if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
                 }
-            }
-
-            // ================================================================================
-            // Penetration resolution
-            //
-            // Here we look for existing collisions and nudge the player in the opposite
-            // direction until the collision is solved. The purpose of iteration is because
-            // the correction may cause collisions with other pieces of geometry. Iteration
-            // also solves the so-called 'jitter' problem where a collision between the
-            // player and the geometry is constantly solved and then re-introduced as the
-            // player's position is nudged backwards and forwards between the same two points
-            // repeatedly, creating jitter in the player's movement.
-            // ================================================================================
-
-            //We skip the movement calculation if we hit an non collidable
-            if (nonCollidableHit) {
-                continue;
-            }
-
-            // We will test the four possible directions of player movement individually
-            // dir: 0 = top, 1 = bottom, 2 = left, 3 = right
-            for (int dir = 0; dir < 4; dir++) {
-                // Skip the test if the expected direction of movement makes the test irrelevant
-                // For example, we only want to test the top of the player's head when movement is
-                // upwards, not downwards. This is really important! If we don't do this, we can
-                // make corrections in the wrong direction, causing the player to magically jump
-                // up to platforms or stick to ceilings.
-                if (dir == 0 && nextMoveY > 0) continue;
-                if (dir == 1 && nextMoveY < 0) continue;
-                if (dir == 2 && nextMoveX > 0) continue;
-                if (dir == 3 && nextMoveX < 0) continue;
-
-                //Speculative Contacts
-                projectedMoveX = projectedMoveY = 0;
-
-                projectedMoveX = (dir >= 2 ? nextMoveX : 0);
-                projectedMoveY = (dir <  2 ? nextMoveY : 0);
-                while (boundObject->contains(QPointF(
-                             collisionPoints[dir * 2].x() + playerX + projectedMoveX,
-                             collisionPoints[dir * 2].y() + playerY + projectedMoveY
-                                             )) ||
-                       boundObject->contains(QPointF(
-                             collisionPoints[dir * 2 + 1].x() + playerX + projectedMoveX,
-                             collisionPoints[dir * 2 + 1].y() + playerY + projectedMoveY
-                                             )))
-                {
-                    if (dir == 0) {
-                        projectedMoveY++;
-                    } else if (dir == 1) {
-                        projectedMoveY--;
-                    } else if (dir == 2) {
-                        projectedMoveX++;
-                    } else if (dir == 3) {
-                        projectedMoveX--;
-                    }
-                }
-                if (dir >= 2 && dir <= 3) nextMoveX = projectedMoveX;
-                if (dir >= 0 && dir <= 1) nextMoveY = projectedMoveY;
             }
 
             if (nextMoveY > originalMoveY && originalMoveY < 0) {
                 contactYtop = true;
-                if (gameObject != nullptr) {
-                    this->hit(gameObject, TOP);
-                }
             }
 
             if (nextMoveY < originalMoveY && originalMoveY > 0) {
                 contactYbottom = true;
-                if (gameObject != nullptr) {
-                    this->hit(gameObject, BOTTOM);
-                }
             }
 
             if (qFabs(nextMoveX - originalMoveX) > 0.01f) {
                 contactX = true;
-                if (gameObject != nullptr) {
+            }
+
+            //we cancel the collision flags if the collision was a walkable entity
+            //but we still need to call the hit method
+            if (notCollidable) {
+                //we cancele the collision
+                nextMoveY = originalMoveY;
+                nextMoveX = originalMoveX;
+                //when notCollidable is set: gameObject != nullptr
+                if (contactX) {
                     this->hit(gameObject, SIDE);
+                    contactX = false;
+                }
+                if (contactYtop) {
+                    this->hit(gameObject, TOP);
+                    contactYtop = false;
+                }
+                if (contactYbottom) {
+                    this->hit(gameObject, BOTTOM);
+                    contactYbottom = false;
                 }
             }
 
@@ -333,4 +323,17 @@ void Entity::advance(int phase) {
     if (speedX < -maxSpeedX) speedX = -maxSpeedX;
     if (speedY < -maxSpeedY) speedY = -maxSpeedY;
     if (speedY > maxSpeedY) speedY = maxSpeedY;
+}
+
+bool Entity::objectIsNotInCollisionPoints(QGraphicsItem * boundObject, int dir, qreal projectedMoveX, qreal projectedMoveY) {
+    qreal playerX = x();
+    qreal playerY = y();
+    return ! boundObject->contains(QPointF(
+               collisionPoints[dir * 2].x() + playerX + projectedMoveX,
+               collisionPoints[dir * 2].y() + playerY + projectedMoveY
+                               )) &&
+         ! boundObject->contains(QPointF(
+               collisionPoints[dir * 2 + 1].x() + playerX + projectedMoveX,
+               collisionPoints[dir * 2 + 1].y() + playerY + projectedMoveY
+                               ));
 }

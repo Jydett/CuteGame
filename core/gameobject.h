@@ -13,7 +13,7 @@ class GameObject {
 public:
     GameObject();
 
-    inline bool isCollidable() const {
+    inline bool isCollidable() {
         return collidable;
     }
 
