@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QDebug>
+#include "../scene/playscene.h"
 
 ReapeatableTexturedItem::ReapeatableTexturedItem(QString file, int width, int height, int textureSize)
     : QGraphicsRectItem()
@@ -28,6 +29,9 @@ void ReapeatableTexturedItem::nextFrame() {
 
 void ReapeatableTexturedItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     QPointF pos = rect().topLeft();
+
+    if (PlayScene::showBoundingBoxes)
+        painter->drawRect(rect().toAlignedRect());
 
     for (auto x = 0; x < width; x++) {
         for (auto y = 0; y < height; y++) {

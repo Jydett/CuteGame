@@ -1,33 +1,35 @@
 #ifndef PLAYER2_H
 #define PLAYER2_H
 #include "../core/keyboardcontrollable.h"
-#include <QGraphicsView>
+#include "../view/levelview.h"
 
-class Player : public KeyBoardControllable
+class Player : public Entity
 {
 public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    Player(QGraphicsView* view);
+    Player(LevelView* view);
     void movementUpdated(qreal dX, qreal dY) override;
     void hit(GameObject* what, Direction fromDir) override;
 
 protected:
-    bool onJump() override;
-//    bool handleInput() override;
-//    void keyPressEvent(QKeyEvent* event) override;
-//    void keyReleaseEvent(QKeyEvent *event) override;
+//    bool onJump() override;//FIXME
+    bool handleInput() override;
+    void update() override;
 
 private:
     QPixmap textureData;
     QGraphicsTextItem * debugIfo;
-    QGraphicsView * view;
+    LevelView * view;
 
     int spriteWidth;
     int spriteHeight;
     int annimationIndex;
-    int lastYIndex;
+    int lastDirection;
 
-    qreal axeXSave;
+    bool isCrouching;
+    bool downKeyPressedLastFrame;
+
+    int annimationTimer;
 };
 
 #endif // PLAYER2_H

@@ -9,6 +9,8 @@ class PlayScene : public QGraphicsScene
     Q_OBJECT
 public:
     PlayScene();
+
+    static bool showBoundingBoxes;
 };
 
 #endif // PLAYSCENE_H

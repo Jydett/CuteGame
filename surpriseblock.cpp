@@ -2,6 +2,7 @@
 #include <QRectF>
 #include <QPainter>
 #include <QDebug>
+#include "scene/playscene.h"
 
 SurpriseBlock::SurpriseBlock(bool hidden)
 {
@@ -20,7 +21,9 @@ void SurpriseBlock::setPosition(int x, int y) {
 }
 
 void SurpriseBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-//    painter->drawRect(boundingRect());
+
+    if (PlayScene::showBoundingBoxes)
+        painter->drawRect(boundingRect());
     if (hidden && ! broken) return;
     QPointF pos = boundingRect().topLeft();
     painter->drawPixmap(
@@ -31,19 +34,15 @@ void SurpriseBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 }
 
 void SurpriseBlock::hit(GameObject *what, Direction fromDir) {
-    if (fromDir == TOP) {
-        qDebug() << "block hit";
-    }
-}
-
-void SurpriseBlock::collide(Player *player) {
-    if (broken == false) {
-        if (hidden) {
-            collidable = true;
+    Player* player = dynamic_cast<Player*>(what);
+    if (player != nullptr && fromDir == BOTTOM) {
+        if (broken == false) {
+            if (hidden) {
+                collidable = true;
+            }
+            this->brokenOffset = 16;
+            this->broken = true;
+            this->scene()->update(boundingRect());
         }
-        qDebug() << "collide";
-        this->brokenOffset = 16;
-        this->broken = true;
-        this->scene()->update(boundingRect());
     }
 }

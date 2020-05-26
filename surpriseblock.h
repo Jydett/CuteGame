@@ -11,10 +11,9 @@ public:
     SurpriseBlock(bool hidden);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setPosition(int x, int y);
-    void hit(GameObject *what, Direction fromDir) override;
-    enum { Type = UserType + 11 };
+    enum { Type = BLOCK_TYPE };
     int type() const override { return Type; };
-    void collide(Player* player);
+    void hit(GameObject *what, Direction fromDir) override;
 
 private:
     QPixmap textureData;

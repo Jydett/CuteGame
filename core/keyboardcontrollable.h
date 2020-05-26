@@ -9,7 +9,6 @@ public:
     KeyBoardControllable();
 
 protected:
-    bool handleInput() override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
     virtual bool onJump() {return true;};

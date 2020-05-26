@@ -1,6 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
+#include "../core/keyboardstatus.h"
 #include <QGraphicsView>
 
 class LevelView : public QGraphicsView {
@@ -12,10 +13,15 @@ public:
 //    QMediaPlaylist *bgm;
 
     LevelView();
+    ~LevelView();
     void sceneSet(QGraphicsScene * scene);
+    KeyBoardStatus* keyboardStatus;
 
 protected:
-    virtual void wheelEvent(QWheelEvent *e);
+    void wheelEvent(QWheelEvent *e) override;
+    bool focusNextPrevChild(bool next) override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 };
 
 #endif // VIEW_H

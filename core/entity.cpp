@@ -9,6 +9,7 @@
 
 Entity::Entity()
 {
+    this->collidable = false;
     this->dying = false;
     this->dead = false;
     this->wasOnGroundLastFrame = false;
@@ -51,11 +52,11 @@ void Entity::generateCollisionBox() {
 }
 
 //collision detection
-void Entity::advance(int phase) {
-    if (! phase)
-        return;
+void Entity::update() {
 
     static const int MASK_SIZE = 10;
+
+    QPointF pos = this->pos();
 
     qreal playerX = x();
     qreal playerY = y();
@@ -197,10 +198,10 @@ void Entity::advance(int phase) {
                     // upwards, not downwards. This is really important! If we don't do this, we can
                     // make corrections in the wrong direction, causing the player to magically jump
                     // up to platforms or stick to ceilings.
-                    if (dir == 0 && nextMoveY >= 0) continue; else
-                    if (dir == 1 && nextMoveY <= 0) continue; else
-                    if (dir == 2 && nextMoveX >= 0) continue; else
-                    if (dir == 3 && nextMoveX <= 0) continue;
+                    if (dir == 0 && nextMoveY > 0) continue;
+                    if (dir == 1 && nextMoveY < 0) continue;
+                    if (dir == 2 && nextMoveX > 0) continue;
+                    if (dir == 3 && nextMoveX < 0) continue;
 
                     projectedMoveX = (dir >= 2 ? nextMoveX : 0);
                     projectedMoveY = (dir <  2 ? nextMoveY : 0);
@@ -280,6 +281,7 @@ void Entity::advance(int phase) {
             speedX = 0;
         }
     }
+
 
     //FIXME un peu dégeu ca non ? xD @Jydet
     if (speedY == 0) {

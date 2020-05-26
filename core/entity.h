@@ -11,6 +11,7 @@ public:
     virtual bool handleInput() { return false; };
     enum { Type = ENTITY_TYPE };
     int type() const override { return Type; };
+    void setPosition(int x, int y);
 
 private:
     void accelerate(qreal accelX, qreal accelY);
@@ -48,7 +49,8 @@ protected:
     //collision flags
     bool contactX = true, contactYbottom = true, contactYtop = true;
 
-    void advance(int step) override;
+    inline void advance(int step) override {if (!step) update();};
+    virtual void update();
     void generateCollisionBox();
 
     //inline ?

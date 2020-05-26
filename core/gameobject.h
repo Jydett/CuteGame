@@ -22,6 +22,14 @@ public:
         return pps * sec_elapsed;
     }
 
+    Direction oposite(Direction dir) const {
+        switch (dir) {
+            case SIDE: return SIDE;
+            case TOP: return BOTTOM;
+            case BOTTOM: return TOP;
+        }
+    }
+
     virtual void hit(GameObject* what, Direction fromDir) {};
 protected:
     bool collidable;

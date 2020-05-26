@@ -3,5 +3,8 @@
         <file>images/brick.png</file>
         <file>images/surprise_block.png</file>
         <file>images/player.png</file>
+        <file>images/coin.png</file>
+        <file>images/covid-enemies.png</file>
+        <file>images/virus.png</file>
     </qresource>
 </RCC>

@@ -1,16 +1,16 @@
-#include "keyboardcontrollable.h"
-#include <QDebug>
-#include <QKeyEvent>
+#include "keyboardstatus.h"
 #include "../scene/playscene.h"
+#include <QDebug>
 
-KeyBoardControllable::KeyBoardControllable() {
-    leftKeyPressed = false;
-    rightKeyPressed = false;
-    spaceKeyPressed = false;
-    downKeyPressed = false;
+KeyBoardStatus::KeyBoardStatus()
+{
+    this->leftKeyPressed = false;
+    this->rightKeyPressed = false;
+    this->downKeyPressed = false;
+    this->spaceKeyPressed =false;
 }
 
-void KeyBoardControllable::keyPressEvent(QKeyEvent *event)
+void KeyBoardStatus::keyPressEvent(QKeyEvent *event)
 {
     if(event->isAutoRepeat()) {
         event->ignore();
@@ -31,7 +31,7 @@ void KeyBoardControllable::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void KeyBoardControllable::keyReleaseEvent(QKeyEvent *event)
+void KeyBoardStatus::keyReleaseEvent(QKeyEvent *event)
 {
     if(event->isAutoRepeat()) {
         event->ignore();

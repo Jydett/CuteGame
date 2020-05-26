@@ -10,6 +10,11 @@ LevelView::LevelView()
     this->setRenderHints(QPainter::SmoothPixmapTransform);
     this->setSceneRect(0, 0, 10000, 225);
     this->scale(1.4, 1.4);
+    this->keyboardStatus = new KeyBoardStatus();
+}
+
+LevelView::~LevelView() {
+    delete keyboardStatus;
 }
 
 void LevelView::sceneSet(QGraphicsScene *scene) {
@@ -24,4 +29,17 @@ void LevelView::wheelEvent(QWheelEvent *e)
         scale(1.1, 1.1);
     else
         scale(1/1.1, 1/1.1);
+}
+
+
+bool LevelView::focusNextPrevChild(bool next) {
+    return false;
+}
+
+void LevelView::keyPressEvent(QKeyEvent *event) {
+    keyboardStatus->keyPressEvent(event);
+}
+
+void LevelView::keyReleaseEvent(QKeyEvent *event) {
+    keyboardStatus->keyReleaseEvent(event);
 }

@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     //add a view
-    QGraphicsView * view = new LevelView;
+    LevelView * view = new LevelView;
 //    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 
     PlayScene * scene = new PlayScene();
@@ -26,12 +26,11 @@ int main(int argc, char *argv[]) {
 
     //add the item to the scene
     //make the player focusable -> mendatory to get key events
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
     scene->addItem(player);
 
-    view->centerOn(0, 0);
+    view->centerOn(200, 400);
 
+    view->setFocusPolicy(Qt::FocusPolicy::StrongFocus);
     view->show();
 
     QTimer timer;

@@ -3,6 +3,11 @@
 #include "../antigravityfield.h"
 #include "../core/reapeatabletextureditem.h"
 #include "../surpriseblock.h"
+#include "../core/coin.h"
+#include "../player/ennemy.h"
+
+
+bool PlayScene::showBoundingBoxes = false;
 
 PlayScene::PlayScene()
 {
@@ -36,9 +41,18 @@ PlayScene::PlayScene()
 
     const int TEXTURE_SIZE = 16;
 
-    ReapeatableTexturedItem * petit = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);
-    petit->setPosition(230, 600 - 16);
-    this->addItem(petit);
+//    ReapeatableTexturedItem * petit = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);
+//    petit->setPosition(230, 600 - 16);
+//    this->addItem(petit);
+
+    ReapeatableTexturedItem * wall = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 6, TEXTURE_SIZE);
+    wall->setPosition(0, 500 + 16);
+    this->addItem(wall);
+
+
+    ReapeatableTexturedItem * wall2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 6, TEXTURE_SIZE);
+    wall2->setPosition(600, 500 + 16);
+    this->addItem(wall2);
 
     ReapeatableTexturedItem * ground1 = new ReapeatableTexturedItem(":/assets/images/brick.png", 200, 1, TEXTURE_SIZE);
     ground1->setPosition(0, 600);
@@ -48,9 +62,13 @@ PlayScene::PlayScene()
     ground2->setPosition(0, 500);
     this->addItem(ground2);
 
-    ReapeatableTexturedItem * mur = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 3, TEXTURE_SIZE);
-    mur->setPosition(260, 600 - 48);
-    this->addItem(mur);
+//    ReapeatableTexturedItem * mur = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 3, TEXTURE_SIZE);
+//    mur->setPosition(260, 600 - 48);
+//    this->addItem(mur);
+
+    Ennemy * ennemy = new Ennemy();
+    ennemy->setPosition(280, 600 - 100);
+    this->addItem(ennemy);
 
 //    ReapeatableTexturedItem * mur2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 2, TEXTURE_SIZE);
 //    mur2->setPosition(300, 600 - 32);
@@ -60,19 +78,21 @@ PlayScene::PlayScene()
 //    ladder->setRect(550, 100, 100, 20);
 //    this->addItem(ladder);
 
-    for (auto i = 0; i < 20; i++) {
-        SurpriseBlock * block = new SurpriseBlock(i % 2 == 0);
-        block->setPosition(300 + (i * 32), 490);
-        this->addItem(block);
+    for (auto i = 0; i < 5; i++) {
+//        SurpriseBlock * block = new SurpriseBlock(i % 2 == 1);
+//        block->setPosition(300 + (i * 25), 600 - 32 - i * 2);
+//        this->addItem(block);
+
+        Coin * coin = new Coin();
+        coin->setPosition(300 + (i * 32), 600 - 16);
+        this->addItem(coin);
     }
 
-    for (auto i = 0; i < 19; i++) {
+    for (auto i = 0; i < 5; i++) {
         SurpriseBlock * block = new SurpriseBlock(i % 2 == 1);
-        block->setPosition(316 + (i * 32), 420);
+        block->setPosition(316 + (i * 32), 500);
         this->addItem(block);
     }
-
-
 
 //    ReapeatableTexturedItem * myFirstBlock = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);
 //    myFirstBlock->setPos(-400, 150);
