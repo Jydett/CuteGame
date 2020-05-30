@@ -4,7 +4,11 @@
         <file>images/surprise_block.png</file>
         <file>images/player.png</file>
         <file>images/coin.png</file>
-        <file>images/covid-enemies.png</file>
         <file>images/virus.png</file>
+        <file>images/mask.png</file>
+        <file>images/crachat.png</file>
+        <file>images/bg.png</file>
+        <file>images/soap.png</file>
+        <file>images/soap_item.png</file>
     </qresource>
 </RCC>

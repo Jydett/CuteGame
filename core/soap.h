@@ -1,26 +1,25 @@
-#ifndef ENNEMY_H
-#define ENNEMY_H
-#include "../core/entity.h"
+#ifndef SPIT_H
+#define SPIT_H
+#include "entity.h"
 
-class Ennemy : public Entity
+
+class Soap : public Entity
 {
 public:
-    Ennemy();
-    void hit(GameObject* what, Direction fromDir) override;
+    Soap(bool direction);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void hit(GameObject* what, Direction fromDir) override;
     void setPosition(int x, int y) override;
-    void hurt() override;
-    void updateLogic() override;
 
 protected:
     bool handleInput() override;
-
+    void updateLogic() override;
 private:
+    QGraphicsTextItem * debugIfo;
     QPixmap textureData;
-    int direction;
-    int wallHit;
     int annimationTimer;
     int annimationIndex;
+    int direction;
 };
 
-#endif // ENNEMY_H
+#endif // SPIT_H

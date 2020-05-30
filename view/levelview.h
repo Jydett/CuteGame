@@ -11,15 +11,14 @@ signals:
 
 public:
 //    QMediaPlaylist *bgm;
-
     LevelView();
     ~LevelView();
     void sceneSet(QGraphicsScene * scene);
     KeyBoardStatus* keyboardStatus;
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 
 protected:
     void wheelEvent(QWheelEvent *e) override;
-    bool focusNextPrevChild(bool next) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 };

@@ -17,13 +17,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     antigravityfield.cpp \
-    core/coin.cpp \
     core/entity.cpp \
     core/gameobject.cpp \
     core/inert.cpp \
-    core/keyboardcontrollable.cpp \
+    core/keyboardstatus.cpp \
+    core/mask.cpp \
     core/reapeatabletextureditem.cpp \
+    core/roundplateform.cpp \
+    core/soap.cpp \
+    core/soap_item.cpp \
+    core/spit.cpp \
     main.cpp \
+    player/ennemy.cpp \
     player/player.cpp \
     rotatingplateform.cpp \
     scene/playscene.cpp \
@@ -33,12 +38,17 @@ SOURCES += \
 HEADERS += \
     antigravityfield.h \
     core/Type.h \
-    core/coin.h \
     core/entity.h \
     core/gameobject.h \
     core/inert.h \
-    core/keyboardcontrollable.h \
+    core/keyboardstatus.h \
+    core/mask.h \
     core/reapeatabletextureditem.h \
+    core/roundplateform.h \
+    core/soap.h \
+    core/soap_item.h \
+    core/spit.h \
+    player/ennemy.h \
     player/player.h \
     rotatingplateform.h \
     scene/playscene.h \

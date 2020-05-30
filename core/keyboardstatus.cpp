@@ -27,6 +27,8 @@ void KeyBoardStatus::keyPressEvent(QKeyEvent *event)
         } else if (event->key() == Qt::Key_B) {
             qDebug() << "Key pressed event " << event->key();
             PlayScene::showBoundingBoxes = ! PlayScene::showBoundingBoxes;
+        } else if (event->key() == Qt::Key_Shift) {
+            shiftKeyPressed = true;
         }
     }
 }
@@ -44,6 +46,8 @@ void KeyBoardStatus::keyReleaseEvent(QKeyEvent *event)
             spaceKeyPressed = false;
         } else if (event->key() == Qt::Key_Down) {
             downKeyPressed = false;
+        } else if (event->key() == Qt::Key_Shift) {
+            shiftKeyPressed = false;
         }
     }
 }

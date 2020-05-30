@@ -4,9 +4,12 @@
 #include "../surpriseblock.h"
 #include "../scene/playscene.h"
 #include "../core/keyboardstatus.h"
+#include "../core/soap.h"
 #include <QApplication>
 
 #define SPEED 3
+
+#define DEBUG
 
 Player::Player(LevelView* view)
 {
@@ -25,33 +28,43 @@ Player::Player(LevelView* view)
      //TODO gerer erreur
     this->downKeyPressedLastFrame = false;
     this->isCrouching = false;
+
+    this->soapBar = new QGraphicsRectItem(this);
+    soapBar->setRect(0, - 10, 16, 3);
+    soapBar->setBrush(QColor(0xFF, 0xae, 0xc8));
+
+    this->soapCount = 0;
+
+    isMasked = false;
+    shootTimer = 0;
+
+    //turn off gravity
+//    this->accY = 0;
 }
 
-void Player::update() {
-    Entity::update();
-    qDebug() << "focussed" << QApplication::focusWidget();
+QRectF Player::boundingRect() const {
+    return QRectF(0, 0, 16, 32);
 }
 
-void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-    QRectF rect = this->rect();
-    int xIndex = 0, yIndex = 0;
-    int actualSpriteHeight;
+void Player::updateLogic() {
+    Entity::updateLogic();
+    xIndex = 0, yIndex = 0;
     if (isCrouching) {
-        actualSpriteHeight = 16;
-        yIndex = spriteHeight + 1 + spriteHeight + 2;
+        spriteHeight = 16;
+        yIndex = 32 + 1 + 32 + 2;
         xIndex = lastDirection * spriteWidth;
     } else {
         annimationTimer++;
-        if (annimationTimer > 300) {
+        if (annimationTimer > 6) {
             annimationIndex = ((annimationIndex + 1) % 3);
             annimationTimer = 0;
         }
 
-        actualSpriteHeight = spriteHeight;
+        spriteHeight = 32;
         if (speedX > 0) {
-            xIndex = (annimationIndex + 1) * spriteWidth;
+            xIndex = ((annimationIndex + 1) % 3) * spriteWidth;
         } else if (speedX < 0) {
-            xIndex = (annimationIndex + 1) * spriteWidth;
+            xIndex = ((annimationIndex + 1) % 3) * spriteWidth;
             yIndex = spriteHeight + 1;
         } else {
             annimationIndex = 0;
@@ -59,26 +72,36 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
         }
     }
 
-    if (speedX > 0) {
-        lastDirection = 0;
-    } else if (speedX < 0) {
-        lastDirection = 1;
+    if (isMasked) {
+        yIndex += 84;
     }
 
-    painter->drawPixmap(rect, textureData, QRect(xIndex, yIndex, spriteWidth, actualSpriteHeight));
+    if (shootTimer > 50) {
+        xIndex = 64;
+    }
 
-    if (PlayScene::showBoundingBoxes)
-        painter->drawRect(rect.toAlignedRect());
+    if (shootTimer > 0) {
+        shootTimer--;
+    }
 
-    #ifdef DEBUG
+    if (soapCount > 0) {
+        soapBar->setVisible(true);
+        QRectF old = soapBar->rect();
+        soapBar->setRect(old.x(), old.y(), soapCount * 3, 3);
+    } else {
+        soapBar->setVisible(false);
+    }
 
-//        painter->setBrush(QBrush(Qt::white));
-    debugIfo->setPlainText(
-////            "x:" + QString::number(x()) + " y:" + QString::number(y()) +
+//    scene()->update(boundingRect());
+
+//    debugIfo->setPlainText(
+//                QString::number(shootTimer) +
+//                "lastDirection " + QString::number(lastDirection) +
+//            "\nx:" + QString::number(x()) + " y:" + QString::number(y()) +
 //    //       "\nsx:" + QString::number(speedX) + " sy:" + QString::number(speedY) +
 //    //       "\nsy:" + QString::number(accX) + " ay:" + QString::number(accY) +
-                "\nannimationTimer" + QString::number(annimationTimer) +
-                "\nannimationIndex" + QString::number(annimationIndex) +
+//                "\nannimationTimer" + QString::number(annimationTimer) +
+//                "\nannimationIndex" + QString::number(annimationIndex) +
 //           "\n jumping ? " + QString::number(jumping) +
 //            " requested ? " + QString::number(jumpRequested) +
 //           " \n wasOnGround " + QString::number(wasOnGroundLastFrame) +
@@ -86,7 +109,33 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 //           "  spaceKeyPressed " + QString::number(spaceKeyPressed) +
 //    //                       "\n bottom " + QString::number(contactYbottom) + " top " + QString::number(contactYtop)
 //    //                       "\n scroll " + scroll->value()
-       "");
+//       "");
+}
+
+void Player::shoot() {
+    if (soapCount > 0 && shootTimer == 0 && ! isCrouching) {
+        soapCount--;
+        shootTimer = 60;
+
+        Soap* soap = new Soap(! (bool)lastDirection);
+        soap->setPosition(this->x(), this->y() + 10);
+        this->scene()->addItem(dynamic_cast<QGraphicsItem *>(soap));
+    }
+}
+
+void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    QRectF rect = this->rect();
+
+    painter->drawPixmap(rect, textureData, QRect(xIndex, yIndex, spriteWidth, spriteHeight));
+
+    if (PlayScene::showBoundingBoxes)
+        painter->drawRect(rect.toAlignedRect());
+
+    #ifdef DEBUG
+
+//        painter->setBrush(QBrush(Qt::white));
+
+
 //         painter->setBrush(QBrush(Qt::red));
 //        for (auto i = 0; i < 8; i++) {
 //            painter->drawPoint(collisionPoints[i]);
@@ -103,6 +152,11 @@ void Player::hit(GameObject* what, Direction fromDir) {
     what->hit(this, oposite(fromDir));
 }
 
+void Player::setPosition(int x, int y)
+{
+    //TODO
+}
+
 //bool Player::onJump() {
 //    //son
 //    return true;
@@ -111,14 +165,18 @@ void Player::hit(GameObject* what, Direction fromDir) {
 bool Player::handleInput() {
     bool moveRequested = false;
 
-    bool debugCheat = true;
-
     KeyBoardStatus* kbs = view->keyboardStatus;
 
     isCrouching = kbs->downKeyPressed;
 
-    if (debugCheat || ! kbs->downKeyPressed) {
-        if (kbs->leftKeyPressed) {
+    if (kbs->leftKeyPressed) {
+        lastDirection = 1;
+     }
+     if (kbs->rightKeyPressed) {
+         lastDirection = 0;
+     }
+    if (! (isCrouching && wasOnGroundLastFrame)) {
+       if (kbs->leftKeyPressed) {
             speedX -= linearMovement(accX);
             moveRequested = true;
         }
@@ -128,43 +186,48 @@ bool Player::handleInput() {
         }
     }
 
-    //TODO deplacer ca dans la fonction update !!!!!
-    if (kbs->downKeyPressed != downKeyPressedLastFrame) {
-        qDebug() << "downKey status changed " << kbs->downKeyPressed << " " << rect();
-
-        // ne marche pas ? prepareGeometryChange();
-        if (kbs->downKeyPressed) {
+    if (isCrouching != downKeyPressedLastFrame) {
+        if (isCrouching) {
             setY(y() + 16);
             setRect(0, 0, 16, 16);
         } else {
-            //TODO faire une requete pour se lever car pas possible dans tout les cas
             setY(y() - 16);
             setRect(0, 0, 16, 32);
         }
         //TODO optimisation passer d'une bb à l'autre sans la regenerer
         generateCollisionBox();
-        QGraphicsRectItem::update(rect());
     }
+    //TODO pas refresh a chaque fois
+    QGraphicsRectItem::update(rect());
     downKeyPressedLastFrame = kbs->downKeyPressed;
 
     if (kbs->spaceKeyPressed && wasOnGroundLastFrame && !jumping && !jumpRequested) {
-        if (true /*onJump()*/) {
+        if (true /* TODO onJump()*/) {
             jumping = true;
             jumpRequested = true;
             speedY = -jumpForce;
         }
-    } else if (kbs->spaceKeyPressed) {
-        #ifdef DEBUG
-            qDebug() << "Jump denied reason : "
-                    << (! spaceKeyPressed ? "spaceKeyPressed" : "")
-                    << (! wasOnGroundLastFrame ? "wasOnGroundLastFrame" : "")
-                    << (jumping ? "jumping" : "")
-                    << (jumpRequested ? "jumpRequested" : "");
-        #endif
     }
 
     if (! kbs->spaceKeyPressed) {
         jumpRequested = false;
     }
+
+    if (kbs->shiftKeyPressed) {
+        shoot();
+    }
+
     return moveRequested;
+}
+
+void Player::collectSoap() {
+    soapCount++;
+}
+
+void Player::hurt() {
+    if (isMasked) {
+        isMasked = false;
+    } else {
+        //TODO game over
+    }
 }

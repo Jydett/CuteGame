@@ -12,6 +12,7 @@ enum Direction {
 class GameObject {
 public:
     GameObject();
+    virtual ~GameObject() {};
 
     inline bool isCollidable() {
         return collidable;
@@ -28,11 +29,23 @@ public:
             case TOP: return BOTTOM;
             case BOTTOM: return TOP;
         }
+        return SIDE;
     }
+
+    virtual void updateLogic() {
+        if (toRemove) {
+            remove();
+            delete this;
+        }
+    }
+
+    virtual void remove() = 0;
+    virtual void setPosition(int x, int y) = 0;
 
     virtual void hit(GameObject* what, Direction fromDir) {};
 protected:
     bool collidable;
+    bool toRemove;
 };
 
 #endif // GAMEOBJECT_H

@@ -1,5 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
+#include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include "gameobject.h"
 #include "Type.h"
@@ -11,7 +12,7 @@ public:
     virtual bool handleInput() { return false; };
     enum { Type = ENTITY_TYPE };
     int type() const override { return Type; };
-    void setPosition(int x, int y);
+    virtual void hurt() {};
 
 private:
     void accelerate(qreal accelX, qreal accelY);
@@ -49,11 +50,21 @@ protected:
     //collision flags
     bool contactX = true, contactYbottom = true, contactYtop = true;
 
-    inline void advance(int step) override {if (!step) update();};
-    virtual void update();
+    inline void advance(int step) override {
+        if (! step) {
+            updateLogic();
+            GameObject::updateLogic();
+        }
+    };
+
+    void remove() override {
+        scene()->removeItem(this);
+    }
+
+    virtual void updateLogic() override;
     void generateCollisionBox();
 
-    //inline ?
+    //FIXME inline ?
     bool objectIsNotInCollisionPoints(QGraphicsItem * boundObject, int dir, qreal projectedMoveX, qreal projectedMoveY);
 };
 

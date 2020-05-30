@@ -11,6 +11,7 @@ public:
     bool leftKeyPressed;
     bool spaceKeyPressed;
     bool downKeyPressed;
+    bool shiftKeyPressed;
 
 
     void keyPressEvent(QKeyEvent* event);

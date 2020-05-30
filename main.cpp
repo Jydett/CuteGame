@@ -29,8 +29,6 @@ int main(int argc, char *argv[]) {
     scene->addItem(player);
 
     view->centerOn(200, 400);
-
-    view->setFocusPolicy(Qt::FocusPolicy::StrongFocus);
     view->show();
 
     QTimer timer;

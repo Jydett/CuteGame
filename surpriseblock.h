@@ -8,13 +8,16 @@
 class SurpriseBlock : public Inert, public QGraphicsRectItem
 {
 public:
-    SurpriseBlock(bool hidden);
+    SurpriseBlock(bool hidden, GameObject* toSpawn);
+    ~SurpriseBlock();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    void setPosition(int x, int y);
+    void setPosition(int x, int y) override;
     enum { Type = BLOCK_TYPE };
     int type() const override { return Type; };
     void hit(GameObject *what, Direction fromDir) override;
-
+    void remove() override {
+        scene()->removeItem(this);
+    }
 private:
     QPixmap textureData;
     int size;
@@ -22,6 +25,7 @@ private:
     bool deleteOnbreak;
     int brokenOffset;
     bool hidden;
+    GameObject* toSpawn;
 };
 
 #endif // SURPRISEBLOCK_H

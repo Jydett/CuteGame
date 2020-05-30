@@ -52,11 +52,9 @@ void Entity::generateCollisionBox() {
 }
 
 //collision detection
-void Entity::update() {
+void Entity::updateLogic() {
 
     static const int MASK_SIZE = 10;
-
-    QPointF pos = this->pos();
 
     qreal playerX = x();
     qreal playerY = y();
@@ -119,12 +117,15 @@ void Entity::update() {
                 continue;
             }
 
-            GameObject * gameObject = nullptr;
+            GameObject * gameObject = dynamic_cast<GameObject*>(boundObject);
             bool nonCollidableHit = false;
             bool notCollidable = false;
-            if (type > (UserType + 10)) {
-                gameObject = dynamic_cast<GameObject*>(boundObject);
+            if (gameObject != nullptr) {
                 notCollidable = (gameObject->isCollidable() == false);
+            } else {
+                //FIXME on collide plus les non gameobject
+                //si on garde ca, go optimiser les if d'en dessous
+                continue;
             }
 
             // ================================================================================
@@ -255,13 +256,6 @@ void Entity::update() {
                 if (contactYtop) contactYtop = false;
                 if (contactYbottom) contactYbottom = false;
             }
-
-            // The player can't continue jumping if we hit the side of something, must fall instead
-            // Without this, a player hitting a wall during a jump will continue trying to travel
-            // upwards
-            if (contactX && contactYtop && speedY < 0) {
-                speedY = nextMoveY = 0;
-            }
         }
 
         // If a contact has been detected, apply the re-calculated movement vector
@@ -302,6 +296,10 @@ void Entity::update() {
         playerX = 0;
     }
 
+    if (playerY > 720) {
+       toRemove = true;
+    }
+
     setPos(playerX, playerY);
     bool moveRequested = handleInput();
 
@@ -330,12 +328,13 @@ void Entity::update() {
 bool Entity::objectIsNotInCollisionPoints(QGraphicsItem * boundObject, int dir, qreal projectedMoveX, qreal projectedMoveY) {
     qreal playerX = x();
     qreal playerY = y();
-    return ! boundObject->contains(QPointF(
-               collisionPoints[dir * 2].x() + playerX + projectedMoveX,
-               collisionPoints[dir * 2].y() + playerY + projectedMoveY
-                               )) &&
-         ! boundObject->contains(QPointF(
-               collisionPoints[dir * 2 + 1].x() + playerX + projectedMoveX,
-               collisionPoints[dir * 2 + 1].y() + playerY + projectedMoveY
-                               ));
+
+    return ! boundObject->contains(boundObject->mapFromScene(QPointF(
+             collisionPoints[dir * 2].x() + playerX + projectedMoveX,
+            collisionPoints[dir * 2].y() + playerY + projectedMoveY
+            ))) &&
+         ! boundObject->contains(mapFromScene(QPointF(
+              collisionPoints[dir * 2 + 1].x() + playerX + projectedMoveX,
+              collisionPoints[dir * 2 + 1].y() + playerY + projectedMoveY
+            )));
 }

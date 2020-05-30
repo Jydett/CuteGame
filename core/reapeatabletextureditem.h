@@ -2,6 +2,7 @@
 #define REAPEATABLETEXTUREDITEM_H
 
 #include "inert.h"
+#include <QGraphicsScene>
 #include <QGraphicsRectItem>
 
 
@@ -13,11 +14,15 @@ public:
     void nextFrame();
     enum { Type = BLOCK_TYPE };
     int type() const override { return Type; };
-    void setPosition(int x, int y);
+    void setPosition(int x, int y) override;
+    void setWidth(int width);
+    int width;
+    void remove() override {
+        scene()->removeItem(this);
+    }
 private:
     int maxFrame;
     int currentFrame;
-    int width;
     int height;
     int textureSize;
     QPixmap textureData;

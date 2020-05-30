@@ -4,8 +4,9 @@
 #include <QDebug>
 #include "scene/playscene.h"
 
-SurpriseBlock::SurpriseBlock(bool hidden)
+SurpriseBlock::SurpriseBlock(bool hidden, GameObject* toSpawn)
 {
+    this->toSpawn = toSpawn;
     this->collidable = true;
     this->hidden = hidden;
     this->broken = false;
@@ -16,21 +17,32 @@ SurpriseBlock::SurpriseBlock(bool hidden)
     this->textureData = QPixmap(":/assets/images/surprise_block.png");
 }
 
+SurpriseBlock::~SurpriseBlock() {
+    if (broken == false && toSpawn != nullptr) {
+        delete toSpawn;
+    }
+}
+
 void SurpriseBlock::setPosition(int x, int y) {
-    setRect(x, y, size - 1, size - 1);
+    setRect(x, y, size, size);
+    if (toSpawn != nullptr) {
+        toSpawn->setPosition(x, y - 16);
+    }
 }
 
 void SurpriseBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
 
-    if (PlayScene::showBoundingBoxes)
-        painter->drawRect(boundingRect());
-    if (hidden && ! broken) return;
-    QPointF pos = boundingRect().topLeft();
-    painter->drawPixmap(
-        QPointF(pos.x(), pos.y()),
-        textureData,
-        QRectF(brokenOffset, 0, size, size)
-    );
+    if (PlayScene::showBoundingBoxes) {
+        painter->drawRect(rect().toAlignedRect());
+    } else {
+        if (hidden && ! broken) return;
+        QPointF pos = boundingRect().topLeft();
+        painter->drawPixmap(
+            QPointF(pos.x(), pos.y()),
+            textureData,
+            QRectF(brokenOffset, 0, size, size)
+        );
+    }
 }
 
 void SurpriseBlock::hit(GameObject *what, Direction fromDir) {
@@ -42,6 +54,9 @@ void SurpriseBlock::hit(GameObject *what, Direction fromDir) {
             }
             this->brokenOffset = 16;
             this->broken = true;
+            if (toSpawn != nullptr) {
+                this->scene()->addItem(dynamic_cast<QGraphicsItem *>(toSpawn));
+            }
             this->scene()->update(boundingRect());
         }
     }

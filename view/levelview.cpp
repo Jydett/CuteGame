@@ -22,6 +22,11 @@ void LevelView::sceneSet(QGraphicsScene *scene) {
     emit sceneChanged();
 }
 
+void LevelView::drawForeground(QPainter *painter, const QRectF &rect)
+{
+    painter->drawText(mapToScene(30, 30), "Score : 0");
+}
+
 void LevelView::wheelEvent(QWheelEvent *e)
 {
     //TODO max zoom ?
@@ -29,11 +34,6 @@ void LevelView::wheelEvent(QWheelEvent *e)
         scale(1.1, 1.1);
     else
         scale(1/1.1, 1/1.1);
-}
-
-
-bool LevelView::focusNextPrevChild(bool next) {
-    return false;
 }
 
 void LevelView::keyPressEvent(QKeyEvent *event) {

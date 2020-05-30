@@ -1,20 +1,20 @@
-#include "coin.h"
+#include "soap_item.h"
 #include "../player/player.h"
 #include <QPainter>
 
-Coin::Coin()
+SoapItem::SoapItem()
 {
     collidable = false;
     collected = false;
     setRect(0, 0, 12, 16);
-    this->textureData = QPixmap(":/assets/images/coin.png");
+    this->textureData = QPixmap(":/assets/images/soap_item.png");
 }
 
-void Coin::setPosition(int x, int y) {
+void SoapItem::setPosition(int x, int y) {
     setRect(x, y, 12 - 1, 16 - 1);
 }
 
-void Coin::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void SoapItem::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 //    painter->drawRect(rect().toAlignedRect());
     QPointF pos = boundingRect().topLeft();
@@ -25,15 +25,13 @@ void Coin::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWi
     );
 }
 
-void Coin::hit(GameObject *what, Direction fromDir)
+void SoapItem::hit(GameObject *what, Direction fromDir)
 {
     Player* player = dynamic_cast<Player*>(what);
     if (! collected && player != nullptr) {
-        qDebug() << "Argent ramassé";
+        player->collectSoap();
         collected = true;
-        scene()->removeItem(this);
-        //FIXME fuite mémoire
-//        delete this;
+        toRemove = true;
         return;
     }
 }

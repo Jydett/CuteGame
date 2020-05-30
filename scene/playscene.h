@@ -9,6 +9,7 @@ class PlayScene : public QGraphicsScene
     Q_OBJECT
 public:
     PlayScene();
+    void loadLevel(const QJsonObject& data);
 
     static bool showBoundingBoxes;
 };
