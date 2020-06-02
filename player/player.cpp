@@ -33,7 +33,7 @@ Player::Player(LevelView* view)
     soapBar->setRect(0, - 10, 16, 3);
     soapBar->setBrush(QColor(0xFF, 0xae, 0xc8));
 
-    this->soapCount = 0;
+    this->soapCount = 20;
 
     isMasked = false;
     shootTimer = 0;
@@ -42,11 +42,14 @@ Player::Player(LevelView* view)
 //    this->accY = 0;
 }
 
-QRectF Player::boundingRect() const {
-    return QRectF(0, 0, 16, 32);
-}
-
 void Player::updateLogic() {
+    if (dead) {
+        dead = false;
+        setPosition(0, 0);
+        speedX = 0;
+        speedY = 0;
+        isMasked = false;
+    }
     Entity::updateLogic();
     xIndex = 0, yIndex = 0;
     if (isCrouching) {
@@ -154,7 +157,9 @@ void Player::hit(GameObject* what, Direction fromDir) {
 
 void Player::setPosition(int x, int y)
 {
-    //TODO
+    movementUpdated(this->x() - x, this->y() - y);
+    setX(x); setY(y);
+    setRect(x, y, 16, 32);
 }
 
 //bool Player::onJump() {

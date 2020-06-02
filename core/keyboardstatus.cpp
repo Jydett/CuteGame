@@ -8,6 +8,7 @@ KeyBoardStatus::KeyBoardStatus()
     this->rightKeyPressed = false;
     this->downKeyPressed = false;
     this->spaceKeyPressed =false;
+    this->shiftKeyPressed =false;
 }
 
 void KeyBoardStatus::keyPressEvent(QKeyEvent *event)

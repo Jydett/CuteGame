@@ -36,18 +36,22 @@ void Ennemy::hit(GameObject* what, Direction fromDir) {
 }
 
 void Ennemy::updateLogic() {
-    Entity::updateLogic();
-    annimationTimer++;
-    if (annimationTimer > 6) {
-        if (direction == 1) {
-            annimationIndex = ((annimationIndex + 1) % 4);
-        } else {
-            annimationIndex = annimationIndex - 1;
-            if (annimationIndex < 0) {
-                annimationIndex = 3;
+    if (dead) {
+        toRemove = true;
+    } else {
+        Entity::updateLogic();
+        annimationTimer++;
+        if (annimationTimer > 6) {
+            if (direction == 1) {
+                annimationIndex = ((annimationIndex + 1) % 4);
+            } else {
+                annimationIndex = annimationIndex - 1;
+                if (annimationIndex < 0) {
+                    annimationIndex = 3;
+                }
             }
+            annimationTimer = 0;
         }
-        annimationTimer = 0;
     }
 }
 

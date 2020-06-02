@@ -19,7 +19,6 @@ protected:
 //    bool onJump() override;//FIXME
     bool handleInput() override;
     void updateLogic() override;
-    QRectF boundingRect() const override;
 
 private:
     QPixmap textureData;

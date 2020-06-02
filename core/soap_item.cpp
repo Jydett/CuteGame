@@ -1,6 +1,7 @@
 #include "soap_item.h"
 #include "../player/player.h"
 #include <QPainter>
+#include "../scene/playscene.h"
 
 SoapItem::SoapItem()
 {
@@ -11,18 +12,19 @@ SoapItem::SoapItem()
 }
 
 void SoapItem::setPosition(int x, int y) {
-    setRect(x, y, 12 - 1, 16 - 1);
+    setRect(x, y, 12, 16);
 }
 
 void SoapItem::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    painter->drawRect(rect().toAlignedRect());
-    QPointF pos = boundingRect().topLeft();
+    QPointF pos = rect().topLeft();
     painter->drawPixmap(
         QPointF(pos.x(), pos.y()),
         textureData,
         QRectF(0, 0, 12, 16)
     );
+    if (PlayScene::showBoundingBoxes)
+        painter->drawRect(rect());
 }
 
 void SoapItem::hit(GameObject *what, Direction fromDir)

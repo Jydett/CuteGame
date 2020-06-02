@@ -123,7 +123,7 @@ PlayScene::PlayScene()
 //    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
 //    this->addItem(myFourthBlock);
 
-    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveau1.json"));
+    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveauF.json"));
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
     } else {
@@ -148,13 +148,15 @@ PlayScene::PlayScene()
 #define SURPRISE_MUSH 3
 #define SURPRISE_MASK 4
 #define SURPRISE_UKN 5
-#define COIN 6
+#define SOAP 35
 #define VIRUS 7
+#define BRICK_DARK 8
 #define BRICK_COIN 27
 #define SURPRISE_INVI 28
 #define SURPRISE_MUSH_INVI 29
 #define SURPRISE_MASK_INVI 30
 #define SURPRISE_UKN_INVI 31
+#define ROAD 33
 
 
 void PlayScene::loadLevel(const QJsonObject& level) {
@@ -163,15 +165,24 @@ void PlayScene::loadLevel(const QJsonObject& level) {
     QJsonArray data = level["layers"][0]["data"].toArray();
     int lastLineIndex = -1;
     ReapeatableTexturedItem * lastBlock = nullptr;
+    int lastBlockType = -1;
     for (int i = 0; i < data.size(); ++i) {
         int lineIndex = i / width;
 
         auto x = (i % width) * 16;
         auto y = (lineIndex) * 16 + 144;
         int blockType = qRound(data.at(i).toDouble());
-        if (blockType == BRICK) {
-            QString texture = ":/assets/images/brick.png";
-            if (lastBlock == nullptr || lastLineIndex != lineIndex) {
+        if (blockType == BRICK || blockType == ROAD || blockType == BRICK_DARK) {
+            QString texture;
+            if (blockType == BRICK) {
+                texture = ":/assets/images/brick.png";
+            } else if (blockType == ROAD) {
+                texture = ":/assets/images/road.png";
+            } else if (blockType == BRICK_DARK) {
+                texture = ":/assets/images/brick_dark.png";
+            }
+
+            if (blockType != lastBlockType || lastBlock == nullptr || lastLineIndex != lineIndex) {
                 ReapeatableTexturedItem * block = new ReapeatableTexturedItem(texture, 1, 1, 16);
                 block->setPosition(x, y);
                 this->addItem(block);
@@ -189,12 +200,14 @@ void PlayScene::loadLevel(const QJsonObject& level) {
                  GameObject * toSpawn = nullptr;
                  if (blockType == SURPRISE_MASK || blockType == SURPRISE_MASK_INVI) {
                      toSpawn = new Mask();
+                 } else {
+                     toSpawn = new SoapItem();
                  }
 
                  SurpriseBlock * block = new SurpriseBlock(blockType >= SURPRISE_INVI, toSpawn);
                  block->setPosition(x, y);
                  this->addItem(block);
-             } else if (blockType == COIN) {
+             } else if (blockType == SOAP) {
                  SoapItem * coin = new SoapItem();
                  coin->setPosition(x, y);
                  this->addItem(coin);
@@ -204,6 +217,7 @@ void PlayScene::loadLevel(const QJsonObject& level) {
                  this->addItem(virus);
              }
         }
+        lastBlockType = blockType;
     }
 }
 

@@ -10,7 +10,7 @@ Mask::Mask()
 }
 
 void Mask::setPosition(int x, int y) {
-    setRect(x, y, 16 - 1, 16 - 1);
+    setRect(x, y, 16, 16);
 }
 
 void Mask::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -18,7 +18,7 @@ void Mask::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWi
     if (PlayScene::showBoundingBoxes) {
         painter->drawRect(rect().toAlignedRect());
     } else {
-        QPointF pos = boundingRect().topLeft();
+        QPointF pos = rect().topLeft();
         painter->drawPixmap(
             QPointF(pos.x(), pos.y()),
             textureData,
