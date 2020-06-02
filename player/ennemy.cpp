@@ -30,6 +30,7 @@ void Ennemy::hit(GameObject* what, Direction fromDir) {
     }
     Player* player = dynamic_cast<Player*>(what);
     if (player != nullptr) {
+        player->hurt();
         qDebug() << "Ennemy touché";
         return;
     }

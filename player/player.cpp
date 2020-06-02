@@ -33,13 +33,15 @@ Player::Player(LevelView* view)
     soapBar->setRect(0, - 10, 16, 3);
     soapBar->setBrush(QColor(0xFF, 0xae, 0xc8));
 
-    this->soapCount = 20;
+    this->soapCount = 10;
 
     isMasked = false;
+    life = 3;
     shootTimer = 0;
 
     //turn off gravity
 //    this->accY = 0;
+    sound = new Sound;
 }
 
 void Player::updateLogic() {
@@ -95,6 +97,21 @@ void Player::updateLogic() {
         soapBar->setVisible(false);
     }
 
+    if(dying){
+        yIndex = 0;
+        xIndex = 80;
+        if (life > 0) {
+            QString lifeRemaining = QString("life : %1").arg(life);
+            qDebug() << lifeRemaining;
+            dying = false;
+            Player::setPosition(0,0);
+        }
+        else {
+            dying = false;
+            dead = true;
+        }
+    }
+
 //    scene()->update(boundingRect());
 
 //    debugIfo->setPlainText(
@@ -120,6 +137,7 @@ void Player::shoot() {
         soapCount--;
         shootTimer = 60;
 
+        sound->playSound(4, 40);
         Soap* soap = new Soap(! (bool)lastDirection);
         soap->setPosition(this->x(), this->y() + 10);
         this->scene()->addItem(dynamic_cast<QGraphicsItem *>(soap));
@@ -162,10 +180,10 @@ void Player::setPosition(int x, int y)
     setRect(x, y, 16, 32);
 }
 
-//bool Player::onJump() {
-//    //son
-//    return true;
-//}
+bool Player::onJump() {
+    sound->playSound(0,30);
+    return true;
+}
 
 bool Player::handleInput() {
     bool moveRequested = false;
@@ -207,7 +225,8 @@ bool Player::handleInput() {
     downKeyPressedLastFrame = kbs->downKeyPressed;
 
     if (kbs->spaceKeyPressed && wasOnGroundLastFrame && !jumping && !jumpRequested) {
-        if (true /* TODO onJump()*/) {
+        if (true) {
+            onJump();
             jumping = true;
             jumpRequested = true;
             speedY = -jumpForce;
@@ -226,13 +245,20 @@ bool Player::handleInput() {
 }
 
 void Player::collectSoap() {
+    sound->playSound(1, 30);
     soapCount++;
 }
 
 void Player::hurt() {
+    sound->playSound(3,40);
     if (isMasked) {
         isMasked = false;
     } else {
-        //TODO game over
+        qDebug() << "dead";
+        dying = true;
+        if(life > 0) {
+            life--;
+        }
     }
+
 }

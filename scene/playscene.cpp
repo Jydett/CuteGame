@@ -10,7 +10,7 @@
 #include "../core/roundplateform.h"
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QJSonDocument>
+#include <QJsonDocument>
 
 bool PlayScene::showBoundingBoxes = false;
 
@@ -123,7 +123,8 @@ PlayScene::PlayScene()
 //    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
 //    this->addItem(myFourthBlock);
 
-    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveauF.json"));
+
+    QFile levelFile(QStringLiteral("C:/Users/vlefi/Documents/Polytech 4A/Qt/CuteGame/level/niveau3.json"));
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
     } else {

@@ -8,6 +8,7 @@
 #include "scene/playscene.h"
 #include "view/levelview.h"
 #include "player/player.h"
+#include "sound/music.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -20,6 +21,9 @@ int main(int argc, char *argv[]) {
     view->setScene(scene);
     view->setSceneRect(0, 0, 100000000, 100000000);
 
+    //add the music
+    Music * music = new Music();
+    music->playMusic(2);
 
     //create an vieable item
     Player * player = new Player(view);
