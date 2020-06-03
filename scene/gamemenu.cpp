@@ -12,9 +12,15 @@ gameMenu::gameMenu(QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(1024, 768);
 
+    QBrush brush;
+    brush.setColor(Qt::yellow);
+    brush.setStyle(Qt::SolidPattern);
+
     scene = new QGraphicsScene();
     scene->setSceneRect(100000000, 100000000, 0, 0);
+
     setScene(scene);
+    scene->setBackgroundBrush(brush);
 
 }
 
