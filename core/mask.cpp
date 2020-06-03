@@ -7,7 +7,7 @@ Mask::Mask()
     collected = false;
     setRect(0, 0, 16, 16);
     this->textureData = QPixmap(":/assets/images/mask.png");
-    this->sound = Sound();
+    sound = new Sound();
 }
 
 void Mask::setPosition(int x, int y) {
@@ -32,7 +32,7 @@ void Mask::hit(GameObject *what, Direction fromDir)
 {
     Player* player = dynamic_cast<Player*>(what);
     if (! collected && player != nullptr && ! player->isMasked) {
-        sound.playSound(6, 40);
+        sound->playSound(6, 40);
         collected = true;
         player->isMasked = true;
         toRemove = true;
