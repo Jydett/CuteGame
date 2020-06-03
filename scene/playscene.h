@@ -4,12 +4,13 @@
 #include <QGraphicsScene>
 #include <QScrollBar>
 #include <QTimer>
+#include <QString>
 
 class PlayScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    PlayScene();
+    PlayScene(QString path);
     ~PlayScene();
     void loadLevel(const QJsonObject& data);
 
