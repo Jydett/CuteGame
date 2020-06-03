@@ -9,13 +9,12 @@
 #include <QTimer>
 
 #include <button.h>
-#include "scene/playscene.h"
-#include "view/levelview.h"
-#include "player/player.h"
-#include "sound/music.h"
+#include "scene/levelmenu.h"
 
 class gameMenu: public QGraphicsView{
     Q_OBJECT
+private:
+    void closeEvent(QCloseEvent *event) override;
 public:
     gameMenu(QWidget* parent = NULL);
     void displayMainMenu();
