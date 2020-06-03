@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     antigravityfield.cpp \
+    button.cpp \
     core/entity.cpp \
     core/gameobject.cpp \
     core/inert.cpp \
@@ -35,6 +36,7 @@ SOURCES += \
     player/player.cpp \
     player/thug.cpp \
     rotatingplateform.cpp \
+    scene/gamemenu.cpp \
     scene/playscene.cpp \
     sound/music.cpp \
     sound/sound.cpp \
@@ -43,6 +45,7 @@ SOURCES += \
 
 HEADERS += \
     antigravityfield.h \
+    button.h \
     core/Type.h \
     core/entity.h \
     core/gameobject.h \
@@ -61,6 +64,7 @@ HEADERS += \
     player/player.h \
     player/thug.h \
     rotatingplateform.h \
+    scene/gamemenu.h \
     scene/playscene.h \
     sound/music.h \
     sound/sound.h \

@@ -5,8 +5,6 @@
 #include <QObject>
 #include <QGlobal.h>
 #include <QTime>
-#include <QGlobal.h>
-#include <QTime>
 
 #include "scene/gamemenu.h"
 

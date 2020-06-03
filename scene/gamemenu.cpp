@@ -45,6 +45,7 @@ void gameMenu::displayMainMenu()
 void gameMenu::start()
 {
     scene->invalidate();
+    this->hide();
     //add a view
     LevelView * view = new LevelView;
 //    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
@@ -66,10 +67,6 @@ void gameMenu::start()
 
     view->centerOn(200, 400);
     view->show();
-
-    QTimer timer;
-    QObject::connect(&timer, &QTimer::timeout, scene, &QGraphicsScene::advance);
-    timer.start(1000 / 60);
 }
 
 

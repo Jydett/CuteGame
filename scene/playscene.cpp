@@ -14,6 +14,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QObject>
 
 bool PlayScene::showBoundingBoxes = false;
 
@@ -140,14 +141,21 @@ PlayScene::PlayScene()
 //    spit->setPosition(200, 200);
 //    this->addItem(spit);
 
-    QGraphicsEllipseItem * mur3 = new RoundPlateform();
-    mur3->setRect(100, 410, 300, 100);
-    this->addItem(mur3);
+//    QGraphicsEllipseItem * mur3 = new RoundPlateform();
+//    mur3->setRect(100, 410, 300, 100);
+//    this->addItem(mur3);
 
     Thug * thug = new Thug();
     thug->setPosition(100, 100);
     this->addItem(thug);
 
+    timer = new QTimer;
+    QObject::connect(timer, &QTimer::timeout, this, &QGraphicsScene::advance);
+    timer->start(1000 / 60);
+}
+
+PlayScene::~PlayScene() {
+   delete timer;
 }
 
 #define BRICK 1
@@ -168,7 +176,6 @@ PlayScene::PlayScene()
 #define PIPE_TOP 10
 #define PIPE_BOTTOM_DIRT 37
 #define PIPE_BOTTOM 64
-
 
 void PlayScene::loadLevel(const QJsonObject& level) {
     this->clear();
