@@ -22,14 +22,18 @@ SOURCES += \
     core/inert.cpp \
     core/keyboardstatus.cpp \
     core/mask.cpp \
+    core/pipe_bottom.cpp \
+    core/pipe_top.cpp \
     core/reapeatabletextureditem.cpp \
     core/roundplateform.cpp \
     core/soap.cpp \
     core/soap_item.cpp \
     core/spit.cpp \
     main.cpp \
+    player/coronaball.cpp \
     player/ennemy.cpp \
     player/player.cpp \
+    player/thug.cpp \
     rotatingplateform.cpp \
     scene/playscene.cpp \
     surpriseblock.cpp \
@@ -43,13 +47,17 @@ HEADERS += \
     core/inert.h \
     core/keyboardstatus.h \
     core/mask.h \
+    core/pipe_bottom.h \
+    core/pipe_top.h \
     core/reapeatabletextureditem.h \
     core/roundplateform.h \
     core/soap.h \
     core/soap_item.h \
     core/spit.h \
+    player/coronaball.h \
     player/ennemy.h \
     player/player.h \
+    player/thug.h \
     rotatingplateform.h \
     scene/playscene.h \
     surpriseblock.h \

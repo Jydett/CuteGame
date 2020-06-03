@@ -295,6 +295,7 @@ void Entity::updateLogic() {
 
     if (playerX < 0) {
         playerX = 0;
+        this->hit(nullptr, SIDE);
     }
     if (playerY > 720) {
        dead = true;

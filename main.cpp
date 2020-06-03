@@ -4,6 +4,8 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QObject>
+#include <QGlobal.h>
+#include <QTime>
 
 #include "scene/playscene.h"
 #include "view/levelview.h"
@@ -11,6 +13,9 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
+
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
 
     //add a view
     LevelView * view = new LevelView;

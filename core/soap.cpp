@@ -43,14 +43,21 @@ bool Soap::handleInput() {
 }
 
 void Soap::hit(GameObject* what, Direction fromDir) {
+    if (dead) return;
+    if (what == nullptr) {
+        this->dead = true;
+        this->toRemove = true;
+        return;
+    }
     Inert* inert = dynamic_cast<Inert*>(what);
     if (inert != nullptr && inert->isCollidable()) {
         this->dead = true;
         this->toRemove = true;
+        return;
     }
     Ennemy * ennemy = dynamic_cast<Ennemy *>(what);
     if (ennemy != nullptr) {
-        ennemy->hurt();
+        ennemy->hurt(this);
         this->dead = true;
         this->toRemove = true;
     }

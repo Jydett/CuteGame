@@ -3,7 +3,7 @@
 #include <QPainter>
 #include "player/player.h"
 
-Spit::Spit(bool direction)
+Spit::Spit(int direction)
 {
     this->annimationTimer = 0;
     this->annimationIndex = 0;
@@ -12,7 +12,7 @@ Spit::Spit(bool direction)
     textureData = QPixmap(":/assets/images/crachat.png");
     jumpRequested = true;
     jumpForce = 300;
-    this->direction = direction ? 1 : -1;
+    this->direction = direction;
     this->debugIfo = new QGraphicsTextItem(this);
 }
 
@@ -46,6 +46,11 @@ bool Spit::handleInput() {
 
 void Spit::hit(GameObject* what, Direction fromDir) {
     if (fromDir == SIDE) {
+        if (what == nullptr) {
+            this->dead = true;
+            this->toRemove = true;
+            return;
+        }
         Inert* inert = dynamic_cast<Inert*>(what);
         if (inert != nullptr && inert->isCollidable()) {
             this->dead = true;

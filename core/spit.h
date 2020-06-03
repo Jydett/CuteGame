@@ -6,7 +6,7 @@
 class Spit : public Entity
 {
 public:
-    Spit(bool direction);
+    Spit(int direction);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void hit(GameObject* what, Direction fromDir) override;
     void setPosition(int x, int y) override;

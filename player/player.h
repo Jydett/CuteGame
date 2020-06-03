@@ -11,7 +11,7 @@ public:
     void movementUpdated(qreal dX, qreal dY) override;
     void hit(GameObject* what, Direction fromDir) override;
     void setPosition(int x, int y) override;
-    void hurt() override;
+    void hurt(GameObject* byWhat) override;
     bool isMasked;
     void collectSoap();
 
@@ -41,6 +41,8 @@ private:
     int xIndex, yIndex;
 
     int shootTimer;
+
+    int invincibilityFrames;
 
     void shoot();
 };

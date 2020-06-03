@@ -5,9 +5,12 @@
 #include "../surpriseblock.h"
 #include "../core/soap_item.h"
 #include "../core/mask.h"
-#include "../player/ennemy.h"
+#include "../player/coronaball.h"
+#include "../player/thug.h"
 #include "../core/spit.h"
 #include "../core/roundplateform.h"
+#include "../core/pipe_top.h"
+#include "../core/pipe_bottom.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJSonDocument>
@@ -123,7 +126,7 @@ PlayScene::PlayScene()
 //    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
 //    this->addItem(myFourthBlock);
 
-    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveauF.json"));
+    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveau1.json"));
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
     } else {
@@ -133,13 +136,17 @@ PlayScene::PlayScene()
 
     setBackgroundBrush(QPixmap(":/assets/images/bg.png"));
 
-    Spit * spit = new Spit(1);
-    spit->setPosition(200, 200);
-    this->addItem(spit);
+//    Spit * spit = new Spit(1);
+//    spit->setPosition(200, 200);
+//    this->addItem(spit);
 
-//    QGraphicsEllipseItem * mur3 = new RoundPlateform();
-//    mur3->setRect(100, 400, 300, 100);
-//    this->addItem(mur3);
+    QGraphicsEllipseItem * mur3 = new RoundPlateform();
+    mur3->setRect(100, 410, 300, 100);
+    this->addItem(mur3);
+
+    Thug * thug = new Thug();
+    thug->setPosition(100, 100);
+    this->addItem(thug);
 
 }
 
@@ -158,6 +165,10 @@ PlayScene::PlayScene()
 #define SURPRISE_UKN_INVI 31
 #define ROAD 33
 
+#define PIPE_TOP 10
+#define PIPE_BOTTOM_DIRT 37
+#define PIPE_BOTTOM 64
+
 
 void PlayScene::loadLevel(const QJsonObject& level) {
     this->clear();
@@ -172,7 +183,15 @@ void PlayScene::loadLevel(const QJsonObject& level) {
         auto x = (i % width) * 16;
         auto y = (lineIndex) * 16 + 144;
         int blockType = qRound(data.at(i).toDouble());
-        if (blockType == BRICK || blockType == ROAD || blockType == BRICK_DARK) {
+        if (blockType == PIPE_BOTTOM || blockType == PIPE_BOTTOM_DIRT) {
+            PipeBottom * pipe = new PipeBottom();
+            pipe->setPosition(x + 2, y);
+            this->addItem(pipe);
+        } else if (blockType == PIPE_TOP) {
+            PipeTop * pipe = new PipeTop();
+            pipe->setPosition(x, y);
+            this->addItem(pipe);
+        } else if (blockType == BRICK || blockType == ROAD || blockType == BRICK_DARK) {
             QString texture;
             if (blockType == BRICK) {
                 texture = ":/assets/images/brick.png";
@@ -212,7 +231,7 @@ void PlayScene::loadLevel(const QJsonObject& level) {
                  coin->setPosition(x, y);
                  this->addItem(coin);
              } else if (blockType == VIRUS) {
-                 Ennemy * virus = new Ennemy();
+                 CoronaBall * virus = new CoronaBall();
                  virus->setPosition(x, y);
                  this->addItem(virus);
              }

@@ -12,7 +12,9 @@ public:
     virtual bool handleInput() { return false; };
     enum { Type = ENTITY_TYPE };
     int type() const override { return Type; };
-    virtual void hurt() {};
+    virtual void hurt(GameObject* byWhat) {};
+    inline qreal sx() const { return speedX; }
+    inline qreal sy() const { return speedY; }
 
 private:
     void accelerate(qreal accelX, qreal accelY);

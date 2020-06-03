@@ -12,5 +12,8 @@
         <file>images/soap_item.png</file>
         <file>images/brick_dark.png</file>
         <file>images/road.png</file>
+        <file>images/pipetop.png</file>
+        <file>images/pipebottom.png</file>
+        <file>images/caillera.png</file>
     </qresource>
 </RCC>

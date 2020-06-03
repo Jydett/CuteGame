@@ -33,10 +33,11 @@ Player::Player(LevelView* view)
     soapBar->setRect(0, - 10, 16, 3);
     soapBar->setBrush(QColor(0xFF, 0xae, 0xc8));
 
-    this->soapCount = 20;
+    this->soapCount = 0;
 
     isMasked = false;
     shootTimer = 0;
+    invincibilityFrames = 0;
 
     //turn off gravity
 //    this->accY = 0;
@@ -95,6 +96,10 @@ void Player::updateLogic() {
         soapBar->setVisible(false);
     }
 
+    if (invincibilityFrames > 0) {
+        invincibilityFrames--;
+    }
+
 //    scene()->update(boundingRect());
 
 //    debugIfo->setPlainText(
@@ -129,7 +134,9 @@ void Player::shoot() {
 void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     QRectF rect = this->rect();
 
-    painter->drawPixmap(rect, textureData, QRect(xIndex, yIndex, spriteWidth, spriteHeight));
+    if (invincibilityFrames == 0 || invincibilityFrames % 10 == 0) {
+        painter->drawPixmap(rect, textureData, QRect(xIndex, yIndex, spriteWidth, spriteHeight));
+    }
 
     if (PlayScene::showBoundingBoxes)
         painter->drawRect(rect.toAlignedRect());
@@ -152,11 +159,11 @@ void Player::movementUpdated(qreal dX, qreal dY) {
 }
 
 void Player::hit(GameObject* what, Direction fromDir) {
+    if (what == nullptr) return;
     what->hit(this, oposite(fromDir));
 }
 
-void Player::setPosition(int x, int y)
-{
+void Player::setPosition(int x, int y) {
     movementUpdated(this->x() - x, this->y() - y);
     setX(x); setY(y);
     setRect(x, y, 16, 32);
@@ -229,9 +236,17 @@ void Player::collectSoap() {
     soapCount++;
 }
 
-void Player::hurt() {
+void Player::hurt(GameObject* byWhat) {
+    if (invincibilityFrames > 0) return;
     if (isMasked) {
         isMasked = false;
+        //apply knockback
+        Entity * byWhayEntity = dynamic_cast<Entity *>(byWhat);
+        if (byWhayEntity != nullptr) {
+            this->speedX = byWhayEntity->sx() / 3;
+            this->speedY = byWhayEntity->sy() / 3;
+        }
+        invincibilityFrames = 20;
     } else {
         //TODO game over
     }

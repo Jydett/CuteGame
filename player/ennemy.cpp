@@ -5,13 +5,15 @@
 
 #define SIZE 16
 
-Ennemy::Ennemy()
+Ennemy::Ennemy(QString texture, int width, int height)
 {
+    this->width = width;
+    this->height = height;
     wallHit = 0;
-    direction = 0;
-    setRect(0, 0, SIZE, SIZE);
+    direction = 1;
+    setRect(0, 0, width, height);
     generateCollisionBox();
-    textureData = QPixmap(":/assets/images/virus.png");
+    textureData = QPixmap(texture);
     this->maxSpeedX = maxSpeedX / 3;
     this->annimationIndex = 0;
     this->annimationTimer = 0;
@@ -19,13 +21,16 @@ Ennemy::Ennemy()
 
 void Ennemy::hit(GameObject* what, Direction fromDir) {
     if (fromDir == SIDE) {
+        if (what == nullptr) {
+            speedX = 0;
+            direction = -direction;
+            return;
+        }
         Inert* inert = dynamic_cast<Inert*>(what);
         if (inert != nullptr && inert->isCollidable()) {
-            if (direction == 1) {
-                direction = 0;
-            } else {
-                direction = 1;
-            }
+            speedX = 0;
+            direction = -direction;
+            return;
         }
     }
     Player* player = dynamic_cast<Player*>(what);
@@ -59,29 +64,17 @@ void Ennemy::setPosition(int x, int y) {
     setX(x); setY(y);
 }
 
-void Ennemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    if (PlayScene::showBoundingBoxes)
-        painter->drawRect(rect().toAlignedRect());
-    QPointF pos = boundingRect().topLeft();
-    painter->drawPixmap(
-        QPointF(pos.x(), pos.y()),
-        textureData,
-        QRectF(annimationIndex * SIZE, 0, SIZE, SIZE)
-    );
-}
-
-bool Ennemy::handleInput()
-{
-    if (direction == 0) {
-        speedX -= linearMovement(accX);
-    } else {
-        speedX += linearMovement(accX);
-    }
+bool Ennemy::handleInput() {
+    speedX += linearMovement(accX * direction);
     return true;
 }
 
-void Ennemy::hurt() {
+void Ennemy::hurt(GameObject* byWhat) {
+    Entity * byWhayEntity = dynamic_cast<Entity *>(byWhat);
+    if (byWhayEntity != nullptr) {
+        this->speedX = byWhayEntity->sx() / 3;
+        this->speedY = byWhayEntity->sy() / 3;
+    }
     this->dead = true;
     this->toRemove = true;
 }
