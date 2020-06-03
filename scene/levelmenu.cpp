@@ -15,9 +15,14 @@ LevelMenu::LevelMenu(QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(1024, 768);
 
+    QBrush brush;
+    brush.setColor(Qt::yellow);
+    brush.setStyle(Qt::SolidPattern);
+
     scene = new QGraphicsScene();
     scene->setSceneRect(100000000, 100000000, 0, 0);
     setScene(scene);
+    scene->setBackgroundBrush(brush);
 
 }
 
@@ -54,9 +59,23 @@ void LevelMenu::displayLevelMenu()
     connect(level3, SIGNAL(clicked()), this, SLOT(startLevel3()));
     scene->addItem(level3);
 
+    button* level4 = new button(QString("Level 4"));
+    int posXl4 = this->width()/2 - level4->boundingRect().width()/2;
+    int posYl4 = 350;
+    level4->setPos(posXl4, posYl4);
+    connect(level4, SIGNAL(clicked()), this, SLOT(startLevel4()));
+    scene->addItem(level4);
+
+    button* level5 = new button(QString("Level 5"));
+    int posXl5 = this->width()/2 - level5->boundingRect().width()/2;
+    int posYl5 = 410;
+    level5->setPos(posXl5, posYl5);
+    connect(level5, SIGNAL(clicked()), this, SLOT(startLevel5()));
+    scene->addItem(level5);
+
     button* levelF = new button(QString("Final Level"));
     int posXlF = this->width()/2 - levelF->boundingRect().width()/2;
-    int posYlF = 350;
+    int posYlF = 470;
     levelF->setPos(posXlF, posYlF);
     connect(levelF, SIGNAL(clicked()), this, SLOT(startLevelF()));
     scene->addItem(levelF);
@@ -101,6 +120,15 @@ void LevelMenu::startLevel3()
     start(":/levels/level/niveau3.json");
 }
 
+void LevelMenu::startLevel4()
+{
+    start(":/levels/level/niveau4.json");
+}
+
+void LevelMenu::startLevel5()
+{
+    start(":/levels/level/niveau5.json");
+}
 
 void LevelMenu::startLevelF()
 {
