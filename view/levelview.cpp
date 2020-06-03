@@ -1,5 +1,15 @@
 #include "levelview.h"
 #include <QWheelEvent>
+#include "scene/levelmenu.h"
+
+void LevelView::closeEvent(QCloseEvent *event)
+{
+    LevelMenu* levelMenu = new LevelMenu();
+    levelMenu->show();
+    levelMenu->displayLevelMenu();
+    delete(music);
+
+}
 
 LevelView::LevelView()
 {
@@ -11,6 +21,11 @@ LevelView::LevelView()
     this->setSceneRect(0, 0, 10000, 225);
     this->scale(1.4, 1.4);
     this->keyboardStatus = new KeyBoardStatus();
+
+
+    //add the music
+    music = new Music();
+    music->playMusic(20);
 }
 
 LevelView::~LevelView() {

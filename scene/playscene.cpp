@@ -19,7 +19,7 @@
 
 bool PlayScene::showBoundingBoxes = false;
 
-PlayScene::PlayScene()
+PlayScene::PlayScene(QString path)
 {
 
 ////    RotatingPlateform* rooo = new RotatingPlateform();
@@ -128,7 +128,7 @@ PlayScene::PlayScene()
 //    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
 //    this->addItem(myFourthBlock);
 
-    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveau1.json"));
+    QFile levelFile(path);
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
     } else {

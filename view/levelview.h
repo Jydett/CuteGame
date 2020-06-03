@@ -3,11 +3,15 @@
 
 #include "../core/keyboardstatus.h"
 #include <QGraphicsView>
+#include "sound/music.h"
 
 class LevelView : public QGraphicsView {
     Q_OBJECT
 signals:
     void sceneChanged();
+
+private:
+    void closeEvent(QCloseEvent *event) override;
 
 public:
 //    QMediaPlaylist *bgm;
@@ -21,6 +25,9 @@ protected:
     void wheelEvent(QWheelEvent *e) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
+
+private:
+    Music * music;
 };
 
 #endif // VIEW_H

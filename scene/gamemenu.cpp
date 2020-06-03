@@ -1,5 +1,10 @@
 #include "gamemenu.h"
 
+void gameMenu::closeEvent(QCloseEvent *event)
+{
+    delete(this);
+}
+
 gameMenu::gameMenu(QWidget *parent)
 {
     //create scene
@@ -44,29 +49,13 @@ void gameMenu::displayMainMenu()
 
 void gameMenu::start()
 {
-    scene->invalidate();
     this->hide();
-    //add a view
-    LevelView * view = new LevelView;
-//    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-
-    PlayScene * scene = new PlayScene();
-    view->setScene(scene);
-    view->setSceneRect(0, 0, 100000000, 100000000);
-
-    //add the music
-    Music * music = new Music();
-    music->playMusic(20);
-
-    //create an vieable item
-    Player * player = new Player(view);
-
-    //add the item to the scene
-    //make the player focusable -> mendatory to get key events
-    scene->addItem(player);
-
-    view->centerOn(200, 400);
-    view->show();
+    LevelMenu* levelMenu = new LevelMenu();
+    levelMenu->show();
+    levelMenu->displayLevelMenu();
 }
+
+
+
 
 
