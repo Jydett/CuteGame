@@ -13,7 +13,7 @@
 #include "../core/pipe_bottom.h"
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QJSonDocument>
+#include <QJsonDocument>
 
 bool PlayScene::showBoundingBoxes = false;
 
@@ -126,7 +126,7 @@ PlayScene::PlayScene()
 //    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
 //    this->addItem(myFourthBlock);
 
-    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveau1.json"));
+    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveauF.json"));
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
     } else {

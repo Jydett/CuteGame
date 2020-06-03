@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -36,6 +36,8 @@ SOURCES += \
     player/thug.cpp \
     rotatingplateform.cpp \
     scene/playscene.cpp \
+    sound/music.cpp \
+    sound/sound.cpp \
     surpriseblock.cpp \
     view/levelview.cpp
 
@@ -60,8 +62,9 @@ HEADERS += \
     player/thug.h \
     rotatingplateform.h \
     scene/playscene.h \
+    sound/music.h \
+    sound/sound.h \
     surpriseblock.h \
-    view.h \
     view/levelview.h
 
 # Default rules for deployment.
@@ -69,7 +72,20 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    level/niveau1.json \
+    level/niveau1_old.json \
+    level/niveau2.json \
+    level/niveau3.json \
+    level/niveauF.json \
+    level/test.json \
+    music/bestMusic.mp3 \
+    sounds/breakingBlock.wav \
+    sounds/coin.wav \
+    sounds/finishLvl.wav \
+    sounds/jump.wav
 
 RESOURCES += \
-    assets.qrc
+    assets.qrc \
+    player/assets.qrc \
+    player/ressources.qrc

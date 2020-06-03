@@ -1,7 +1,10 @@
 #ifndef PLAYER2_H
 #define PLAYER2_H
+
 #include "../core/entity.h"
 #include "../view/levelview.h"
+#include "sound/sound.h"
+#include <QGraphicsView>
 
 class Player : public Entity
 {
@@ -13,10 +16,11 @@ public:
     void setPosition(int x, int y) override;
     void hurt(GameObject* byWhat) override;
     bool isMasked;
+    int life;
     void collectSoap();
 
 protected:
-//    bool onJump() override;//FIXME
+    bool onJump();//FIXME
     bool handleInput() override;
     void updateLogic() override;
 
@@ -45,6 +49,8 @@ private:
     int invincibilityFrames;
 
     void shoot();
+
+    Sound * sound;
 };
 
 #endif // PLAYER2_H

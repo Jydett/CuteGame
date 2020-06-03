@@ -1,44 +1,26 @@
 #include <QApplication>
-#include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QObject>
 #include <QGlobal.h>
 #include <QTime>
+#include <QGlobal.h>
+#include <QTime>
 
-#include "scene/playscene.h"
-#include "view/levelview.h"
-#include "player/player.h"
+#include "scene/gamemenu.h"
+
+
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
 
-    //add a view
-    LevelView * view = new LevelView;
-//    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 
-    PlayScene * scene = new PlayScene();
-    view->setScene(scene);
-    view->setSceneRect(0, 0, 100000000, 100000000);
-
-
-    //create an vieable item
-    Player * player = new Player(view);
-
-    //add the item to the scene
-    //make the player focusable -> mendatory to get key events
-    scene->addItem(player);
-
-    view->centerOn(200, 400);
-    view->show();
-
-    QTimer timer;
-    QObject::connect(&timer, &QTimer::timeout, scene, &QGraphicsScene::advance);
-    timer.start(1000 / 60);
+    gameMenu* menu = new gameMenu();
+    menu->show();
+    menu->displayMainMenu();
 
     return a.exec();
 }
