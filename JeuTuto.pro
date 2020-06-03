@@ -40,6 +40,7 @@ SOURCES += \
     scene/playscene.cpp \
     sound/music.cpp \
     sound/sound.cpp \
+    stopblock.cpp \
     surpriseblock.cpp \
     view/levelview.cpp
 
@@ -68,6 +69,7 @@ HEADERS += \
     scene/playscene.h \
     sound/music.h \
     sound/sound.h \
+    stopblock.h \
     surpriseblock.h \
     view/levelview.h
 
@@ -84,12 +86,11 @@ DISTFILES += \
     level/niveauF.json \
     level/test.json \
     music/bestMusic.mp3 \
+    sounds/mask.mp3 \
     sounds/breakingBlock.wav \
     sounds/coin.wav \
     sounds/finishLvl.wav \
     sounds/jump.wav
 
 RESOURCES += \
-    assets.qrc \
-    player/assets.qrc \
-    player/ressources.qrc
+    assets.qrc

@@ -28,5 +28,6 @@ protected:
 private:
     bool collected;
     QPixmap textureData;
+    Sound sound;
 };
 #endif // MASK_H

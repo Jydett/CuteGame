@@ -3,7 +3,7 @@
 #include <QGraphicsRectItem>
 #include "core/inert.h"
 #include "core/Type.h"
-#include "player/player.h"
+#include <QGraphicsScene>
 
 class SurpriseBlock : public Inert, public QGraphicsRectItem
 {

@@ -56,7 +56,7 @@ void gameMenu::start()
 
     //add the music
     Music * music = new Music();
-    music->playMusic(2);
+    music->playMusic(20);
 
     //create an vieable item
     Player * player = new Player(view);

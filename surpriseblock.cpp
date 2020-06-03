@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QDebug>
 #include "scene/playscene.h"
+#include "player/player.h"
 
 SurpriseBlock::SurpriseBlock(bool hidden, GameObject* toSpawn)
 {

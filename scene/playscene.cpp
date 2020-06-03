@@ -15,6 +15,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QObject>
+#include "../stopblock.h"
 
 bool PlayScene::showBoundingBoxes = false;
 
@@ -127,7 +128,7 @@ PlayScene::PlayScene()
 //    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
 //    this->addItem(myFourthBlock);
 
-    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveauF.json"));
+    QFile levelFile(QStringLiteral("C:/Users/Trombonesolo/Documents/JeuTuto/level/niveau1.json"));
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
     } else {
@@ -137,17 +138,9 @@ PlayScene::PlayScene()
 
     setBackgroundBrush(QPixmap(":/assets/images/bg.png"));
 
-//    Spit * spit = new Spit(1);
-//    spit->setPosition(200, 200);
-//    this->addItem(spit);
-
 //    QGraphicsEllipseItem * mur3 = new RoundPlateform();
 //    mur3->setRect(100, 410, 300, 100);
 //    this->addItem(mur3);
-
-    Thug * thug = new Thug();
-    thug->setPosition(100, 100);
-    this->addItem(thug);
 
     timer = new QTimer;
     QObject::connect(timer, &QTimer::timeout, this, &QGraphicsScene::advance);
@@ -172,6 +165,8 @@ PlayScene::~PlayScene() {
 #define SURPRISE_MASK_INVI 30
 #define SURPRISE_UKN_INVI 31
 #define ROAD 33
+#define THUG 12
+#define STOP 39
 
 #define PIPE_TOP 10
 #define PIPE_BOTTOM_DIRT 37
@@ -233,6 +228,10 @@ void PlayScene::loadLevel(const QJsonObject& level) {
                  SurpriseBlock * block = new SurpriseBlock(blockType >= SURPRISE_INVI, toSpawn);
                  block->setPosition(x, y);
                  this->addItem(block);
+             } else if (blockType == STOP) {
+                 StopBlock * block = new StopBlock();
+                 block->setPosition(x, y);
+                 this->addItem(block);
              } else if (blockType == SOAP) {
                  SoapItem * coin = new SoapItem();
                  coin->setPosition(x, y);
@@ -241,6 +240,10 @@ void PlayScene::loadLevel(const QJsonObject& level) {
                  CoronaBall * virus = new CoronaBall();
                  virus->setPosition(x, y);
                  this->addItem(virus);
+             } else if (blockType == THUG) {
+                 Thug * thug = new Thug();
+                 thug->setPosition(x, y - 16);
+                 this->addItem(thug);
              }
         }
         lastBlockType = blockType;

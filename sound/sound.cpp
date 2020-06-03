@@ -41,6 +41,12 @@ void Sound::playSound(int soundNumber,int volume) {
             soundPlayer->setVolume(volume);
             soundPlayer->play();
             break;
+        case 6 :
+            qDebug() << path << "mask.mp3";
+            soundPlayer->setMedia(QUrl::fromLocalFile(path + "mask.mp3"));
+            soundPlayer->setVolume(volume);
+            soundPlayer->play();
+            break;
         default: break;
     }
 

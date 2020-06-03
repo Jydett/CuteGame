@@ -2,6 +2,7 @@
 #include "player.h"
 #include "../core/inert.h"
 #include "../scene/playscene.h"
+#include "../stopblock.h"
 
 #define SIZE 16
 
@@ -10,7 +11,7 @@ Ennemy::Ennemy(QString texture, int width, int height)
     this->width = width;
     this->height = height;
     wallHit = 0;
-    direction = 1;
+    direction = -1;
     setRect(0, 0, width, height);
     generateCollisionBox();
     textureData = QPixmap(texture);
@@ -26,8 +27,16 @@ void Ennemy::hit(GameObject* what, Direction fromDir) {
             direction = -direction;
             return;
         }
+
         Inert* inert = dynamic_cast<Inert*>(what);
         if (inert != nullptr && inert->isCollidable()) {
+            speedX = 0;
+            direction = -direction;
+            return;
+        }
+
+        StopBlock* block = dynamic_cast<StopBlock*>(what);
+        if (block != nullptr) {
             speedX = 0;
             direction = -direction;
             return;
