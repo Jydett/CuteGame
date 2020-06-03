@@ -59,7 +59,9 @@ void Spit::hit(GameObject* what, Direction fromDir) {
     }
     Player* player = dynamic_cast<Player*>(what);
     if (fromDir != TOP && player != nullptr) {
-        qDebug() << "Ennemy touché";
+        player->hurt(this);
+        this->dead = true;
+        this->toRemove = true;
         return;
     }
 }

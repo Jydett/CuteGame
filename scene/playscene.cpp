@@ -15,6 +15,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QObject>
+#include "../core/toiletpaper.h"
 #include "../stopblock.h"
 
 bool PlayScene::showBoundingBoxes = false;
@@ -167,7 +168,7 @@ PlayScene::~PlayScene() {
 #define ROAD 33
 #define THUG 12
 #define STOP 39
-
+#define TOILET_PAPER 40
 #define PIPE_TOP 10
 #define PIPE_BOTTOM_DIRT 37
 #define PIPE_BOTTOM 64
@@ -185,7 +186,11 @@ void PlayScene::loadLevel(const QJsonObject& level) {
         auto x = (i % width) * 16;
         auto y = (lineIndex) * 16 + 144;
         int blockType = qRound(data.at(i).toDouble());
-        if (blockType == PIPE_BOTTOM || blockType == PIPE_BOTTOM_DIRT) {
+        if (blockType == TOILET_PAPER) {
+            ToiletPaper * tp = new ToiletPaper();
+            tp->setPosition(x, y);
+            this->addItem(tp);
+        } else if (blockType == PIPE_BOTTOM || blockType == PIPE_BOTTOM_DIRT) {
             PipeBottom * pipe = new PipeBottom();
             pipe->setPosition(x + 2, y);
             this->addItem(pipe);

@@ -30,6 +30,7 @@ SOURCES += \
     core/soap.cpp \
     core/soap_item.cpp \
     core/spit.cpp \
+    core/toiletpaper.cpp \
     main.cpp \
     player/coronaball.cpp \
     player/ennemy.cpp \
@@ -61,6 +62,7 @@ HEADERS += \
     core/soap.h \
     core/soap_item.h \
     core/spit.h \
+    core/toiletpaper.h \
     player/coronaball.h \
     player/ennemy.h \
     player/player.h \

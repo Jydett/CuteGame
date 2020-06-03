@@ -20,7 +20,6 @@ public:
     void collectSoap();
 
 protected:
-    bool onJump();//FIXME
     bool handleInput() override;
     void updateLogic() override;
 
@@ -49,6 +48,7 @@ private:
     int invincibilityFrames;
 
     void shoot();
+    void jump();
 
     Sound * sound;
 };

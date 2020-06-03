@@ -23,7 +23,6 @@ Player::Player(LevelView* view)
     setRect(0, 0, 16, 32);
     generateCollisionBox();
     this->debugIfo = new QGraphicsTextItem(this);
-//    setFlag(ItemClipsToShape);
     textureData = QPixmap(":/assets/images/player.png");
      //TODO gerer erreur
     this->downKeyPressedLastFrame = false;
@@ -40,8 +39,6 @@ Player::Player(LevelView* view)
     shootTimer = 0;
     invincibilityFrames = 0;
 
-    //turn off gravity
-//    this->accY = 0;
     sound = new Sound;
 }
 
@@ -115,25 +112,6 @@ void Player::updateLogic() {
             dead = true;
         }
     }
-
-//    scene()->update(boundingRect());
-
-//    debugIfo->setPlainText(
-//                QString::number(shootTimer) +
-//                "lastDirection " + QString::number(lastDirection) +
-//            "\nx:" + QString::number(x()) + " y:" + QString::number(y()) +
-//    //       "\nsx:" + QString::number(speedX) + " sy:" + QString::number(speedY) +
-//    //       "\nsy:" + QString::number(accX) + " ay:" + QString::number(accY) +
-//                "\nannimationTimer" + QString::number(annimationTimer) +
-//                "\nannimationIndex" + QString::number(annimationIndex) +
-//           "\n jumping ? " + QString::number(jumping) +
-//            " requested ? " + QString::number(jumpRequested) +
-//           " \n wasOnGround " + QString::number(wasOnGroundLastFrame) +
-//           " \n downKeyPressed " + QString::number(downKeyPressed) +
-//           "  spaceKeyPressed " + QString::number(spaceKeyPressed) +
-//    //                       "\n bottom " + QString::number(contactYbottom) + " top " + QString::number(contactYtop)
-//    //                       "\n scroll " + scroll->value()
-//       "");
 }
 
 void Player::shoot() {
@@ -157,17 +135,6 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 
     if (PlayScene::showBoundingBoxes)
         painter->drawRect(rect.toAlignedRect());
-
-    #ifdef DEBUG
-
-//        painter->setBrush(QBrush(Qt::white));
-
-
-//         painter->setBrush(QBrush(Qt::red));
-//        for (auto i = 0; i < 8; i++) {
-//            painter->drawPoint(collisionPoints[i]);
-//        }
-    #endif
 }
 
 void Player::movementUpdated(qreal dX, qreal dY) {
@@ -186,9 +153,11 @@ void Player::setPosition(int x, int y) {
     setRect(x, y, 16, 32);
 }
 
-bool Player::onJump() {
+void Player::jump() {
     sound->playSound(0,30);
-    return true;
+    jumping = true;
+    jumpRequested = true;
+    speedY = -jumpForce;
 }
 
 bool Player::handleInput() {
@@ -231,12 +200,7 @@ bool Player::handleInput() {
     downKeyPressedLastFrame = kbs->downKeyPressed;
 
     if (kbs->spaceKeyPressed && wasOnGroundLastFrame && !jumping && !jumpRequested) {
-        if (true) {
-            onJump();//FIXME
-            jumping = true;
-            jumpRequested = true;
-            speedY = -jumpForce;
-        }
+        jump();
     }
 
     if (! kbs->spaceKeyPressed) {
@@ -270,7 +234,8 @@ void Player::hurt(GameObject* byWhat) {
     } else {
         qDebug() << "dead";
         dying = true;
-        if(life > 0) {
+        soapCount = 0;
+        if (life > 0) {
             life--;
         }
     }

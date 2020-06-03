@@ -107,17 +107,6 @@ void Entity::updateLogic() {
                 if (boundObject == this) {
                     continue;
                 }
-                int type = boundObject->type();
-                if (type == 8) {//ignore text elem
-                    continue;
-                }
-
-                //antigravity
-                bool isLadder = type == (UserType + 1);
-                if (isLadder) {
-                    realAccY = - 2 * accY;
-                    continue;
-                }
 
                 GameObject * gameObject = dynamic_cast<GameObject*>(boundObject);
                 bool nonCollidableHit = false;
@@ -125,8 +114,7 @@ void Entity::updateLogic() {
                 if (gameObject != nullptr) {
                     notCollidable = (gameObject->isCollidable() == false);
                 } else {
-                    //FIXME on collide plus les non gameobject
-                    //si on garde ca, go optimiser les if d'en dessous
+                    //on collide qu'avec les gameobject
                     continue;
                 }
 
@@ -234,17 +222,17 @@ void Entity::updateLogic() {
 
                 if (nextMoveY > originalMoveY && originalMoveY < 0) {
                     contactYtop = true;
-                    if (gameObject != nullptr) this->hit(gameObject, TOP);
+                    this->hit(gameObject, TOP);
                 }
 
                 if (nextMoveY < originalMoveY && originalMoveY > 0) {
                     contactYbottom = true;
-                    if (gameObject != nullptr) this->hit(gameObject, BOTTOM);
+                    this->hit(gameObject, BOTTOM);
                 }
 
                 if (qFabs(nextMoveX - originalMoveX) > 0.01f) {
                     contactX = true;
-                    if (gameObject != nullptr) this->hit(gameObject, SIDE);
+                    this->hit(gameObject, SIDE);
                 }
                 //we cancel the collision flags if the collision was a walkable entity
                 //but we still need to call the hit method

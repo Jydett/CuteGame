@@ -20,8 +20,6 @@ private:
     void accelerate(qreal accelX, qreal accelY);
     void move(qreal xDelta, qreal yDelta);
     void setCollisionPoint(QPointF collisions[8]);
-
-    //todo signal ??
     virtual void movementUpdated(qreal dX, qreal dY) {};
 
 protected:
