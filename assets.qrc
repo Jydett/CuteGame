@@ -16,4 +16,12 @@
         <file>images/pipebottom.png</file>
         <file>images/caillera.png</file>
     </qresource>
+    <qresource prefix="/levels">
+        <file>level/niveau1.json</file>
+        <file>level/niveau2.json</file>
+        <file>level/niveau3.json</file>
+        <file>level/niveau4.json</file>
+        <file>level/niveau5.json</file>
+        <file>level/niveauF.json</file>
+    </qresource>
 </RCC>

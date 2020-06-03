@@ -37,6 +37,7 @@ SOURCES += \
     player/thug.cpp \
     rotatingplateform.cpp \
     scene/gamemenu.cpp \
+    scene/levelmenu.cpp \
     scene/playscene.cpp \
     sound/music.cpp \
     sound/sound.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     player/thug.h \
     rotatingplateform.h \
     scene/gamemenu.h \
+    scene/levelmenu.h \
     scene/playscene.h \
     sound/music.h \
     sound/sound.h \
@@ -79,12 +81,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    level/niveau1.json \
-    level/niveau1_old.json \
-    level/niveau2.json \
-    level/niveau3.json \
-    level/niveauF.json \
-    level/test.json \
     music/bestMusic.mp3 \
     sounds/mask.mp3 \
     sounds/breakingBlock.wav \

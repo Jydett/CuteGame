@@ -87,22 +87,22 @@ void LevelMenu::start(QString path)
 
 void LevelMenu::startLevel1()
 {
-    start("C:/Users/lenam/Documents/CuteGame/level/niveau1.json");
+    start(":/levels/level/niveau1.json");
 }
 
 
 void LevelMenu::startLevel2()
 {
-    start("C:/Users/lenam/Documents/CuteGame/level/niveau2.json");
+    start(":/levels/level/niveau2.json");
 }
 
 void LevelMenu::startLevel3()
 {
-    start("C:/Users/lenam/Documents/CuteGame/level/niveau3.json");
+    start(":/levels/level/niveau3.json");
 }
 
 
 void LevelMenu::startLevelF()
 {
-    start("C:/Users/lenam/Documents/CuteGame/level/niveauF.json");
+    start(":/levels/level/niveauF.json");
 }
