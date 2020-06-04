@@ -6,7 +6,7 @@
 #include <QGlobal.h>
 #include <QTime>
 
-#include "scene/gamemenu.h"
+#include "view/mainview.h"
 
 
 
@@ -16,9 +16,9 @@ int main(int argc, char *argv[]) {
     qsrand((uint)time.msec());
 
 
-    gameMenu* menu = new gameMenu();
-    menu->show();
-    menu->displayMainMenu();
+    MainView* mainView = new MainView();
+    mainView->show();
+    mainView->display();
 
     return a.exec();
 }
