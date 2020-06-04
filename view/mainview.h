@@ -29,6 +29,7 @@ public slots:
     void closeMenu();
     void closeLvlView();
     void closeLvlMenu();
+    void nextLevel();
 private:
     gameMenu* menu;
     LevelMenu* lvlMenu;

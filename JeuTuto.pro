@@ -44,7 +44,8 @@ SOURCES += \
     sound/sound.cpp \
     stopblock.cpp \
     surpriseblock.cpp \
-    view/levelview.cpp
+    view/levelview.cpp \
+    view/mainview.cpp
 
 HEADERS += \
     antigravityfield.h \
@@ -75,7 +76,8 @@ HEADERS += \
     sound/sound.h \
     stopblock.h \
     surpriseblock.h \
-    view/levelview.h
+    view/levelview.h \
+    view/mainview.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -10,14 +10,13 @@ MainView::MainView()
 
     scene = new QGraphicsScene();
     scene->setSceneRect(100000000, 100000000, 0, 0);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 void MainView::closeEvent(QCloseEvent *event)
 {
     qDebug() << "close event";
 
-    this->menu = nullptr;
-    this->scene = nullptr;
     delete(this);
 }
 
@@ -65,6 +64,8 @@ void MainView::start(QString path)
 
     // connect signals
     connect(this->lvlView, SIGNAL(lvlViewClosed()), this, SLOT(closeLvlView()));
+
+    connect(this->game, SIGNAL(changeLevel()), this, SLOT(nextLevel()));
 
 }
 
@@ -146,7 +147,6 @@ void MainView::closeMenu()
     qDebug() << "close menu";
 
     this->lvlMenu = nullptr;
-    this->player = nullptr;
     this->lvlView = nullptr;
     this->game = nullptr;
 
@@ -157,26 +157,35 @@ void MainView::closeLvlView()
 {
     qDebug() << "close lvl view";
 
+
     scene->clear();
     this->show();
     this->lvlMenu->displayLevelMenu(scene);
 
-    this->game->clear();
-    this->lvlView->close();
 
-    this->game = nullptr;
-    this->player = nullptr;
-    this->lvlView = nullptr;
+    lvlView->stop();
+
+    qDebug() << "ici";
+
+    delete(game);
+
 }
 
+//todo a enlever
 void MainView::closeLvlMenu()
 {
     qDebug() << "close lvl menu";
 
-    scene->clear();
+    /*scene->clear();
     this->menu->displayMainMenu(scene);
 
-    this->lvlMenu = nullptr;
+    this->lvlMenu = nullptr;*/
+}
+
+void MainView::nextLevel()
+{
+    closeLvlView();
+
 }
 
 

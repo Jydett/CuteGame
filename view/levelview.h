@@ -19,6 +19,7 @@ public:
 //    QMediaPlaylist *bgm;
     LevelView();
     ~LevelView();
+    void stop();
     void sceneSet(QGraphicsScene * scene);
     KeyBoardStatus* keyboardStatus;
     void drawForeground(QPainter *painter, const QRectF &rect) override;

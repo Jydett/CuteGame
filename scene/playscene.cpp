@@ -143,14 +143,16 @@ PlayScene::PlayScene(QString path)
 //    mur3->setRect(100, 410, 300, 100);
 //    this->addItem(mur3);
 
-    timer = new QTimer;
+    ToiletPaper * tp = new ToiletPaper();
+    tp->setPosition(100, 250);
+    this->addItem(tp);
+    connect(tp, SIGNAL(nextLevel()), this, SLOT(doNextLevel()));
+
+    timer = new QTimer(this);
     QObject::connect(timer, &QTimer::timeout, this, &QGraphicsScene::advance);
     timer->start(1000 / 60);
 }
 
-PlayScene::~PlayScene() {
-   delete timer;
-}
 
 #define BRICK 1
 #define SURPRISE 2
@@ -175,6 +177,7 @@ PlayScene::~PlayScene() {
 
 void PlayScene::loadLevel(const QJsonObject& level) {
     this->clear();
+
     int width = qRound(level["width"].toDouble());
     QJsonArray data = level["layers"][0]["data"].toArray();
     int lastLineIndex = -1;
@@ -190,6 +193,7 @@ void PlayScene::loadLevel(const QJsonObject& level) {
             ToiletPaper * tp = new ToiletPaper();
             tp->setPosition(x, y);
             this->addItem(tp);
+            connect(tp, SIGNAL(nextLevel()), this, SLOT(doNextLevel()));
         } else if (blockType == PIPE_BOTTOM || blockType == PIPE_BOTTOM_DIRT) {
             PipeBottom * pipe = new PipeBottom();
             pipe->setPosition(x + 2, y);
@@ -253,6 +257,25 @@ void PlayScene::loadLevel(const QJsonObject& level) {
         }
         lastBlockType = blockType;
     }
+}
+
+void PlayScene::stopTimer()
+{
+    QList<QGraphicsItem*> all = items();
+    for (int i = 0; i < all.size(); i++)
+    {
+        QGraphicsItem *gi = all[i];
+        if(gi->parentItem()==NULL) {
+            delete gi;
+        }
+    }
+    qDebug() << items().size();
+    timer->stop();
+}
+
+void PlayScene::doNextLevel()
+{
+    emit changeLevel();
 }
 
 

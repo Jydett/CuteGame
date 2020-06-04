@@ -30,8 +30,8 @@ void ToiletPaper::hit(GameObject *what, Direction fromDir)
 {
     Player* player = dynamic_cast<Player*>(what);
     if (! toRemove && player != nullptr) {
-        //TODO nextLevel
         toRemove = true;
+        emit nextLevel();
         return;
     }
 }

@@ -6,8 +6,9 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 
-class ToiletPaper : public Inert, public QGraphicsRectItem
+class ToiletPaper : public QObject, public Inert, public QGraphicsRectItem
 {
+    Q_OBJECT
 public:
     ToiletPaper();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -25,7 +26,8 @@ public:
     };
 protected:
     void hit(GameObject* what, Direction fromDir) override;
-
+signals:
+    void nextLevel();
 private:
     QPixmap textureData;
 };

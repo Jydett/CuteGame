@@ -8,6 +8,7 @@ void gameMenu::closeEvent(QCloseEvent *event)
 gameMenu::gameMenu(QWidget *parent, QGraphicsScene* scene)
 {
     scene->clear();
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
 }
 

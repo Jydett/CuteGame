@@ -12,6 +12,7 @@ void LevelMenu::closeEvent(QCloseEvent *event)
 LevelMenu::LevelMenu(QWidget *parent, QGraphicsScene* scene)
 {
     scene->clear();
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 
