@@ -24,10 +24,8 @@ LevelView::LevelView()
 
 
     //add the music
-    music = new Music();
-    music->playMusic(10);
-
     this->setAttribute(Qt::WA_DeleteOnClose, true);
+    music.playMusic(10);
 }
 
 LevelView::~LevelView() {
@@ -37,7 +35,6 @@ LevelView::~LevelView() {
 void LevelView::stop()
 {
     dynamic_cast<PlayScene*>(scene())->stopTimer();
-    delete(music);
 }
 
 void LevelView::sceneSet(QGraphicsScene *scene) {

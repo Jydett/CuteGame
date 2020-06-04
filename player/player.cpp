@@ -39,7 +39,6 @@ Player::Player(LevelView* view)
     shootTimer = 0;
     invincibilityFrames = 0;
 
-    sound = new Sound;
 }
 
 void Player::updateLogic() {
@@ -119,7 +118,7 @@ void Player::shoot() {
         soapCount--;
         shootTimer = 60;
 
-        sound->playSound(4, 40);
+        sound.playSound(4, 40);
         Soap* soap = new Soap(! (bool)lastDirection);
         soap->setPosition(this->x(), this->y() + 10);
         this->scene()->addItem(dynamic_cast<QGraphicsItem *>(soap));
@@ -154,7 +153,7 @@ void Player::setPosition(int x, int y) {
 }
 
 void Player::jump() {
-    sound->playSound(0,30);
+    sound.playSound(0,30);
     jumping = true;
     jumpRequested = true;
     speedY = -jumpForce;
@@ -215,13 +214,23 @@ bool Player::handleInput() {
 }
 
 void Player::collectSoap() {
-    sound->playSound(1, 30);
+    sound.playSound(1, 30);
     soapCount++;
+}
+
+void Player::collectMask() {
+    sound.playSound(6, 100);
+    isMasked=true;
+}
+
+void Player::collectToiletPaper() {
+    sound.playSound(5, 100);
+    isMasked=true;
 }
 
 void Player::hurt(GameObject* byWhat) {
     if (invincibilityFrames > 0) return;
-    sound->playSound(3,40);
+    sound.playSound(3,40);
     if (isMasked) {
         isMasked = false;
         //apply knockback

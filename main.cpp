@@ -3,7 +3,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QObject>
-#include <QGlobal.h>
+#include <qglobal.h>
 #include <QTime>
 
 #include "view/mainview.h"

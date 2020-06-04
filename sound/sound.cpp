@@ -2,52 +2,22 @@
 
 Sound::Sound()
 {
-    soundPlayer = new QMediaPlayer;
+    //soundPlayer = QMediaPlayer;
+    //playlist = QMediaPlaylist;
+    playlist.addMedia(QUrl::fromLocalFile(path + "jump.wav"));
+    playlist.addMedia(QUrl::fromLocalFile(path + "coin.wav"));
+    playlist.addMedia(QUrl::fromLocalFile(path + "breakingBlock.wav"));
+    playlist.addMedia(QUrl::fromLocalFile(path + "pain.wav"));
+    playlist.addMedia(QUrl::fromLocalFile(path + "plop.mp3"));
+    playlist.addMedia(QUrl::fromLocalFile(path + "finishLvl.wav"));
+    playlist.addMedia(QUrl::fromLocalFile(path + "mask.mp3"));
+    playlist.setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+    soundPlayer.setPlaylist(&playlist);
 }
 
-Sound::~Sound(){
-    delete soundPlayer;
-}
 
 void Sound::playSound(int soundNumber,int volume) {
-    switch (soundNumber) {
-        case 0 :
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "jump.wav"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        case 1 :
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "coin.wav"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        case 2 :
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "breakingBlock.wav"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        case 3 :
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "pain.wav"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        case 4 :
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "plop.mp3"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        case 5 :
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "finishLvl.wav"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        case 6 :
-            qDebug() << path << "mask.mp3";
-            soundPlayer->setMedia(QUrl::fromLocalFile(path + "mask.mp3"));
-            soundPlayer->setVolume(volume);
-            soundPlayer->play();
-            break;
-        default: break;
-    }
-
+    playlist.setCurrentIndex(soundNumber);
+    soundPlayer.setVolume(volume);
+    soundPlayer.play();
 }
