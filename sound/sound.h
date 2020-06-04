@@ -14,7 +14,7 @@ public:
     void playSound(int soundNumber, int volume);
 private:
     QMediaPlayer* soundPlayer;
-    QString path = "C:/Users/Trombonesolo/Documents/JeuTuto/sounds/";
+    QString path = "C:/Users/lenam/Documents/CuteGame/sounds/";
 };
 
 #endif // SOUND_H
