@@ -2,29 +2,16 @@
 
 void gameMenu::closeEvent(QCloseEvent *event)
 {
-    delete(this);
+    emit menuClosed();
 }
 
-gameMenu::gameMenu(QWidget *parent)
+gameMenu::gameMenu(QWidget *parent, QGraphicsScene* scene)
 {
-    //create scene
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(1024, 768);
-
-    QBrush brush;
-    brush.setColor(Qt::yellow);
-    brush.setStyle(Qt::SolidPattern);
-
-    scene = new QGraphicsScene();
-    scene->setSceneRect(100000000, 100000000, 0, 0);
-
-    setScene(scene);
-    scene->setBackgroundBrush(brush);
+    scene->clear();
 
 }
 
-void gameMenu::displayMainMenu()
+void gameMenu::displayMainMenu(QGraphicsScene* scene)
 {
     //game name
     QGraphicsTextItem* gameName = new QGraphicsTextItem(QString("SUPER CORONARIO LEPEN"));
@@ -38,28 +25,35 @@ void gameMenu::displayMainMenu()
     //create play button
     button* playButton = new button(QString("Play !"));
     int posXplay = this->width()/2 - playButton->boundingRect().width()/2;
-    int posYplay = 170;
+    int posYplay = 215;
     playButton->setPos(posXplay, posYplay);
     connect(playButton, SIGNAL(clicked()), this, SLOT(start()));
     scene->addItem(playButton);
 
-
     //create quit button
     button* quitButton = new button(QString("Quit"));
     int posXquit = this->width()/2 - quitButton->boundingRect().width()/2;
-    int posYquit = 245;
+    int posYquit = 315;
     quitButton->setPos(posXquit, posYquit);
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(quitButton, SIGNAL(clicked()), this, SLOT(closeMenu()));
     scene->addItem(quitButton);
 }
 
 void gameMenu::start()
 {
-    this->hide();
+    /*this->hide();
     LevelMenu* levelMenu = new LevelMenu();
     levelMenu->show();
-    levelMenu->displayLevelMenu();
+    levelMenu->displayLevelMenu();*/
+
+    emit displayLvlMenu();
 }
+
+void gameMenu::closeMenu()
+{
+    emit menuClosed();
+}
+
 
 
 

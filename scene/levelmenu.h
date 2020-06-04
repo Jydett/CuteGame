@@ -19,8 +19,8 @@ class LevelMenu: public QGraphicsView{
 private:
     void closeEvent(QCloseEvent *event) override;
 public:
-    LevelMenu(QWidget* parent = NULL);
-    void displayLevelMenu();
+    LevelMenu(QWidget* parent = NULL, QGraphicsScene* scene = NULL);
+    void displayLevelMenu(QGraphicsScene* scene);
     void start(QString path);
 
 public slots:
@@ -30,9 +30,17 @@ public slots:
     void startLevel4();
     void startLevel5();
     void startLevelF();
+    void retour();
 
-private:
-    QGraphicsScene* scene;
+signals:
+    void displayLevel1();
+    void displayLevel2();
+    void displayLevel3();
+    void displayLevel4();
+    void displayLevel5();
+    void displayLevelF();
+    void lvlMenuClosed();
+    void returnToMainMenu();
 };
 
 #endif // LEVELMENU_H

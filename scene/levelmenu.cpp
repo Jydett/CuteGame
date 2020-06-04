@@ -3,31 +3,19 @@
 
 void LevelMenu::closeEvent(QCloseEvent *event)
 {
-    gameMenu* menu = new gameMenu();
+    /*gameMenu* menu = new gameMenu();
     menu->show();
-    menu->displayMainMenu();
+    menu->displayMainMenu();*/
+    emit lvlMenuClosed();
 }
 
-LevelMenu::LevelMenu(QWidget *parent)
+LevelMenu::LevelMenu(QWidget *parent, QGraphicsScene* scene)
 {
-    //create scene
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(1024, 768);
-
-    QBrush brush;
-    brush.setColor(Qt::yellow);
-    brush.setStyle(Qt::SolidPattern);
-
-    scene = new QGraphicsScene();
-    scene->setSceneRect(100000000, 100000000, 0, 0);
-    setScene(scene);
-    scene->setBackgroundBrush(brush);
-
+    scene->clear();
 }
 
 
-void LevelMenu::displayLevelMenu()
+void LevelMenu::displayLevelMenu(QGraphicsScene* scene)
 {
     QGraphicsTextItem* title = new QGraphicsTextItem(QString("Choisissez un niveau"));
     QFont nameFont("Consolas",30);
@@ -79,9 +67,16 @@ void LevelMenu::displayLevelMenu()
     levelF->setPos(posXlF, posYlF);
     connect(levelF, SIGNAL(clicked()), this, SLOT(startLevelF()));
     scene->addItem(levelF);
+
+    button* retour = new button(QString("Revenir au menu"));
+    int posXlr = this->width()/2 - retour->boundingRect().width()/2;;
+    int posYlr = 700;
+    retour->setPos(posXlr, posYlr);
+    connect(retour, SIGNAL(clicked()), this, SLOT(retour()));
+    scene->addItem(retour);
 }
 
-void LevelMenu::start(QString path)
+/*void LevelMenu::start(QString path)
 {
     this->hide();
     //add a view
@@ -102,35 +97,40 @@ void LevelMenu::start(QString path)
     view->centerOn(200, 400);
     view->show();
 
-}
+}*/
 
 void LevelMenu::startLevel1()
 {
-    start(":/levels/level/niveau1.json");
+    emit displayLevel1();
 }
 
 
 void LevelMenu::startLevel2()
 {
-    start(":/levels/level/niveau2.json");
+    emit displayLevel2();
 }
 
 void LevelMenu::startLevel3()
 {
-    start(":/levels/level/niveau3.json");
+    emit displayLevel3();
 }
 
 void LevelMenu::startLevel4()
 {
-    start(":/levels/level/niveau4.json");
+    emit displayLevel4();
 }
 
 void LevelMenu::startLevel5()
 {
-    start(":/levels/level/niveau5.json");
+    emit displayLevel5();
 }
 
 void LevelMenu::startLevelF()
 {
-    start(":/levels/level/niveauF.json");
+    emit displayLevelF();
+}
+
+void LevelMenu::retour()
+{
+    emit returnToMainMenu();
 }

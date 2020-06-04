@@ -16,14 +16,16 @@ class gameMenu: public QGraphicsView{
 private:
     void closeEvent(QCloseEvent *event) override;
 public:
-    gameMenu(QWidget* parent = NULL);
-    void displayMainMenu();
+    gameMenu(QWidget* parent = NULL, QGraphicsScene* scene = NULL);
+    void displayMainMenu(QGraphicsScene* scene);
 
 public slots:
     void start();
+    void closeMenu();
+signals:
+    void displayLvlMenu();
+    void menuClosed();
 
-private:
-    QGraphicsScene* scene;
 };
 
 #endif // GAMEMENU_H
