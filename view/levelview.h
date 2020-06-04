@@ -7,8 +7,10 @@
 
 class LevelView : public QGraphicsView {
     Q_OBJECT
+
 signals:
     void sceneChanged();
+    void lvlViewClosed();
 
 private:
     void closeEvent(QCloseEvent *event) override;

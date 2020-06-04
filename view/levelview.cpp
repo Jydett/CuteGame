@@ -4,10 +4,11 @@
 
 void LevelView::closeEvent(QCloseEvent *event)
 {
-    LevelMenu* levelMenu = new LevelMenu();
+    /*LevelMenu* levelMenu = new LevelMenu();
     levelMenu->show();
-    levelMenu->displayLevelMenu();
+    levelMenu->displayLevelMenu();*/
     delete(music);
+    emit lvlViewClosed();
 
 }
 
