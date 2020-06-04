@@ -5,6 +5,7 @@
 #include <QGraphicsRectItem>
 #include <QPixmap>
 #include <QGraphicsScene>
+#include "sound/sound.h"
 
 class ToiletPaper : public Inert, public QGraphicsRectItem
 {

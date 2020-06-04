@@ -29,7 +29,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private:
-    Music * music;
+    Music music;
 };
 
 #endif // VIEW_H

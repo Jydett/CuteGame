@@ -10,11 +10,12 @@ class Sound
 {
 public:
     Sound();
-    ~Sound();
+    //~Sound();
     void playSound(int soundNumber, int volume);
 private:
-    QMediaPlayer* soundPlayer;
-    QString path = "C:/Users/Trombonesolo/Documents/JeuTuto/sounds/";
+    QMediaPlayer soundPlayer;
+    QMediaPlaylist playlist;
+    QString path = "C:/Users/vlefi/Documents/Polytech 4A/Qt/CuteGame/sounds/";
 };
 
 #endif // SOUND_H

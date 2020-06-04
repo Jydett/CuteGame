@@ -18,6 +18,8 @@ public:
     bool isMasked;
     int life;
     void collectSoap();
+    void collectMask();
+    void collectToiletPaper();
 
 protected:
     bool handleInput() override;
@@ -50,7 +52,7 @@ private:
     void shoot();
     void jump();
 
-    Sound * sound;
+    Sound sound;
 };
 
 #endif // PLAYER2_H

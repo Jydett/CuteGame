@@ -7,7 +7,7 @@ void LevelView::closeEvent(QCloseEvent *event)
     /*LevelMenu* levelMenu = new LevelMenu();
     levelMenu->show();
     levelMenu->displayLevelMenu();*/
-    delete(music);
+    //delete(music);
     emit lvlViewClosed();
 
 }
@@ -25,8 +25,7 @@ LevelView::LevelView()
 
 
     //add the music
-    music = new Music();
-    music->playMusic(20);
+    music.playMusic(20);
 }
 
 LevelView::~LevelView() {
