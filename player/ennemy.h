@@ -20,6 +20,8 @@ protected:
     int annimationIndex;
     int width;
     int height;
+    int life;
+    int invincibilityFrames;
 };
 
 #endif // ENNEMY_H

@@ -9,6 +9,7 @@
 
 Thug::Thug() : Ennemy(":/assets/images/caillera.png", 16, 28) {
     spitTimer = INITIAL_SPIT;
+    life = 2;
 }
 
 void Thug::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -16,14 +17,17 @@ void Thug::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     if (spitTimer < TIME_SPIT_ANIM) {
         yOffset = height * 2;
     }
-    if (PlayScene::showBoundingBoxes)
+    if (PlayScene::showBoundingBoxes) {
         painter->drawRect(rect().toAlignedRect());
-    QPointF pos = boundingRect().topLeft();
-    painter->drawPixmap(
-        QPointF(pos.x(), pos.y()),
-        textureData,
-        QRectF(annimationIndex * width, (-direction + 1) / 2 * height + yOffset, width, height)
-    );
+    }
+    if (invincibilityFrames == 0 || invincibilityFrames % 5 == 0) {
+        QPointF pos = boundingRect().topLeft();
+        painter->drawPixmap(
+            QPointF(pos.x(), pos.y()),
+            textureData,
+            QRectF(annimationIndex * width, (-direction + 1) / 2 * height + yOffset, width, height)
+        );
+    }
 }
 
 void Thug::updateLogic() {

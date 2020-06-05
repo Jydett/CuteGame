@@ -96,7 +96,7 @@ void Player::updateLogic() {
     }
 
     if(dying){
-        soapCount = 0;
+        soapCount = soapCount / 2;
         isMasked = false;
         yIndex = 0;
         xIndex = 80;

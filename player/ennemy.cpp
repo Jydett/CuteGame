@@ -17,6 +17,8 @@ Ennemy::Ennemy(QString texture, int width, int height) {
     this->maxSpeedX = maxSpeedX / 3;
     this->annimationIndex = 0;
     this->annimationTimer = 0;
+    life = 1;
+    invincibilityFrames = 0;
 }
 
 void Ennemy::hit(GameObject* what, Direction fromDir) {
@@ -53,6 +55,9 @@ void Ennemy::updateLogic() {
         toRemove = true;
     } else {
         Entity::updateLogic();
+        if (invincibilityFrames > 0) {
+            invincibilityFrames--;
+        }
         annimationTimer++;
         if (annimationTimer > 6) {
             if (direction == 1) {
@@ -78,11 +83,17 @@ bool Ennemy::handleInput() {
 }
 
 void Ennemy::hurt(GameObject* byWhat) {
-    Entity * byWhayEntity = dynamic_cast<Entity *>(byWhat);
-    if (byWhayEntity != nullptr) {
-        this->speedX = byWhayEntity->sx() / 3;
-        this->speedY = byWhayEntity->sy() / 3;
+    if (invincibilityFrames > 0) return;
+    life--;
+    if (life > 0) {
+        Entity * byWhayEntity = dynamic_cast<Entity *>(byWhat);
+        if (byWhayEntity != nullptr) {
+            this->speedX = byWhayEntity->sx() / 3;
+            this->speedY = byWhayEntity->sy() / 3;
+        }
+        invincibilityFrames = 45;
+    } else {
+        this->dead = true;
+        this->toRemove = true;
     }
-    this->dead = true;
-    this->toRemove = true;
 }

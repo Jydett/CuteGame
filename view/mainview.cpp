@@ -36,6 +36,8 @@ void MainView::startLvlMenu() {
     connect(this->lvlMenu, SIGNAL(returnToMainMenu()), this, SLOT(backToMenu()));
     connect(this->lvlMenu, SIGNAL(lvlMenuClosed()), this, SLOT(closeLvlMenu()));
     game = new PlayScene();
+
+    connect(this->game, SIGNAL(changeLevel()), this, SLOT(nextLevel()));
 }
 
 void MainView::start(QString path) {
@@ -59,8 +61,6 @@ void MainView::start(QString path) {
 
     // connect signals
     connect(this->lvlView, SIGNAL(lvlViewClosed()), this, SLOT(closeLvlView()));
-
-    connect(this->game, SIGNAL(changeLevel()), this, SLOT(nextLevel()));
 
     game->display();
     lvlView->show();
@@ -159,7 +159,7 @@ void MainView::nextLevel() {
         case 3 : startLevel4(); break;
         case 4 : startLevel5(); break;
         case 5 : startLevelF(); break;
-        case 6 : menu->displayMainMenu(scene); break;
+        case 6 : break;
         default: startLevel1();
     }
 }

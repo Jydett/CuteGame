@@ -16,6 +16,7 @@
 #include "../stopblock.h"
 #include <QGraphicsView>
 #include <QList>
+#include "../core/roundplateform.h"
 
 bool PlayScene::showBoundingBoxes = false;
 

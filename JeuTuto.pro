@@ -25,6 +25,7 @@ SOURCES += \
     core/pipe_bottom.cpp \
     core/pipe_top.cpp \
     core/reapeatabletextureditem.cpp \
+    core/roundplateform.cpp \
     core/soap.cpp \
     core/soap_item.cpp \
     core/spit.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     core/pipe_bottom.h \
     core/pipe_top.h \
     core/reapeatabletextureditem.h \
+    core/roundplateform.h \
     core/soap.h \
     core/soap_item.h \
     core/spit.h \
