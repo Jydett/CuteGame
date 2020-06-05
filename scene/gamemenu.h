@@ -22,10 +22,10 @@ public:
 public slots:
     void start();
     void closeMenu();
+
 signals:
     void displayLvlMenu();
     void menuClosed();
-
 };
 
 #endif // GAMEMENU_H

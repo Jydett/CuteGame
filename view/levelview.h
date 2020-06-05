@@ -16,7 +16,6 @@ private:
     void closeEvent(QCloseEvent *event) override;
 
 public:
-//    QMediaPlaylist *bgm;
     LevelView();
     ~LevelView();
     void sceneSet(QGraphicsScene * scene);

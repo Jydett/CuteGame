@@ -2,15 +2,12 @@
 #include <QWheelEvent>
 #include "scene/levelmenu.h"
 
-void LevelView::closeEvent(QCloseEvent *event)
-{
+void LevelView::closeEvent(QCloseEvent *event) {
     scene()->clear();
     emit lvlViewClosed();
 }
 
-LevelView::LevelView()
-{
-//    bgm = new QMediaPlaylist;
+LevelView::LevelView() {
     this->setFixedSize(QSize(1280, 720));
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -18,7 +15,6 @@ LevelView::LevelView()
     this->setSceneRect(0, 0, 10000, 225);
     this->scale(1.4, 1.4);
     this->keyboardStatus = new KeyBoardStatus();
-
 
     //add the music
     this->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -36,11 +32,11 @@ void LevelView::sceneSet(QGraphicsScene *scene) {
 
 void LevelView::wheelEvent(QWheelEvent *e)
 {
-    //TODO max zoom ?
-    if(e->delta() > 0)
+    if (e->delta() > 0) {
         scale(1.1, 1.1);
-    else
+    } else {
         scale(1/1.1, 1/1.1);
+    }
 }
 
 void LevelView::keyPressEvent(QKeyEvent *event) {

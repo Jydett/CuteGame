@@ -1,7 +1,6 @@
 #include "sound.h"
 
-Sound::Sound()
-{
+Sound::Sound() {
     this->soundPlayer = new QMediaPlayer;
     this->playlist = new QMediaPlaylist;
     playlist->addMedia(QUrl::fromLocalFile(path + "jump.wav"));
@@ -19,7 +18,6 @@ Sound::~Sound() {
     delete playlist;
     delete soundPlayer;
 }
-
 
 void Sound::playSound(int soundNumber,int volume) {
     playlist->setCurrentIndex(soundNumber);

@@ -3,8 +3,7 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsItem>
 
-button::button(QString text, QGraphicsItem *parent): QGraphicsRectItem(parent)
-{
+button::button(QString text, QGraphicsItem *parent): QGraphicsRectItem(parent) {
     //set style and color of the button
     setRect(0, 0, 200, 30);
     QBrush brush;
@@ -22,28 +21,23 @@ button::button(QString text, QGraphicsItem *parent): QGraphicsRectItem(parent)
     setAcceptHoverEvents(true);
 }
 
-void button::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
+void button::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     emit clicked();
 }
 
-void button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
-{
+void button::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
     // change color
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::darkMagenta);
     setBrush(brush);
-
 }
 
-void button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
-{
+void button::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     // change color
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::magenta);
     setBrush(brush);
-
 }
 

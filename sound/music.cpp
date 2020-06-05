@@ -1,7 +1,6 @@
 #include "music.h"
 
-Music::Music()
-{
+Music::Music() {
     playlist = new QMediaPlaylist;
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
     musicPlayer = new QMediaPlayer;
@@ -12,7 +11,6 @@ Music::~Music() {
     delete playlist;
     delete musicPlayer;
 }
-
 
 void Music::playMusic(int volume) {
     playlist->addMedia(QUrl::fromLocalFile(path + "bestMusic.mp3"));

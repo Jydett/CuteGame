@@ -32,6 +32,7 @@ signals:
 
 public Q_SLOTS:
     void advanceTest();
+
 private:
     QTimer * timer;
     bool displayed = false;

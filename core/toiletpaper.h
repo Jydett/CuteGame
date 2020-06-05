@@ -25,10 +25,13 @@ public:
             GameObject::updateLogic();
         }
     };
+
 protected:
     void hit(GameObject* what, Direction fromDir) override;
+
 signals:
     void nextLevel();
+
 private:
     QPixmap textureData;
 };

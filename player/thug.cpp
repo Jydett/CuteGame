@@ -7,14 +7,11 @@
 #define TIME_SPIT_ANIM 70
 #define TIME_SPIT 40
 
-Thug::Thug() : Ennemy(":/assets/images/caillera.png", 16, 28)
-{
+Thug::Thug() : Ennemy(":/assets/images/caillera.png", 16, 28) {
     spitTimer = INITIAL_SPIT;
-//    accX = 0;
 }
 
-void Thug::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+void Thug::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     int yOffset = 0;
     if (spitTimer < TIME_SPIT_ANIM) {
         yOffset = height * 2;

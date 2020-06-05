@@ -9,6 +9,7 @@ public:
     Thug();
     void updateLogic() override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
 private:
     int spitTimer;
 };

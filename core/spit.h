@@ -14,6 +14,7 @@ public:
 protected:
     bool handleInput() override;
     void updateLogic() override;
+
 private:
     QGraphicsTextItem * debugIfo;
     QPixmap textureData;

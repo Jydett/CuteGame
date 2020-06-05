@@ -5,12 +5,12 @@
 #include <QMediaPlaylist>
 #include <QFileInfo>
 
-class Music
-{
+class Music {
 public:
     Music();
     ~Music();
     void playMusic(int volume);
+
 private:
     QMediaPlaylist * playlist;
     QMediaPlayer * musicPlayer;

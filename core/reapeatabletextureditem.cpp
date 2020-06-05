@@ -42,7 +42,6 @@ void ReapeatableTexturedItem::paint(QPainter* painter, const QStyleOptionGraphic
     } else {
         for (auto x = 0; x < width; x++) {
             for (auto y = 0; y < height; y++) {
-    //            qDebug() << QPointF(x * textureSize + pos.x(), y * textureSize + pos.y()).x();
                 painter->drawPixmap(
                     QPointF(x * textureSize + pos.x(), y * textureSize + pos.y()),
                     textureData,

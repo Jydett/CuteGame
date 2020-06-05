@@ -18,6 +18,7 @@ public:
     void remove() override {
         scene()->removeItem(this);
     }
+
 private:
     QPixmap textureData;
     int size;

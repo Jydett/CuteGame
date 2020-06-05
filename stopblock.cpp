@@ -2,8 +2,7 @@
 #include "scene/playscene.h"
 #include <QPainter>
 
-StopBlock::StopBlock()
-{
+StopBlock::StopBlock() {
     this->collidable = false;
     setRect(0, 0, 16, 16);
 }

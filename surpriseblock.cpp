@@ -5,8 +5,7 @@
 #include "scene/playscene.h"
 #include "player/player.h"
 
-SurpriseBlock::SurpriseBlock(bool hidden, GameObject* toSpawn)
-{
+SurpriseBlock::SurpriseBlock(bool hidden, GameObject* toSpawn) {
     this->toSpawn = toSpawn;
     this->collidable = true;
     this->hidden = hidden;

@@ -1,25 +1,19 @@
 #include "levelmenu.h"
 #include "scene/gamemenu.h"
 
-void LevelMenu::closeEvent(QCloseEvent *event)
-{
-    /*gameMenu* menu = new gameMenu();
-    menu->show();
-    menu->displayMainMenu();*/
+void LevelMenu::closeEvent(QCloseEvent *event) {
     emit lvlMenuClosed();
 }
 
-LevelMenu::LevelMenu(QWidget *parent, QGraphicsScene* scene)
-{
+LevelMenu::LevelMenu(QWidget *parent, QGraphicsScene* scene) {
     scene->clear();
     this->setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 
-void LevelMenu::displayLevelMenu(QGraphicsScene* scene)
-{
+void LevelMenu::displayLevelMenu(QGraphicsScene* scene) {
     QGraphicsTextItem* title = new QGraphicsTextItem(QString("Choisissez un niveau"));
-    QFont nameFont("Consolas",30);
+    QFont nameFont("Consolas", 30);
     title->setFont(nameFont);
     int posXtitle = this->width()/2 - title->boundingRect().width()/2;
     int posYtitle = 10;
@@ -77,61 +71,31 @@ void LevelMenu::displayLevelMenu(QGraphicsScene* scene)
     scene->addItem(retour);
 }
 
-/*void LevelMenu::start(QString path)
-{
-    this->hide();
-    //add a view
-    LevelView * view = new LevelView;
-//    view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-
-    PlayScene * scene = new PlayScene(path);
-    view->setScene(scene);
-    view->setSceneRect(0, 0, 100000000, 100000000);
-
-    //create an vieable item
-    Player * player = new Player(view);
-
-    //add the item to the scene
-    //make the player focusable -> mendatory to get key events
-    scene->addItem(player);
-
-    view->centerOn(200, 400);
-    view->show();
-
-}*/
-
-void LevelMenu::startLevel1()
-{
+void LevelMenu::startLevel1() {
     emit displayLevel1();
 }
 
 
-void LevelMenu::startLevel2()
-{
+void LevelMenu::startLevel2() {
     emit displayLevel2();
 }
 
-void LevelMenu::startLevel3()
-{
+void LevelMenu::startLevel3() {
     emit displayLevel3();
 }
 
-void LevelMenu::startLevel4()
-{
+void LevelMenu::startLevel4() {
     emit displayLevel4();
 }
 
-void LevelMenu::startLevel5()
-{
+void LevelMenu::startLevel5() {
     emit displayLevel5();
 }
 
-void LevelMenu::startLevelF()
-{
+void LevelMenu::startLevelF() {
     emit displayLevelF();
 }
 
-void LevelMenu::retour()
-{
+void LevelMenu::retour() {
     emit returnToMainMenu();
 }

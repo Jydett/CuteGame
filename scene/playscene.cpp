@@ -1,6 +1,4 @@
 #include "playscene.h"
-#include "../rotatingplateform.h"
-#include "../antigravityfield.h"
 #include "../core/reapeatabletextureditem.h"
 #include "../surpriseblock.h"
 #include "../core/soap_item.h"
@@ -8,7 +6,6 @@
 #include "../player/coronaball.h"
 #include "../player/thug.h"
 #include "../core/spit.h"
-#include "../core/roundplateform.h"
 #include "../core/pipe_top.h"
 #include "../core/pipe_bottom.h"
 #include <QJsonArray>
@@ -22,8 +19,7 @@
 
 bool PlayScene::showBoundingBoxes = false;
 
-PlayScene::PlayScene()
-{
+PlayScene::PlayScene() {
     setBackgroundBrush(QPixmap(":/assets/images/bg.png"));
 
 //    QGraphicsEllipseItem * mur3 = new RoundPlateform();
@@ -43,11 +39,6 @@ void PlayScene::load(QString path) {
         loadLevel(QJsonDocument(QJsonDocument::fromJson(levelFile.readAll())).object());
         levelFile.close();
     }
-
-    ToiletPaper * tp = new ToiletPaper();
-    tp->setPosition(100, 250);
-    this->addItem(tp);
-    connect(tp, SIGNAL(nextLevel()), this, SLOT(doNextLevel()));
 }
 
 #define BRICK 1
@@ -172,9 +163,10 @@ void PlayScene::stop() {
 void PlayScene::advanceTest() {
     if (displayed) {
         QGraphicsScene::advance();
-        qDebug() << "displayed";
     } else if (stopFrame) {
-        views().at(0)->close();
+        for (auto v : views()) {
+            v->close();
+        }
         emit changeLevel();
         stopFrame = false;
     }

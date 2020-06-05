@@ -6,8 +6,7 @@
 
 #define SIZE 16
 
-Ennemy::Ennemy(QString texture, int width, int height)
-{
+Ennemy::Ennemy(QString texture, int width, int height) {
     this->width = width;
     this->height = height;
     wallHit = 0;
@@ -45,7 +44,6 @@ void Ennemy::hit(GameObject* what, Direction fromDir) {
     Player* player = dynamic_cast<Player*>(what);
     if (player != nullptr) {
         player->hurt(this);
-        qDebug() << "Ennemy touché";
         return;
     }
 }

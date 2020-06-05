@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
 
-
     MainView* mainView = new MainView();
     mainView->show();
     mainView->display();

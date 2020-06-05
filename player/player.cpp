@@ -11,8 +11,7 @@
 
 #define DEBUG
 
-Player::Player(LevelView* view)
-{
+Player::Player(LevelView* view) {
     this->view = view;
     this->spriteWidth = 16;
     this->spriteHeight = 32;
@@ -38,7 +37,6 @@ Player::Player(LevelView* view)
     life = 3;
     shootTimer = 0;
     invincibilityFrames = 0;
-
 }
 
 void Player::updateLogic() {
@@ -103,11 +101,9 @@ void Player::updateLogic() {
         yIndex = 0;
         xIndex = 80;
         if (life > 0) {
-            qDebug() << QString("life : %1").arg(life);
             dying = false;
             Player::setPosition(0,0);
-        }
-        else {
+        } else {
             dying = false;
             dead = true;
         }
@@ -242,7 +238,6 @@ void Player::hurt(GameObject* byWhat) {
         }
         invincibilityFrames = 45;
     } else {
-        qDebug() << "dead";
         dying = true;
         if (life > 0) {
             life--;

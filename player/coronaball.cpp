@@ -2,13 +2,11 @@
 #include "../scene/playscene.h"
 #include <QPainter>
 
-CoronaBall::CoronaBall() : Ennemy(":/assets/images/virus.png", 16, 16)
-{
+CoronaBall::CoronaBall() : Ennemy(":/assets/images/virus.png", 16, 16) {
 
 }
 
-void CoronaBall::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+void CoronaBall::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     if (PlayScene::showBoundingBoxes)
         painter->drawRect(rect().toAlignedRect());
     QPointF pos = boundingRect().topLeft();

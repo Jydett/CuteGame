@@ -15,8 +15,10 @@ public:
     MainView();
     void start(QString path);
     void display();
+
 private:
     void closeEvent(QCloseEvent *event) override;
+
 public slots:
     void startLvlMenu();
     void startLevel1();
@@ -30,6 +32,7 @@ public slots:
     void closeLvlView();
     void closeLvlMenu();
     void nextLevel();
+
 private:
     gameMenu* menu;
     LevelMenu* lvlMenu;

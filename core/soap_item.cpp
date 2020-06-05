@@ -3,8 +3,7 @@
 #include <QPainter>
 #include "../scene/playscene.h"
 
-SoapItem::SoapItem()
-{
+SoapItem::SoapItem() {
     collidable = false;
     collected = false;
     setRect(0, 0, 12, 16);
@@ -15,20 +14,19 @@ void SoapItem::setPosition(int x, int y) {
     setRect(x, y, 12, 16);
 }
 
-void SoapItem::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+void SoapItem::paint(QPainter * painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     QPointF pos = rect().topLeft();
     painter->drawPixmap(
         QPointF(pos.x(), pos.y()),
         textureData,
         QRectF(0, 0, 12, 16)
     );
-    if (PlayScene::showBoundingBoxes)
+    if (PlayScene::showBoundingBoxes) {
         painter->drawRect(rect());
+    }
 }
 
-void SoapItem::hit(GameObject *what, Direction fromDir)
-{
+void SoapItem::hit(GameObject *what, Direction fromDir) {
     Player* player = dynamic_cast<Player*>(what);
     if (! collected && player != nullptr) {
         player->collectSoap();

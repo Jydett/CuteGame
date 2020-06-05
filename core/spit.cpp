@@ -3,8 +3,7 @@
 #include <QPainter>
 #include "player/player.h"
 
-Spit::Spit(int direction)
-{
+Spit::Spit(int direction) {
     this->annimationTimer = 0;
     this->annimationIndex = 0;
     setRect(0, 0, 9, 9);
