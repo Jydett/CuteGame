@@ -1,22 +1,22 @@
 #include "playscene.h"
-#include "../core/reapeatabletextureditem.h"
-#include "../surpriseblock.h"
-#include "../core/soap_item.h"
-#include "../core/mask.h"
-#include "../player/coronaball.h"
-#include "../player/thug.h"
-#include "../core/spit.h"
-#include "../core/pipe_top.h"
-#include "../core/pipe_bottom.h"
+#include "../blocks/reapeatabletextureditem.h"
+#include "../blocks/surpriseblock.h"
+#include "../collectible/soap_item.h"
+#include "../collectible/mask.h"
+#include "../entities/coronaball.h"
+#include "../entities/thug.h"
+#include "../entities/spit.h"
+#include "../blocks/pipe_top.h"
+#include "../blocks/pipe_bottom.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QObject>
-#include "../core/toiletpaper.h"
-#include "../stopblock.h"
+#include "../collectible/toiletpaper.h"
+#include "../blocks/stopblock.h"
 #include <QGraphicsView>
 #include <QList>
-#include "../core/roundplateform.h"
+#include "../blocks/roundplateform.h"
 
 bool PlayScene::showBoundingBoxes = false;
 

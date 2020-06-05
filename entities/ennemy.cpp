@@ -2,7 +2,7 @@
 #include "player.h"
 #include "../core/inert.h"
 #include "../scene/playscene.h"
-#include "../stopblock.h"
+#include "../blocks/stopblock.h"
 
 #define SIZE 16
 

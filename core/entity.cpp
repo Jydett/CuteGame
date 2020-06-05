@@ -5,7 +5,7 @@
 #include <QtMath>
 #include "gameobject.h"
 
-#include "../surpriseblock.h"
+#include "../blocks/surpriseblock.h"
 
 Entity::Entity()
 {

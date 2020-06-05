@@ -1,7 +1,7 @@
 #include "spit.h"
-#include "inert.h"
+#include "../core/inert.h"
 #include <QPainter>
-#include "player/player.h"
+#include "player.h"
 
 Spit::Spit(int direction) {
     this->annimationTimer = 0;

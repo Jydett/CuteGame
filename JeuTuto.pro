@@ -16,62 +16,62 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    button.cpp \
+    blocks/pipe_bottom.cpp \
+    blocks/pipe_top.cpp \
+    blocks/reapeatabletextureditem.cpp \
+    blocks/roundplateform.cpp \
+    blocks/stopblock.cpp \
+    blocks/surpriseblock.cpp \
+    collectible/mask.cpp \
+    collectible/soap_item.cpp \
+    collectible/toiletpaper.cpp \
     core/entity.cpp \
     core/gameobject.cpp \
     core/inert.cpp \
     core/keyboardstatus.cpp \
-    core/mask.cpp \
-    core/pipe_bottom.cpp \
-    core/pipe_top.cpp \
-    core/reapeatabletextureditem.cpp \
-    core/roundplateform.cpp \
-    core/soap.cpp \
-    core/soap_item.cpp \
-    core/spit.cpp \
-    core/toiletpaper.cpp \
+    entities/coronaball.cpp \
+    entities/ennemy.cpp \
+    entities/player.cpp \
+    entities/soap.cpp \
+    entities/spit.cpp \
+    entities/thug.cpp \
     main.cpp \
-    player/coronaball.cpp \
-    player/ennemy.cpp \
-    player/player.cpp \
-    player/thug.cpp \
-    scene/gamemenu.cpp \
-    scene/levelmenu.cpp \
     scene/playscene.cpp \
+    scene/ui/button.cpp \
     sound/music.cpp \
     sound/sound.cpp \
-    stopblock.cpp \
-    surpriseblock.cpp \
+    view/gamemenu.cpp \
+    view/levelmenu.cpp \
     view/levelview.cpp \
     view/mainview.cpp
 
 HEADERS += \
-    button.h \
+    blocks/pipe_bottom.h \
+    blocks/pipe_top.h \
+    blocks/reapeatabletextureditem.h \
+    blocks/roundplateform.h \
+    blocks/stopblock.h \
+    blocks/surpriseblock.h \
+    collectible/mask.h \
+    collectible/soap_item.h \
+    collectible/toiletpaper.h \
     core/Type.h \
     core/entity.h \
     core/gameobject.h \
     core/inert.h \
     core/keyboardstatus.h \
-    core/mask.h \
-    core/pipe_bottom.h \
-    core/pipe_top.h \
-    core/reapeatabletextureditem.h \
-    core/roundplateform.h \
-    core/soap.h \
-    core/soap_item.h \
-    core/spit.h \
-    core/toiletpaper.h \
-    player/coronaball.h \
-    player/ennemy.h \
-    player/player.h \
-    player/thug.h \
-    scene/gamemenu.h \
-    scene/levelmenu.h \
+    entities/coronaball.h \
+    entities/ennemy.h \
+    entities/player.h \
+    entities/soap.h \
+    entities/spit.h \
+    entities/thug.h \
     scene/playscene.h \
+    scene/ui/button.h \
     sound/music.h \
     sound/sound.h \
-    stopblock.h \
-    surpriseblock.h \
+    view/gamemenu.h \
+    view/levelmenu.h \
     view/levelview.h \
     view/mainview.h
 
@@ -82,11 +82,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     music/bestMusic.mp3 \
+    sounds/gruntsound.wav \
     sounds/mask.mp3 \
     sounds/breakingBlock.wav \
     sounds/coin.wav \
     sounds/finishLvl.wav \
-    sounds/jump.wav
+    sounds/jump.wav \
+    sounds/pain.wav \
+    sounds/plop.mp3
 
 RESOURCES += \
     assets.qrc

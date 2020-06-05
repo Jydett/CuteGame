@@ -1,5 +1,5 @@
 #include "stopblock.h"
-#include "scene/playscene.h"
+#include "../scene/playscene.h"
 #include <QPainter>
 
 StopBlock::StopBlock() {

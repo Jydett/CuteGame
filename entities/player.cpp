@@ -1,10 +1,10 @@
 #include "player.h"
 #include <QDebug>
 #include <typeinfo>
-#include "../surpriseblock.h"
+#include "../blocks/surpriseblock.h"
 #include "../scene/playscene.h"
 #include "../core/keyboardstatus.h"
-#include "../core/soap.h"
+#include "soap.h"
 #include <QApplication>
 
 #define SPEED 3

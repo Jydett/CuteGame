@@ -1,7 +1,7 @@
 #ifndef PIPE_H
 #define PIPE_H
 
-#include "inert.h"
+#include "../core/inert.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 

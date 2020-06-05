@@ -1,7 +1,7 @@
 #ifndef REAPEATABLETEXTUREDITEM_H
 #define REAPEATABLETEXTUREDITEM_H
 
-#include "inert.h"
+#include "../core/inert.h"
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 

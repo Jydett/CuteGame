@@ -1,8 +1,8 @@
 #ifndef STOPBLOCK_H
 #define STOPBLOCK_H
 #include <QGraphicsRectItem>
-#include "core/inert.h"
-#include "core/Type.h"
+#include "../core/inert.h"
+#include "../core/Type.h"
 #include <QGraphicsScene>
 
 

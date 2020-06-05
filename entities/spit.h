@@ -1,6 +1,6 @@
 #ifndef SPIT_H
 #define SPIT_H
-#include "entity.h"
+#include "../core/entity.h"
 
 
 class Spit : public Entity

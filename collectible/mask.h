@@ -1,9 +1,9 @@
 #ifndef MASK_H
 #define MASK_H
-#include "inert.h"
+#include "../core/inert.h"
 #include <QGraphicsRectItem>
 #include <QPixmap>
-#include "../player/player.h"
+#include "../entities/player.h"
 
 class Mask: public Inert, public QGraphicsRectItem
 {

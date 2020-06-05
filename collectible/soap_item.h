@@ -1,19 +1,18 @@
-#ifndef TOILETPAPER_H
-#define TOILETPAPER_H
-
-#include "inert.h"
+#ifndef COIN_H
+#define COIN_H
+#include "../core/inert.h"
 #include <QGraphicsRectItem>
 #include <QPixmap>
-#include <QGraphicsScene>
-#include "sound/sound.h"
+#include "../entities/player.h"
 
-class ToiletPaper : public QObject, public Inert, public QGraphicsRectItem
+
+class SoapItem : public Inert, public QGraphicsRectItem
 {
-    Q_OBJECT
 public:
-    ToiletPaper();
+    SoapItem();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    enum { Type = COIN_TYPE };//FIXME cointype
+
+    enum { Type = COIN_TYPE };
     int type() const override { return Type; };
     void setPosition(int x, int y) override;
     void remove() override {
@@ -25,14 +24,12 @@ public:
             GameObject::updateLogic();
         }
     };
-
 protected:
     void hit(GameObject* what, Direction fromDir) override;
 
-signals:
-    void nextLevel();
-
 private:
+    bool collected;
     QPixmap textureData;
 };
-#endif // TOILETPAPER_H
+
+#endif // COIN_H

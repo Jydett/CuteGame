@@ -1,6 +1,6 @@
 #ifndef ROUNDPLATEFORM_H
 #define ROUNDPLATEFORM_H
-#include "inert.h"
+#include "../core/inert.h"
 #include <QGraphicsEllipseItem>
 #include <QGraphicsPolygonItem>
 

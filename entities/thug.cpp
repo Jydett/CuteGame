@@ -1,6 +1,6 @@
 #include "thug.h"
 #include "../scene/playscene.h"
-#include "../core/spit.h"
+#include "spit.h"
 #include <QPainter>
 
 #define INITIAL_SPIT 300

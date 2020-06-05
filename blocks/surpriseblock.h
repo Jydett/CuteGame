@@ -1,8 +1,8 @@
 #ifndef SURPRISEBLOCK_H
 #define SURPRISEBLOCK_H
 #include <QGraphicsRectItem>
-#include "core/inert.h"
-#include "core/Type.h"
+#include "../core/inert.h"
+#include "../core/Type.h"
 #include <QGraphicsScene>
 
 class SurpriseBlock : public Inert, public QGraphicsRectItem

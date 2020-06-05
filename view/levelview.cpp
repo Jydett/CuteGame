@@ -1,6 +1,6 @@
 #include "levelview.h"
 #include <QWheelEvent>
-#include "scene/levelmenu.h"
+#include "view/levelmenu.h"
 
 void LevelView::closeEvent(QCloseEvent *event) {
     scene()->clear();

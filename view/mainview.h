@@ -2,14 +2,14 @@
 #define MAINVIEW_H
 
 #include <QGraphicsView>
-#include "scene/levelmenu.h"
-#include "scene/gamemenu.h"
+#include "view/levelmenu.h"
+#include "view/gamemenu.h"
 #include "scene/playscene.h"
 #include "levelview.h"
-#include "player/player.h"
+#include "entities/player.h"
 
 
-class MainView: public QGraphicsView{
+class MainView: public QGraphicsView {
     Q_OBJECT
 public:
     MainView();

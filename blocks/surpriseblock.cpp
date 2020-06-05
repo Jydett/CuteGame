@@ -2,8 +2,8 @@
 #include <QRectF>
 #include <QPainter>
 #include <QDebug>
-#include "scene/playscene.h"
-#include "player/player.h"
+#include "../scene/playscene.h"
+#include "../entities/player.h"
 
 SurpriseBlock::SurpriseBlock(bool hidden, GameObject* toSpawn) {
     this->toSpawn = toSpawn;

@@ -1,5 +1,5 @@
 #include "toiletpaper.h"
-#include "../player/player.h"
+#include "../entities/player.h"
 #include <QPainter>
 #include "../scene/playscene.h"
 

@@ -1,8 +1,8 @@
 #include "soap.h"
-#include "inert.h"
+#include "../core/inert.h"
 #include <QPainter>
-#include "player/player.h"
-#include "../player/ennemy.h"
+#include "player.h"
+#include "ennemy.h"
 
 Soap::Soap(bool direction)
 {
