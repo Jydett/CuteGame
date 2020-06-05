@@ -16,7 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    antigravityfield.cpp \
     button.cpp \
     core/entity.cpp \
     core/gameobject.cpp \
@@ -26,7 +25,6 @@ SOURCES += \
     core/pipe_bottom.cpp \
     core/pipe_top.cpp \
     core/reapeatabletextureditem.cpp \
-    core/roundplateform.cpp \
     core/soap.cpp \
     core/soap_item.cpp \
     core/spit.cpp \
@@ -36,7 +34,6 @@ SOURCES += \
     player/ennemy.cpp \
     player/player.cpp \
     player/thug.cpp \
-    rotatingplateform.cpp \
     scene/gamemenu.cpp \
     scene/levelmenu.cpp \
     scene/playscene.cpp \
@@ -48,7 +45,6 @@ SOURCES += \
     view/mainview.cpp
 
 HEADERS += \
-    antigravityfield.h \
     button.h \
     core/Type.h \
     core/entity.h \
@@ -59,7 +55,6 @@ HEADERS += \
     core/pipe_bottom.h \
     core/pipe_top.h \
     core/reapeatabletextureditem.h \
-    core/roundplateform.h \
     core/soap.h \
     core/soap_item.h \
     core/spit.h \
@@ -68,7 +63,6 @@ HEADERS += \
     player/ennemy.h \
     player/player.h \
     player/thug.h \
-    rotatingplateform.h \
     scene/gamemenu.h \
     scene/levelmenu.h \
     scene/playscene.h \
