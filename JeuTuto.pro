@@ -55,7 +55,6 @@ HEADERS += \
     collectible/mask.h \
     collectible/soap_item.h \
     collectible/toiletpaper.h \
-    core/Type.h \
     core/entity.h \
     core/gameobject.h \
     core/inert.h \

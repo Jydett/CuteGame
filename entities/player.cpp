@@ -23,7 +23,6 @@ Player::Player(LevelView* view) {
     generateCollisionBox();
     this->debugIfo = new QGraphicsTextItem(this);
     textureData = QPixmap(":/assets/images/player.png");
-     //TODO gerer erreur
     this->downKeyPressedLastFrame = false;
     this->isCrouching = false;
 
@@ -188,10 +187,8 @@ bool Player::handleInput() {
             setY(y() - 16);
             setRect(0, 0, 16, 32);
         }
-        //TODO optimisation passer d'une bb à l'autre sans la regenerer
         generateCollisionBox();
     }
-    //TODO pas refresh a chaque fois
     QGraphicsRectItem::update(rect());
     downKeyPressedLastFrame = kbs->downKeyPressed;
 

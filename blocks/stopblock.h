@@ -2,7 +2,6 @@
 #define STOPBLOCK_H
 #include <QGraphicsRectItem>
 #include "../core/inert.h"
-#include "../core/Type.h"
 #include <QGraphicsScene>
 
 
@@ -12,8 +11,6 @@ public:
     StopBlock();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setPosition(int x, int y) override;
-    enum { Type = BLOCK_TYPE };
-    int type() const override { return Type; };
     void remove() override {
         scene()->removeItem(this);
     }

@@ -11,9 +11,6 @@ class SoapItem : public Inert, public QGraphicsRectItem
 public:
     SoapItem();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
-    enum { Type = COIN_TYPE };
-    int type() const override { return Type; };
     void setPosition(int x, int y) override;
     void remove() override {
         scene()->removeItem(this);

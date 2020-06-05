@@ -3,15 +3,12 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include "gameobject.h"
-#include "Type.h"
 
 class Entity : public GameObject, public QGraphicsRectItem
 {
 public:
     Entity();
     virtual bool handleInput() { return false; };
-    enum { Type = ENTITY_TYPE };
-    int type() const override { return Type; };
     virtual void hurt(GameObject* byWhat) {};
     inline qreal sx() const { return speedX; }
     inline qreal sy() const { return speedY; }

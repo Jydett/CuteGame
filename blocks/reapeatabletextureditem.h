@@ -12,8 +12,6 @@ public:
     ReapeatableTexturedItem(QString file, int width, int height, int textureSize);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void nextFrame();
-    enum { Type = BLOCK_TYPE };
-    int type() const override { return Type; };
     void setPosition(int x, int y) override;
     void setWidth(int width);
     int width;

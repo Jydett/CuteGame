@@ -24,6 +24,7 @@ void MainView::startLvlMenu() {
     //create lvl menu
     this->menu->hide();
     lvlMenu = new LevelMenu(nullptr, scene);
+    lvlMenu->setWindowTitle("Super corona lepen");
     lvlMenu->displayLevelMenu(scene);
 
     //connect lvl menu signals
@@ -47,6 +48,7 @@ void MainView::start(QString path) {
 
     //add a view
     lvlView = new LevelView();
+    lvlView->setWindowTitle("Super corona lepen");
     lvlView->setScene(game);
     lvlView->setSceneRect(0, 0, 100000000, 100000000);
     game->load(path);

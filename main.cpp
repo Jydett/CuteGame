@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     qsrand((uint)time.msec());
 
     MainView* mainView = new MainView();
+    mainView->setWindowTitle("Super corona lepen");
     mainView->show();
     mainView->display();
 

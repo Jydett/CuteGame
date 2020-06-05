@@ -9,8 +9,6 @@ class PipeTop : public Inert, public QGraphicsRectItem
 {
 public:
     PipeTop();
-    enum { Type = BLOCK_TYPE };
-    int type() const override { return Type; };
     void setPosition(int x, int y) override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
