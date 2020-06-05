@@ -16,6 +16,6 @@ public:
 private:
     QMediaPlayer * soundPlayer;
     QMediaPlaylist * playlist;
-    QString path = "C:/Users/Trombonesolo/Documents/JeuTuto/sounds/";
+    QString path = "sounds/";
 };
 #endif // SOUND_H
