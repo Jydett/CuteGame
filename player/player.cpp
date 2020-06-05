@@ -98,11 +98,12 @@ void Player::updateLogic() {
     }
 
     if(dying){
+        soapCount = 0;
+        isMasked = false;
         yIndex = 0;
         xIndex = 80;
         if (life > 0) {
-            QString lifeRemaining = QString("life : %1").arg(life);
-            qDebug() << lifeRemaining;
+            qDebug() << QString("life : %1").arg(life);
             dying = false;
             Player::setPosition(0,0);
         }
@@ -239,11 +240,10 @@ void Player::hurt(GameObject* byWhat) {
             this->speedX = byWhayEntity->sx() / 3;
             this->speedY = byWhayEntity->sy() / 3;
         }
-        invincibilityFrames = 20;
+        invincibilityFrames = 45;
     } else {
         qDebug() << "dead";
         dying = true;
-        soapCount = 0;
         if (life > 0) {
             life--;
         }

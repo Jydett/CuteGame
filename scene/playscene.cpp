@@ -17,118 +17,25 @@
 #include <QObject>
 #include "../core/toiletpaper.h"
 #include "../stopblock.h"
+#include <QGraphicsView>
+#include <QList>
 
 bool PlayScene::showBoundingBoxes = false;
 
-PlayScene::PlayScene(QString path)
+PlayScene::PlayScene()
 {
+    setBackgroundBrush(QPixmap(":/assets/images/bg.png"));
 
-////    RotatingPlateform* rooo = new RotatingPlateform();
-////    this->addItem(rooo);
+//    QGraphicsEllipseItem * mur3 = new RoundPlateform();
+//    mur3->setRect(100, 410, 300, 100);
+//    this->addItem(mur3);
 
-////    QGraphicsRectItem * ground = new QGraphicsRectItem();
-////    ground->setRect(0, 150, 500, 3);
-////    ground->setTransformOriginPoint(ground->boundingRect().center());
-////    ground->setRotation(340);
-////    this->addItem(ground);
+    timer = new QTimer(this);
+    QObject::connect(timer, &QTimer::timeout, this, &PlayScene::advanceTest);
+    timer->start(1000 / 60);
+}
 
-
-////    QGraphicsRectItem * mur = new QGraphicsRectItem();
-////    mur->setRect(150, 300, 75, 200);
-////    this->addItem(mur);
-
-////    QGraphicsEllipseItem * mur2 = new QGraphicsEllipseItem();
-////    mur2->setRect(-300, 400, 200, 200);
-////    this->addItem(mur2);
-
-////    QGraphicsEllipseItem * mur3 = new QGraphicsEllipseItem();
-////    mur3->setRect(-30, 550, 300, 50);
-////    this->addItem(mur3);
-
-
-////    QGraphicsRectItem * ground1 = new QGraphicsRectItem();
-////    ground1->setRect(0, 600, 3000, 20);
-////    this->addItem(ground1);
-
-//    const int TEXTURE_SIZE = 16;
-
-////    ReapeatableTexturedItem * petit = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);
-////    petit->setPosition(230, 600 - 16);
-////    this->addItem(petit);
-
-//    ReapeatableTexturedItem * wall = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 6, TEXTURE_SIZE);
-//    wall->setPosition(0, 500 + 16);
-//    this->addItem(wall);
-
-
-//    ReapeatableTexturedItem * wall2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 6, TEXTURE_SIZE);
-//    wall2->setPosition(600, 500 + 16);
-//    this->addItem(wall2);
-
-//    ReapeatableTexturedItem * ground1 = new ReapeatableTexturedItem(":/assets/images/brick.png", 200, 1, TEXTURE_SIZE);
-//    ground1->setPosition(0, 600);
-//    this->addItem(ground1);
-
-//    ReapeatableTexturedItem * ground2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 10, 1, TEXTURE_SIZE);
-//    ground2->setPosition(0, 500);
-//    this->addItem(ground2);
-
-////    ReapeatableTexturedItem * mur = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 3, TEXTURE_SIZE);
-////    mur->setPosition(260, 600 - 48);
-////    this->addItem(mur);
-
-//    Ennemy * ennemy = new Ennemy();
-//    ennemy->setPosition(280, 600 - 100);
-//    this->addItem(ennemy);
-
-////    ReapeatableTexturedItem * mur2 = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 2, TEXTURE_SIZE);
-////    mur2->setPosition(300, 600 - 32);
-////    this->addItem(mur2);
-
-////    QGraphicsRectItem * ladder = new AntigravityField();
-////    ladder->setRect(550, 100, 100, 20);
-////    this->addItem(ladder);
-
-//    for (auto i = 0; i < 6; i++) {
-////        SurpriseBlock * block = new SurpriseBlock(i % 2 == 1);
-////        block->setPosition(300 + (i * 25), 600 - 32 - i * 2);
-////        this->addItem(block);
-
-//        if (i == 5) {
-//            Mask * mask = new Mask();
-//            mask->setPosition(300 + (i * 32), 600 - 16);
-//            this->addItem(mask);
-//        } else {
-//            Coin * coin = new Coin();
-//            coin->setPosition(300 + (i * 32), 600 - 16);
-//            this->addItem(coin);
-//        }
-
-//    }
-
-//    for (auto i = 0; i < 5; i++) {
-//        SurpriseBlock * block = new SurpriseBlock(i % 2 == 1);
-//        block->setPosition(316 + (i * 32), 500);
-//        this->addItem(block);
-//    }
-
-//    ReapeatableTexturedItem * myFirstBlock = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 1, TEXTURE_SIZE);
-//    myFirstBlock->setPos(-400, 150);
-//    this->addItem(myFirstBlock);
-
-//    ReapeatableTexturedItem * mySecondBlock = new ReapeatableTexturedItem(":/assets/images/brick.png", 2, 2, TEXTURE_SIZE);
-//    mySecondBlock->setPos(-200, 150);
-//    this->addItem(mySecondBlock);
-
-
-//    ReapeatableTexturedItem * myThirdBlock = new ReapeatableTexturedItem(":/assets/images/brick.png", 10, 2, TEXTURE_SIZE);
-//    myThirdBlock->setPosition(200, 600 - TEXTURE_SIZE);
-//    this->addItem(myThirdBlock);
-
-//    ReapeatableTexturedItem * myFourthBlock = new ReapeatableTexturedItem(":/assets/images/brick.png", 1, 4, TEXTURE_SIZE);
-//    myFourthBlock->setPosition(500, 600 - TEXTURE_SIZE * 4);
-//    this->addItem(myFourthBlock);
-
+void PlayScene::load(QString path) {
     QFile levelFile(path);
     if (! levelFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
@@ -137,22 +44,11 @@ PlayScene::PlayScene(QString path)
         levelFile.close();
     }
 
-    setBackgroundBrush(QPixmap(":/assets/images/bg.png"));
-
-//    QGraphicsEllipseItem * mur3 = new RoundPlateform();
-//    mur3->setRect(100, 410, 300, 100);
-//    this->addItem(mur3);
-
     ToiletPaper * tp = new ToiletPaper();
     tp->setPosition(100, 250);
     this->addItem(tp);
     connect(tp, SIGNAL(nextLevel()), this, SLOT(doNextLevel()));
-
-    timer = new QTimer(this);
-    QObject::connect(timer, &QTimer::timeout, this, &QGraphicsScene::advance);
-    timer->start(1000 / 60);
 }
-
 
 #define BRICK 1
 #define SURPRISE 2
@@ -163,10 +59,10 @@ PlayScene::PlayScene(QString path)
 #define VIRUS 7
 #define BRICK_DARK 8
 #define BRICK_COIN 27
-#define SURPRISE_INVI 28
-#define SURPRISE_MUSH_INVI 29
-#define SURPRISE_MASK_INVI 30
-#define SURPRISE_UKN_INVI 31
+#define SURPRISE_INVI 29
+#define SURPRISE_MUSH_INVI 30
+#define SURPRISE_MASK_INVI 31
+#define SURPRISE_UKN_INVI 32
 #define ROAD 33
 #define THUG 12
 #define STOP 39
@@ -259,25 +155,30 @@ void PlayScene::loadLevel(const QJsonObject& level) {
     }
 }
 
-void PlayScene::stopTimer()
-{
-    QList<QGraphicsItem*> all = items();
-    for (int i = 0; i < all.size(); i++)
-    {
-        QGraphicsItem *gi = all[i];
-        if(gi->parentItem()==NULL) {
-            delete gi;
-        }
-    }
-    qDebug() << items().size();
-    timer->stop();
-}
-
 void PlayScene::doNextLevel()
 {
-    emit changeLevel();
+    displayed = false;
+    stopFrame = true;
 }
 
+void PlayScene::display() {
+    displayed = true;
+}
+
+void PlayScene::stop() {
+    displayed = false;
+}
+
+void PlayScene::advanceTest() {
+    if (displayed) {
+        QGraphicsScene::advance();
+        qDebug() << "displayed";
+    } else if (stopFrame) {
+        views().at(0)->close();
+        emit changeLevel();
+        stopFrame = false;
+    }
+}
 
 
 

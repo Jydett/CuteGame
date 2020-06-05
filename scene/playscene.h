@@ -11,9 +11,9 @@ class PlayScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    PlayScene(QString path);
+    PlayScene();
+    void load(QString path);
     void loadLevel(const QJsonObject& data);
-    void stopTimer();
 
     static bool showBoundingBoxes;
 
@@ -21,14 +21,21 @@ public:
         return qrand() % ((high + 1) - low) + low;
     }
 
+    void display();
+    void stop();
+
 public slots:
     void doNextLevel();
 
 signals:
     void changeLevel();
 
+public Q_SLOTS:
+    void advanceTest();
 private:
     QTimer * timer;
+    bool displayed = false;
+    bool stopFrame = false;
 };
 
 #endif // PLAYSCENE_H

@@ -38,6 +38,7 @@ void MainView::startLvlMenu()
     connect(this->lvlMenu, SIGNAL(displayLevelF()), this, SLOT(startLevelF()));
     connect(this->lvlMenu, SIGNAL(returnToMainMenu()), this, SLOT(backToMenu()));
     connect(this->lvlMenu, SIGNAL(lvlMenuClosed()), this, SLOT(closeLvlMenu()));
+    game = new PlayScene();
 }
 
 void MainView::start(QString path)
@@ -48,10 +49,10 @@ void MainView::start(QString path)
 
     //add a view
     lvlView = new LevelView();
-    game = new PlayScene(path);
+//    game = new PlayScene(path);
     lvlView->setScene(game);
     lvlView->setSceneRect(0, 0, 100000000, 100000000);
-
+    game->load(path);
     //create an vieable item
     player = new Player(lvlView);
 
@@ -60,13 +61,14 @@ void MainView::start(QString path)
     game->addItem(player);
 
     lvlView->centerOn(200, 400);
-    lvlView->show();
 
     // connect signals
     connect(this->lvlView, SIGNAL(lvlViewClosed()), this, SLOT(closeLvlView()));
 
     connect(this->game, SIGNAL(changeLevel()), this, SLOT(nextLevel()));
 
+    game->display();
+    lvlView->show();
 }
 
 void MainView::display()
@@ -85,14 +87,12 @@ void MainView::display()
     //connect game menu signals
     connect(this->menu, SIGNAL(displayLvlMenu()), this, SLOT(startLvlMenu()));
     connect(this->menu, SIGNAL(menuClosed()), this, SLOT(closeMenu()));
-
-
 }
 
 void MainView::startLevel1()
 {
     qDebug() << "start level 1";
-
+    lastLevel = 1;
     start(":/levels/level/niveau1.json");
 }
 
@@ -100,35 +100,35 @@ void MainView::startLevel1()
 void MainView::startLevel2()
 {
     qDebug() << "start level 2";
-
+    lastLevel = 2;
     start(":/levels/level/niveau2.json");
 }
 
 void MainView::startLevel3()
 {
     qDebug() << "start level 3";
-
+    lastLevel = 3;
     start(":/levels/level/niveau3.json");
 }
 
 void MainView::startLevel4()
 {
     qDebug() << "start level 4";
-
+    lastLevel = 4;
     start(":/levels/level/niveau4.json");
 }
 
 void MainView::startLevel5()
 {
     qDebug() << "start level 5";
-
+    lastLevel = 5;
     start(":/levels/level/niveau5.json");
 }
 
 void MainView::startLevelF()
 {
     qDebug() << "start level F";
-
+    lastLevel = 6;
     start(":/levels/level/niveauF.json");
 }
 
@@ -155,20 +155,10 @@ void MainView::closeMenu()
 
 void MainView::closeLvlView()
 {
-    qDebug() << "close lvl view";
-
-
-    scene->clear();
+    qDebug() << "MainView::closeLvlView begin";
+    game->stop();
     this->show();
     this->lvlMenu->displayLevelMenu(scene);
-
-
-    lvlView->stop();
-
-    qDebug() << "ici";
-
-    delete(game);
-
 }
 
 //todo a enlever
@@ -184,8 +174,16 @@ void MainView::closeLvlMenu()
 
 void MainView::nextLevel()
 {
-    closeLvlView();
-
+    qDebug() << "MainView::nextLevel()";
+    switch (lastLevel) {
+        case 1 : startLevel2(); break;
+        case 2 : startLevel3(); break;
+        case 3 : startLevel4(); break;
+        case 4 : startLevel5(); break;
+        case 5 : startLevelF(); break;
+        case 6 : menu->displayMainMenu(scene); break;
+        default: startLevel1();
+    }
 }
 
 

@@ -9,12 +9,12 @@ class Music
 {
 public:
     Music();
-    //~Music();
+    ~Music();
     void playMusic(int volume);
 private:
-    QMediaPlaylist playlist;
-    QMediaPlayer musicPlayer;
-    QString path = "C:/Users/vlefi/Documents/Polytech 4A/Qt/CuteGame/music/";
+    QMediaPlaylist * playlist;
+    QMediaPlayer * musicPlayer;
+    QString path = "C:/Users/Trombonesolo/Documents/JeuTuto/music/";
 };
 
 #endif // MUSIC_H

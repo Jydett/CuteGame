@@ -37,7 +37,7 @@ private:
     LevelView* lvlView;
     Player* player;
     QGraphicsScene* scene;
-
+    int lastLevel = 0;
 };
 
 #endif // MAINVIEW_H

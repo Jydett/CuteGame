@@ -8,8 +8,6 @@
 
 #include "view/mainview.h"
 
-
-
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     QTime time = QTime::currentTime();

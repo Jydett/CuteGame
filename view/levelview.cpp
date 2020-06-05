@@ -4,11 +4,8 @@
 
 void LevelView::closeEvent(QCloseEvent *event)
 {
-    /*LevelMenu* levelMenu = new LevelMenu();
-    levelMenu->show();
-    levelMenu->displayLevelMenu();*/
+    scene()->clear();
     emit lvlViewClosed();
-
 }
 
 LevelView::LevelView()
@@ -32,19 +29,9 @@ LevelView::~LevelView() {
     delete keyboardStatus;
 }
 
-void LevelView::stop()
-{
-    dynamic_cast<PlayScene*>(scene())->stopTimer();
-}
-
 void LevelView::sceneSet(QGraphicsScene *scene) {
     setScene(scene);
     emit sceneChanged();
-}
-
-void LevelView::drawForeground(QPainter *painter, const QRectF &rect)
-{
-    painter->drawText(mapToScene(30, 30), "Score : 0");
 }
 
 void LevelView::wheelEvent(QWheelEvent *e)
